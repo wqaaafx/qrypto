@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация | QRYPTO</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <style>
+        :root { --primary: #ff6b00; --bg: #0a0a0a; --card: #161616; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .auth-card { background: var(--card); padding: 40px; border-radius: 24px; width: 100%; max-width: 420px; border: 1px solid rgba(255,107,0,0.25); box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+        .logo { text-align: center; font-size: 28px; font-weight: 900; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; }
+        h2 { text-align: center; font-size: 20px; color: #ccc; font-weight: 400; margin-bottom: 35px; }
+        .input-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 7px; font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        input { width: 100%; padding: 13px 16px; background: #0d0d0d; border: 1px solid #2a2a2a; border-radius: 12px; color: #fff; font-size: 15px; outline: none; transition: border-color 0.3s; }
+        input:focus { border-color: var(--primary); }
+        .btn { width: 100%; padding: 15px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.3s; margin-top: 8px; }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .footer-link { text-align: center; margin-top: 22px; font-size: 14px; color: #666; }
+        .footer-link a { color: var(--primary); text-decoration: none; }
+        .message { padding: 12px; border-radius: 10px; margin-bottom: 15px; font-size: 14px; text-align: center; display: none; }
+        .message.error { background: rgba(255,60,60,0.15); border: 1px solid rgba(255,60,60,0.3); color: #ff6b6b; }
+        .message.success { background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.3); color: #2ecc71; }
+    </style>
+</head>
+<body>
+<div class="auth-card">
+    <div class="logo">QRYPTO</div>
+    <h2>Создать аккаунт</h2>
+    <div id="msg" class="message"></div>
+    <form id="signupForm">
+        <div class="input-group">
+            <label>Ваше имя</label>
+            <input type="text" id="userName" placeholder="Иван Иванов" required>
+        </div>
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="userEmail" placeholder="ivan@example.com" required>
+        </div>
+        <div class="input-group">
+            <label>Пароль (минимум 6 символов)</label>
+            <input type="password" id="userPassword" placeholder="••••••••" required minlength="6">
+        </div>
+        <button type="submit" class="btn" id="submitBtn">Зарегистрироваться →</button>
+    </form>
+    <div class="footer-link">Уже есть аккаунт? <a href="login.html">Войти</a></div>
+</div>
+
+<script>
+    // Инициализация Supabase (переименована переменная, чтобы не было конфликта)
+    const db = supabase.createClient(
+        'https://dwpslpqqasabxilqtkvm.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cHNscHFxYXNhYnhpbHF0a3ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzODQ4OTAsImV4cCI6MjA5NDk2MDg5MH0.YCKirX0pAJYw6gsIxs3KAGNe5YKl6acgs93xxjpPpew'
+    );
+
+    function showMessage(text, type) {
+        const el = document.getElementById('msg');
+        el.textContent = text;
+        el.className = 'message ' + type;
+        el.style.display = 'block';
+    }
+
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Останавливает перезагрузку страницы
+
+        const name     = document.getElementById('userName').value.trim();
+        const email    = document.getElementById('userEmail').value.trim();
+        const password = document.getElementById('userPassword').value;
+        const btn      = document.getElementById('submitBtn');
+
+        if (!name || !email || !password) {
+            showMessage('Заполните все поля', 'error');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Создаём аккаунт...';
+
+        try {
+            // Шаг 1: Регистрация через Supabase Auth
+            const { data, error: authError } = await db.auth.signUp({
+    email: email,
+    password: password
+});
+
+if (authError) {
+    throw authError;
+}
+
+if (!data || !data.user) {
+    throw new Error("Пользователь не был создан. Проверь подтверждение email или существование аккаунта.");
+}
+
+            if (authError) throw authError;
+
+            // Шаг 2: Создание профиля в таблице profiles
+            const { error: profileError } = await db
+                .from('profiles')
+                .insert([{ id: data.user.id, name: name, email: email, plan: 'free' }]);
+
+            if (profileError) console.warn('Ошибка профиля:', profileError.message);
+
+            showMessage('Аккаунт создан! Переходим в кабинет...', 'success');
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
+
+        } catch (err) {
+            console.error(err);
+            let msg = err.message;
+            if (msg.includes('already registered')) msg = 'Этот email уже зарегистрирован. <a href="login.html">Войти?</a>';
+            if (msg.includes('Password should be at least')) msg = 'Пароль должен быть не менее 6 символов';
+            showMessage(msg, 'error');
+            btn.disabled = false;
+            btn.textContent = 'Зарегистрироваться →';
+        }
+    });
+</script>
+</body>
+</html>

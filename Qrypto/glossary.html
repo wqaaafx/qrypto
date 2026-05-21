@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Глоссарий криптотрейдера — Qrypto</title>
+    <meta name="description" content="Глоссарий 50+ терминов криптотрейдинга от Qrypto. CEX, DEX, RSI, MACD, FOMO, HODL и многое другое.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🔥</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg-primary:#0a0a0a;--bg-secondary:#0d0d0d;--bg-card:#111111;--bg-card-hover:#1a1a1a;--accent:#ff6b00;--accent-light:#ff8c00;--accent-glow:rgba(255,107,0,0.15);--green:#00ff88;--red:#ff3366;--text-primary:#ffffff;--text-secondary:#999999;--text-muted:#555555;--border:#1a1a1a;--border-orange:rgba(255,107,0,0.25);--gradient-main:linear-gradient(135deg,#ff6b00,#ff8c00);--shadow-orange:0 0 30px rgba(255,107,0,0.15);--radius:12px;--radius-lg:20px;--transition:all .3s cubic-bezier(.4,0,.2,1)}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6}
+        h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif}
+        a{text-decoration:none;color:inherit;transition:var(--transition)}
+        .container{max-width:1200px;margin:0 auto;padding:0 24px}
+        .gradient-text{background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .section-label{display:inline-block;color:var(--accent);border:1px solid var(--border-orange);background:var(--accent-glow);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+        .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;cursor:pointer;border:none;transition:var(--transition);text-align:center;justify-content:center}
+        .btn-primary{background:var(--gradient-main);color:#000}
+        .btn-ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}
+        .btn-ghost:hover{color:var(--accent);border-color:var(--border-orange)}
+
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:var(--transition);background:rgba(10,10,10,0.6);backdrop-filter:blur(10px)}
+        .navbar.scrolled{background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,107,0,0.1);padding:12px 0}
+        .navbar .container{display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700}
+        .nav-links{display:flex;gap:28px;list-style:none}
+        .nav-links a{color:var(--text-secondary);font-size:14px;font-weight:500}
+        .nav-links a:hover{color:var(--accent)}
+        .nav-actions{display:flex;gap:12px;align-items:center}
+        .nav-actions .btn{padding:10px 20px;font-size:14px}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+        .hamburger span{width:24px;height:2px;background:var(--text-primary);border-radius:2px}
+        .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,0.98);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+        .mobile-menu.active{display:flex}
+        .mobile-menu a{font-size:20px;color:var(--text-secondary);font-family:'Space Grotesk',sans-serif;font-weight:500}
+        .mobile-close{position:absolute;top:20px;right:24px;font-size:32px;color:var(--text-secondary);cursor:pointer;background:none;border:none}
+
+        .glossary-hero{padding:120px 0 40px;text-align:center}
+        .glossary-hero h1{font-size:clamp(28px,5vw,48px);font-weight:700;margin-bottom:12px}
+
+        .search-bar{max-width:600px;margin:0 auto 32px;position:relative}
+        .search-bar input{width:100%;padding:16px 20px 16px 48px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-size:16px;font-family:'Inter',sans-serif;transition:var(--transition)}
+        .search-bar input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:20px}
+
+        .alpha-nav{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:40px}
+        .alpha-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary);font-weight:600;font-size:13px;cursor:pointer;transition:var(--transition)}
+        .alpha-btn:hover,.alpha-btn.active{background:var(--accent-glow);color:var(--accent);border-color:var(--border-orange)}
+
+        .letter-group{margin-bottom:40px}
+        .letter-heading{font-size:32px;font-weight:700;color:var(--accent);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+        .term-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;transition:var(--transition)}
+        .term-card:hover{border-color:var(--border-orange);box-shadow:var(--shadow-orange)}
+        .term-name{font-weight:700;color:var(--accent);font-size:16px;margin-bottom:6px;font-family:'Space Grotesk',sans-serif}
+        .term-def{color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:6px}
+        .term-example{font-style:italic;color:var(--text-muted);font-size:13px}
+        .term-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:100px;background:var(--accent-glow);color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px}
+
+        .footer{background:var(--bg-secondary);border-top:1px solid var(--border);padding:40px 0;text-align:center;margin-top:60px}
+        .footer p{color:var(--text-muted);font-size:13px}
+
+        @media(max-width:768px){
+            .nav-links,.nav-actions{display:none}
+            .hamburger{display:flex}
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+    <div class="container">
+        <a href="index.html" class="nav-logo"><span class="gradient-text">Qrypto</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html#modules">Программа</a></li>
+            <li><a href="index.html#patterns">Паттерны</a></li>
+            <li><a href="index.html#pricing">Тарифы</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-ghost">Войти</a>
+            <a href="free-course.html" class="btn btn-primary">🔥 Начать</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-close" id="mobile-close">✕</button>
+    <a href="index.html">Главная</a>
+    <a href="index.html#modules">Программа</a>
+    <a href="index.html#pricing">Тарифы</a>
+    <a href="login.html">Войти</a>
+</div>
+
+<section class="glossary-hero">
+    <div class="container">
+        <span class="section-label">50+ терминов</span>
+        <h1>Глоссарий <span class="gradient-text">криптотрейдера</span></h1>
+        <p style="color:var(--text-secondary);max-width:500px;margin:16px auto 0">Все ключевые термины трейдинга с определениями и примерами</p>
+    </div>
+</section>
+
+<div class="container">
+    <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Поиск терминов...">
+    </div>
+
+    <div class="alpha-nav" id="alpha-nav"></div>
+
+    <div id="glossary-content"></div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <a href="index.html" style="font-size:24px;font-weight:700;font-family:'Space Grotesk',sans-serif"><span class="gradient-text">Qrypto</span></a>
+        <p style="margin-top:12px">© 2025 Qrypto. Все права защищены.</p>
+    </div>
+</footer>
+
+<script>
+// Navbar
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
+document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('active'));
+document.getElementById('mobile-close').addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('active'));
+
+// Термины
+const terms = [
+    {name:'ATH (All-Time High)',def:'Максимальная цена за всю историю актива.',example:'BTC достиг ATH в $73,800 в марте 2024.',cat:'Биржа'},
+    {name:'ATL (All-Time Low)',def:'Минимальная цена за всю историю актива.',example:'ATL Bitcoin — $0.003 в 2010 году.',cat:'Биржа'},
+    {name:'Breakout (Пробой)',def:'Выход цены за пределы ключевого уровня поддержки или сопротивления.',example:'BTC пробил $70,000 на большом объёме — breakout подтверждён.',cat:'Технический анализ'},
+    {name:'Bull Flag (Бычий флаг)',def:'Паттерн продолжения: импульс вверх + коррекция в канале вниз → пробой вверх.',example:'SOL сформировал бычий флаг на H4 перед ростом на 20%.',cat:'Паттерны'},
+    {name:'Candlestick (Свеча)',def:'Графический элемент, показывающий Open, Close, High, Low цены за период.',example:'Длинная нижняя тень свечи = давление покупателей.',cat:'Технический анализ'},
+    {name:'CEX (Centralized Exchange)',def:'Централизованная биржа, управляемая компанией. Хранит средства пользователей.',example:'BingX, Binance, Bybit — примеры CEX.',cat:'Биржа'},
+    {name:'Consolidation (Консолидация)',def:'Боковое движение цены в узком диапазоне перед импульсом.',example:'BTC торговался в диапазоне $65-67K неделю — консолидация.',cat:'Технический анализ'},
+    {name:'DEX (Decentralized Exchange)',def:'Децентрализованная биржа без посредников. Торговля через смарт-контракты.',example:'Uniswap, Jupiter, PancakeSwap — примеры DEX.',cat:'Биржа'},
+    {name:'Diamond Hands (Алмазные руки)',def:'Трейдер, который держит позицию несмотря на волатильность и просадки.',example:'"Diamond hands" держат BTC с $30K, не продавая на коррекциях.',cat:'Психология'},
+    {name:'Diversification (Диверсификация)',def:'Распределение капитала между разными активами для снижения риска.',example:'Не вкладывай 100% в один альткоин — диверсифицируй.',cat:'Риск'},
+    {name:'Double Bottom (Двойное дно)',def:'Разворотный паттерн: два касания поддержки → пробой сопротивления вверх.',example:'ETH сформировал двойное дно на $3,200 и вырос до $3,800.',cat:'Паттерны'},
+    {name:'Double Top (Двойная вершина)',def:'Разворотный паттерн: два касания сопротивления → пробой поддержки вниз.',example:'BTC двойная вершина на $73K → откат до $60K.',cat:'Паттерны'},
+    {name:'Drawdown (Просадка)',def:'Максимальное снижение капитала от пика до минимума.',example:'Просадка 15% от $10,000 = баланс упал до $8,500.',cat:'Риск'},
+    {name:'Dump (Дамп)',def:'Резкое падение цены, часто вызванное массовыми продажами.',example:'После новости о регуляции BTC дампнул на 10%.',cat:'Психология'},
+    {name:'FOMO (Fear Of Missing Out)',def:'Страх упустить прибыль. Заставляет покупать на пике без анализа.',example:'Не входи в сделку из-за FOMO — следуй торговому плану.',cat:'Психология'},
+    {name:'FUD (Fear, Uncertainty, Doubt)',def:'Негативные новости и слухи, вызывающие панику на рынке.',example:'FUD о запрете крипты в Китае обрушил рынок в 2021.',cat:'Психология'},
+    {name:'Futures (Фьючерсы)',def:'Контракты на покупку/продажу актива по заранее оговорённой цене в будущем.',example:'Торговля BTC фьючерсами с плечом 10x на BingX.',cat:'Биржа'},
+    {name:'Head and Shoulders (Голова и плечи)',def:'Разворотный паттерн: три вершины, центральная выше → пробой шеи вниз.',example:'BTC сформировал ГиП на дневном графике перед коррекцией.',cat:'Паттерны'},
+    {name:'HODL',def:'Стратегия долгосрочного удержания криптовалюты, от англ. "Hold" с ошибкой.',example:'HODLers покупают BTC и не продают годами.',cat:'Психология'},
+    {name:'Leverage (Кредитное плечо)',def:'Заёмные средства для увеличения размера позиции. Умножает и прибыль, и убытки.',example:'Плечо 10x: ваши $100 работают как $1000, но ликвидация при -10%.',cat:'Биржа'},
+    {name:'Limit Order (Лимитный ордер)',def:'Ордер на покупку/продажу по заданной цене или лучше.',example:'Поставил лимитку на BTC $65,000 — ордер сработает когда цена придёт.',cat:'Биржа'},
+    {name:'Liquidity (Ликвидность)',def:'Объём заявок на покупку и продажу. Высокая ликвидность = низкие спреды.',example:'BTC — самый ликвидный криптоактив.',cat:'Биржа'},
+    {name:'MACD',def:'Индикатор Moving Average Convergence Divergence. Показывает смену тренда.',example:'Пересечение MACD линий вверх — бычий сигнал.',cat:'Технический анализ'},
+    {name:'Margin (Маржа)',def:'Залог, который трейдер вносит для открытия позиции с плечом.',example:'Для позиции $1000 с плечом 10x нужна маржа $100.',cat:'Биржа'},
+    {name:'Market Order (Рыночный ордер)',def:'Ордер на немедленную покупку/продажу по текущей рыночной цене.',example:'Market buy BTC — мгновенная покупка по лучшей доступной цене.',cat:'Биржа'},
+    {name:'Order Book (Стакан ордеров)',def:'Список всех активных ордеров на покупку и продажу с ценами и объёмами.',example:'В стакане видно, где скопились крупные заявки на покупку.',cat:'Биржа'},
+    {name:'Paper Hands',def:'Трейдер, который продаёт при первых признаках просадки.',example:'Paper hands продали BTC при -5% и пропустили рост.',cat:'Психология'},
+    {name:'Pennant (Вымпел)',def:'Паттерн продолжения: сходящиеся линии тренда после импульса.',example:'Вымпел на SOL/USDT перед пробоем вверх на 15%.',cat:'Паттерны'},
+    {name:'Position Size (Размер позиции)',def:'Объём средств в конкретной сделке, рассчитанный исходя из допустимого риска.',example:'Депозит $1000, риск 1%, стоп 3% → позиция $333.',cat:'Риск'},
+    {name:'Pump (Памп)',def:'Резкий рост цены актива, часто искусственный.',example:'Альткоин пампнул на 200% за час после листинга.',cat:'Психология'},
+    {name:'Rekt',def:'Крупный убыток или полная потеря депозита.',example:'"Got rekt" — потерял весь депозит на фьючерсах.',cat:'Психология'},
+    {name:'Resistance (Сопротивление)',def:'Ценовой уровень, от которого цена неоднократно отскакивала вниз.',example:'BTC тестирует сопротивление $73,000 уже третий раз.',cat:'Технический анализ'},
+    {name:'Risk/Reward (RR)',def:'Соотношение потенциального убытка к потенциальной прибыли в сделке.',example:'RR 1:3 — рискуешь $10, чтобы заработать $30.',cat:'Риск'},
+    {name:'RSI (Relative Strength Index)',def:'Индикатор силы тренда. Значения 0-100. Выше 70 = перекупленность, ниже 30 = перепроданность.',example:'RSI BTC на 4H = 82 — зона перекупленности, возможен откат.',cat:'Технический анализ'},
+    {name:'Slippage (Проскальзывание)',def:'Разница между ожидаемой и фактической ценой исполнения ордера.',example:'Рыночный ордер проскользнул на 0.2% из-за низкой ликвидности.',cat:'Биржа'},
+    {name:'Spot (Спот)',def:'Покупка и продажа реального актива без плеча. Самый безопасный вид торговли.',example:'Купил 0.01 BTC на споте — владеешь реальным биткоином.',cat:'Биржа'},
+    {name:'Stop-Loss (Стоп-лосс)',def:'Ордер на автоматическое закрытие позиции при достижении определённого уровня убытка.',example:'Вход $67,000, стоп-лосс $65,000 — максимальный убыток ограничен.',cat:'Риск'},
+    {name:'Support (Поддержка)',def:'Ценовой уровень, от которого цена неоднократно отскакивала вверх.',example:'ETH удерживает поддержку $3,000 уже месяц.',cat:'Технический анализ'},
+    {name:'Take-Profit (Тейк-профит)',def:'Ордер на автоматическое закрытие позиции при достижении целевой прибыли.',example:'Вход $67,000, тейк $72,000 — фиксация прибыли +7.5%.',cat:'Риск'},
+    {name:'Trend (Тренд)',def:'Направление движения цены: восходящий (HH/HL), нисходящий (LH/LL) или боковой.',example:'BTC в восходящем тренде — покупаем на откатах к поддержке.',cat:'Технический анализ'},
+    {name:'Triangle (Треугольник)',def:'Паттерн сжатия цены между двумя сходящимися линиями тренда.',example:'Симметричный треугольник на ETH — ждём пробой в любую сторону.',cat:'Паттерны'},
+    {name:'Volume (Объём)',def:'Количество актива, проторгованного за определённый период.',example:'Рост цены на высоком объёме = подтверждённый тренд.',cat:'Технический анализ'},
+    {name:'Wedge (Клин)',def:'Паттерн сужения: восходящий клин (медвежий) или нисходящий клин (бычий).',example:'Восходящий клин на BTC → пробой вниз.',cat:'Паттерны'},
+    {name:'Whale (Кит)',def:'Крупный держатель криптовалюты, способный повлиять на рынок своими сделками.',example:'Кит перевёл 5000 BTC на биржу — возможна распродажа.',cat:'Психология'}
+];
+
+// Группировка по буквам
+function groupTerms(termsList) {
+    const groups = {};
+    termsList.forEach(t => {
+        const letter = t.name.charAt(0).toUpperCase();
+        if (!groups[letter]) groups[letter] = [];
+        groups[letter].push(t);
+    });
+    return groups;
+}
+
+function renderGlossary(filtered) {
+    const groups = groupTerms(filtered || terms);
+    const letters = Object.keys(groups).sort();
+    
+    // Алфавитная навигация
+    const alphaNav = document.getElementById('alpha-nav');
+    const allLetters = [...new Set(terms.map(t => t.name.charAt(0).toUpperCase()))].sort();
+    alphaNav.innerHTML = allLetters.map(l => 
+        `<a href="#letter-${l}" class="alpha-btn">${l}</a>`
+    ).join('');
+    
+    // Контент
+    const content = document.getElementById('glossary-content');
+    let html = '';
+    letters.forEach(letter => {
+        html += `<div class="letter-group" id="letter-${letter}">
+            <h3 class="letter-heading">${letter}</h3>`;
+        groups[letter].forEach(t => {
+            html += `<div class="term-card" data-search="${t.name.toLowerCase()} ${t.def.toLowerCase()} ${t.example.toLowerCase()}">
+                <div class="term-name">${t.name}</div>
+                <div class="term-def">${t.def}</div>
+                <div class="term-example">Например: ${t.example}</div>
+                <span class="term-tag">${t.cat}</span>
+            </div>`;
+        });
+        html += '</div>';
+    });
+    content.innerHTML = html;
+}
+
+renderGlossary();
+
+// Поиск
+document.getElementById('search-input').addEventListener('input', function() {
+    const q = this.value.toLowerCase().trim();
+    if (!q) {
+        renderGlossary();
+        return;
+    }
+    const filtered = terms.filter(t => 
+        t.name.toLowerCase().includes(q) || 
+        t.def.toLowerCase().includes(q) || 
+        t.example.toLowerCase().includes(q) ||
+        t.cat.toLowerCase().includes(q)
+    );
+    renderGlossary(filtered);
+});
+</script>
+</body>
+</html>

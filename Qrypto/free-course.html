@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бесплатный мини-курс — Qrypto</title>
+    <meta name="description" content="Бесплатный мини-курс по криптотрейдингу от Qrypto. 5 уроков: блокчейн, свечи, паттерны, риск-менеджмент.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🔥</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg-primary:#0a0a0a;--bg-secondary:#0d0d0d;--bg-card:#111111;--bg-card-hover:#1a1a1a;--bg-elevated:#141414;--accent:#ff6b00;--accent-light:#ff8c00;--accent-dark:#e65100;--accent-glow:rgba(255,107,0,0.15);--accent-glow-strong:rgba(255,107,0,0.3);--green:#00ff88;--red:#ff3366;--yellow:#ffd600;--text-primary:#ffffff;--text-secondary:#999999;--text-muted:#555555;--border:#1a1a1a;--border-accent:#2a2a2a;--border-orange:rgba(255,107,0,0.25);--gradient-main:linear-gradient(135deg,#ff6b00,#ff8c00);--shadow-orange:0 0 30px rgba(255,107,0,0.15);--shadow-card:0 4px 20px rgba(0,0,0,0.4);--radius:12px;--radius-lg:20px;--transition:all .3s cubic-bezier(.4,0,.2,1)}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+        h1,h2,h3,h4,h5,h6{font-family:'Space Grotesk',sans-serif}
+        a{text-decoration:none;color:inherit;transition:var(--transition)}
+        .container{max-width:1200px;margin:0 auto;padding:0 24px}
+        .gradient-text{background:var(--gradient-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .section-label{display:inline-block;color:var(--accent);border:1px solid var(--border-orange);background:var(--accent-glow);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+        .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;cursor:pointer;border:none;transition:var(--transition);text-align:center;justify-content:center}
+        .btn-primary{background:var(--gradient-main);color:#000;box-shadow:0 4px 20px rgba(255,107,0,0.3)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,107,0,0.4)}
+        .btn-outline{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+        .btn-outline:hover{background:var(--accent-glow);transform:translateY(-2px)}
+        .btn-ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}
+        .btn-ghost:hover{color:var(--accent);border-color:var(--border-orange)}
+
+        /* Navbar */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:var(--transition);background:rgba(10,10,10,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+        .navbar.scrolled{background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,107,0,0.1);padding:12px 0}
+        .navbar .container{display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700}
+        .nav-links{display:flex;gap:28px;list-style:none}
+        .nav-links a{color:var(--text-secondary);font-size:14px;font-weight:500}
+        .nav-links a:hover{color:var(--accent)}
+        .nav-actions{display:flex;gap:12px;align-items:center}
+        .nav-actions .btn{padding:10px 20px;font-size:14px}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+        .hamburger span{width:24px;height:2px;background:var(--text-primary);transition:var(--transition);border-radius:2px}
+        .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,10,10,0.98);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+        .mobile-menu.active{display:flex}
+        .mobile-menu a{font-size:20px;color:var(--text-secondary);font-family:'Space Grotesk',sans-serif;font-weight:500}
+        .mobile-close{position:absolute;top:20px;right:24px;font-size:32px;color:var(--text-secondary);cursor:pointer;background:none;border:none}
+
+        /* Прогресс-бар */
+        .progress-bar-top{position:fixed;top:64px;left:0;right:0;height:4px;background:var(--border);z-index:999}
+        .progress-bar-fill{height:100%;background:var(--gradient-main);transition:width .4s ease;border-radius:0 2px 2px 0}
+
+        /* Курс */
+        .course-hero{padding:120px 0 40px;text-align:center}
+        .course-hero h1{font-size:clamp(28px,5vw,48px);font-weight:700;margin-bottom:12px}
+        .course-hero .badge{display:inline-block;padding:8px 20px;border-radius:100px;background:var(--accent-glow);border:1px solid var(--border-orange);color:var(--accent);font-size:14px;font-weight:600;margin-bottom:24px}
+
+        .lesson-nav{display:flex;justify-content:space-between;align-items:center;max-width:700px;margin:0 auto 32px;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+        .lesson-nav span{color:var(--text-secondary);font-size:14px;font-weight:500}
+        .lesson-nav .btn{padding:10px 20px;font-size:13px}
+
+        .lesson-content{max-width:800px;margin:0 auto;animation:fadeInUp .6s ease}
+        .lesson-card{background:var(--bg-card);border:1px solid var(--border-orange);border-radius:var(--radius-lg);padding:40px;margin-bottom:40px}
+        .lesson-card h2{font-size:24px;margin-bottom:20px}
+        .lesson-card p{color:var(--text-secondary);line-height:1.8;margin-bottom:16px;font-size:15px}
+        .lesson-card svg{width:100%;margin:20px 0;border-radius:8px}
+
+        .key-takeaways{background:var(--accent-glow);border:1px solid var(--border-orange);border-radius:var(--radius);padding:24px;margin-top:24px}
+        .key-takeaways h4{color:var(--accent);margin-bottom:12px;font-size:16px}
+        .key-takeaways li{color:var(--text-secondary);padding:6px 0;font-size:14px;display:flex;align-items:center;gap:8px}
+        .key-takeaways li::before{content:'✓';color:var(--accent);font-weight:700}
+
+        /* Калькулятор внутри урока */
+        .mini-calc{background:var(--bg-card);border:1px solid var(--border-orange);border-radius:var(--radius);padding:24px;margin:20px 0}
+        .mini-calc label{display:block;font-size:13px;color:var(--text-secondary);margin:8px 0 4px}
+        .mini-calc input{width:100%;padding:10px 14px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);font-size:14px;font-family:'Inter',sans-serif}
+        .mini-calc input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        .mini-calc-result{margin-top:16px;padding:16px;background:var(--accent-glow);border:1px solid var(--border-orange);border-radius:8px}
+        .mini-calc-row{display:flex;justify-content:space-between;padding:6px 0;font-size:14px}
+        .mini-calc-row span:last-child{font-weight:600;color:var(--accent)}
+
+        /* Email форма */
+        .lead-form{margin-top:32px;text-align:center}
+        .lead-form input[type="email"]{width:100%;max-width:400px;padding:14px 18px;background:var(--bg-primary);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-primary);font-size:15px;margin-bottom:12px;font-family:'Inter',sans-serif}
+        .lead-form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+
+        /* CTA card */
+        .cta-card{background:var(--bg-card);border:1px solid var(--border-orange);border-radius:var(--radius-lg);padding:40px;text-align:center;margin:32px 0}
+        .cta-card h3{font-size:24px;margin-bottom:12px}
+        .cta-card p{color:var(--text-secondary);margin-bottom:24px}
+
+        /* Footer */
+        .footer{background:var(--bg-secondary);border-top:1px solid var(--border);padding:40px 0}
+        .footer-inner{text-align:center}
+        .footer-inner p{color:var(--text-muted);font-size:13px}
+
+        [data-lesson]{display:none}
+        [data-lesson].active{display:block}
+
+        @media(max-width:768px){
+            .nav-links,.nav-actions{display:none}
+            .hamburger{display:flex}
+            .lesson-card{padding:24px}
+            .lesson-nav{padding:12px 0;flex-wrap:wrap;gap:8px}
+        }
+        @media(max-width:480px){
+            .lesson-nav{flex-direction:column;gap:12px;text-align:center}
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+    <div class="container">
+        <a href="index.html" class="nav-logo"><span class="gradient-text">Qrypto</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html#modules">Программа</a></li>
+            <li><a href="index.html#patterns">Паттерны</a></li>
+            <li><a href="index.html#pricing">Тарифы</a></li>
+            <li><a href="glossary.html">Глоссарий</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-ghost">Войти</a>
+            <a href="index.html#pricing" class="btn btn-primary">🔥 Полный курс</a>
+        </div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-close" id="mobile-close">✕</button>
+    <a href="index.html">Главная</a>
+    <a href="index.html#modules">Программа</a>
+    <a href="index.html#pricing">Тарифы</a>
+    <a href="glossary.html">Глоссарий</a>
+    <a href="login.html" class="btn btn-ghost" style="margin-top:16px">Войти</a>
+</div>
+
+<!-- Прогресс -->
+<div class="progress-bar-top"><div class="progress-bar-fill" id="progress-fill" style="width:20%"></div></div>
+
+<section class="course-hero">
+    <div class="container">
+        <div class="badge">5 уроков • 0 ₽</div>
+        <h1>Бесплатный <span class="gradient-text">мини-курс</span></h1>
+        <p style="color:var(--text-secondary);max-width:500px;margin:0 auto">Основы криптотрейдинга за 5 коротких уроков — от блокчейна до первого сетапа</p>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Навигация между уроками -->
+    <div class="lesson-nav">
+        <button class="btn btn-ghost" id="prev-btn" onclick="prevLesson()">← Назад</button>
+        <span id="lesson-counter">Урок 1 из 5</span>
+        <button class="btn btn-primary" id="next-btn" onclick="nextLesson()">Далее →</button>
+    </div>
+
+    <!-- УРОК 1 -->
+    <div data-lesson="1" class="lesson-content active">
+        <div class="lesson-card">
+            <span class="section-label">Урок 1</span>
+            <h2>Что такое криптовалюта и блокчейн</h2>
+            <svg viewBox="0 0 600 140">
+                <rect x="20" y="40" width="120" height="60" rx="10" fill="none" stroke="#ff6b00" stroke-width="2"/>
+                <text x="80" y="65" fill="#ff6b00" font-size="11" text-anchor="middle" font-weight="600">Блок #1</text>
+                <text x="80" y="82" fill="#999" font-size="9" text-anchor="middle">Транзакции</text>
+                <line x1="140" y1="70" x2="180" y2="70" stroke="#ff6b00" stroke-width="2" marker-end="url(#arrow)"/>
+                <rect x="180" y="40" width="120" height="60" rx="10" fill="none" stroke="#ff6b00" stroke-width="2"/>
+                <text x="240" y="65" fill="#ff6b00" font-size="11" text-anchor="middle" font-weight="600">Блок #2</text>
+                <text x="240" y="82" fill="#999" font-size="9" text-anchor="middle">Транзакции</text>
+                <line x1="300" y1="70" x2="340" y2="70" stroke="#ff6b00" stroke-width="2"/>
+                <rect x="340" y="40" width="120" height="60" rx="10" fill="none" stroke="#ff6b00" stroke-width="2"/>
+                <text x="400" y="65" fill="#ff6b00" font-size="11" text-anchor="middle" font-weight="600">Блок #3</text>
+                <text x="400" y="82" fill="#999" font-size="9" text-anchor="middle">Транзакции</text>
+                <line x1="460" y1="70" x2="500" y2="70" stroke="#ff6b00" stroke-width="2"/>
+                <rect x="500" y="50" width="60" height="40" rx="8" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="5,4"/>
+                <text x="530" y="75" fill="#555" font-size="10" text-anchor="middle">...</text>
+                <text x="300" y="130" fill="#ff6b00" font-size="12" text-anchor="middle" font-weight="600">Блокчейн = цепочка блоков</text>
+                <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#ff6b00"/></marker></defs>
+            </svg>
+            <p><strong>Криптовалюта</strong> — это цифровые деньги, которые работают без банков и государств. Все транзакции записываются в блокчейн — открытую базу данных, которую невозможно подделать.</p>
+            <p><strong>Блокчейн</strong> — это цепочка блоков, где каждый блок содержит список транзакций. Блоки связаны между собой криптографическими хешами, что делает подмену данных невозможной.</p>
+            <p>Bitcoin (BTC) — первая криптовалюта, созданная в 2009 году. Ethereum (ETH) — вторая по капитализации, позволяет создавать смарт-контракты и децентрализованные приложения.</p>
+            <ul class="key-takeaways">
+                <h4>🔑 Ключевые выводы</h4>
+                <li>Криптовалюта — цифровая валюта, не контролируемая банками</li>
+                <li>Блокчейн — неизменяемый реестр всех транзакций</li>
+                <li>BTC и ETH — два главных актива крипторынка</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- УРОК 2 -->
+    <div data-lesson="2" class="lesson-content">
+        <div class="lesson-card">
+            <span class="section-label">Урок 2</span>
+            <h2>Как читать свечной график</h2>
+            <svg viewBox="0 0 600 220">
+                <!-- Бычья свеча -->
+                <text x="150" y="20" fill="#00ff88" font-size="13" text-anchor="middle" font-weight="700">Бычья свеча (рост)</text>
+                <line x1="150" y1="35" x2="150" y2="65" stroke="#999" stroke-width="1.5"/>
+                <rect x="130" y="65" width="40" height="80" rx="3" fill="#00ff88"/>
+                <line x1="150" y1="145" x2="150" y2="180" stroke="#999" stroke-width="1.5"/>
+                <line x1="175" y1="37" x2="230" y2="37" stroke="#555" stroke-width="0.5" stroke-dasharray="3,2"/>
+                <text x="235" y="41" fill="#999" font-size="9">High</text>
+                <line x1="175" y1="68" x2="230" y2="68" stroke="#555" stroke-width="0.5" stroke-dasharray="3,2"/>
+                <text x="235" y="72" fill="#00ff88" font-size="9" font-weight="600">Close ↑</text>
+                <line x1="175" y1="142" x2="230" y2="142" stroke="#555" stroke-width="0.5" stroke-dasharray="3,2"/>
+                <text x="235" y="146" fill="#999" font-size="9">Open</text>
+                <line x1="175" y1="178" x2="230" y2="178" stroke="#555" stroke-width="0.5" stroke-dasharray="3,2"/>
+                <text x="235" y="182" fill="#999" font-size="9">Low</text>
+                <text x="100" y="105" fill="#00ff88" font-size="9" text-anchor="end" font-weight="600">Тело →</text>
+                <!-- Медвежья свеча -->
+                <text x="430" y="20" fill="#ff3366" font-size="13" text-anchor="middle" font-weight="700">Медвежья свеча (падение)</text>
+                <line x1="430" y1="35" x2="430" y2="65" stroke="#999" stroke-width="1.5"/>
+                <rect x="410" y="65" width="40" height="80" rx="3" fill="#ff3366"/>
+                <line x1="430" y1="145" x2="430" y2="180" stroke="#999" stroke-width="1.5"/>
+                <line x1="455" y1="68" x2="510" y2="68" stroke="#555" stroke-width="0.5" stroke-dasharray="3,2"/>
+                <text x="515" y="72" fill="#999" font-size="9">Open</text>
+                <line x1="455" y1="142" x2="510" y2="142" stroke="#555" stroke-width="0.5" stroke-dasharray="3,2"/>
+                <text x="515" y="146" fill="#ff3366" font-size="9" font-weight="600">Close ↓</text>
+                <!-- Разделитель -->
+                <line x1="300" y1="25" x2="300" y2="190" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4,4"/>
+                <text x="300" y="210" fill="#ff6b00" font-size="11" text-anchor="middle" font-weight="600">Зелёная = рост • Красная = падение</text>
+            </svg>
+            <p>Каждая свеча показывает 4 цены: <strong>Open</strong> (открытие), <strong>Close</strong> (закрытие), <strong>High</strong> (максимум) и <strong>Low</strong> (минимум).</p>
+            <p><strong>Зелёная (бычья)</strong> свеча — цена закрытия выше цены открытия (цена выросла). <strong>Красная (медвежья)</strong> — закрытие ниже открытия (цена упала).</p>
+            <p>Длинные фитили показывают давление продавцов (верхний) или покупателей (нижний). Паттерны свечей помогают предсказать дальнейшее движение цены.</p>
+            <ul class="key-takeaways">
+                <h4>🔑 Ключевые выводы</h4>
+                <li>Свеча = Open + Close + High + Low за определённый период</li>
+                <li>Зелёная = рост, Красная = падение</li>
+                <li>Длинные фитили — сигналы разворота</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- УРОК 3 -->
+    <div data-lesson="3" class="lesson-content">
+        <div class="lesson-card">
+            <span class="section-label">Урок 3</span>
+            <h2>Топ-3 паттерна для новичка</h2>
+            <p>Вот три паттерна, которые стоит выучить в первую очередь. Они встречаются чаще всего и дают сильные сигналы.</p>
+
+            <h3 style="margin:24px 0 12px;color:var(--green)">1. Двойное дно (Double Bottom)</h3>
+            <svg viewBox="0 0 260 100">
+                <line x1="20" y1="32" x2="220" y2="32" stroke="#555" stroke-width="0.8" stroke-dasharray="4,3"/>
+                <rect x="22" y="22" width="5" height="8" fill="#ff3366" rx="1"/>
+                <rect x="32" y="35" width="5" height="10" fill="#ff3366" rx="1"/>
+                <rect x="42" y="50" width="5" height="14" fill="#ff3366" rx="1"/>
+                <rect x="52" y="60" width="5" height="14" fill="#ff3366" rx="1"/>
+                <rect x="62" y="68" width="5" height="5" fill="#00ff88" rx="1"/>
+                <rect x="72" y="52" width="5" height="12" fill="#00ff88" rx="1"/>
+                <rect x="82" y="38" width="5" height="8" fill="#00ff88" rx="1"/>
+                <rect x="92" y="35" width="5" height="5" fill="#ff3366" rx="1"/>
+                <rect x="102" y="42" width="5" height="10" fill="#ff3366" rx="1"/>
+                <rect x="112" y="55" width="5" height="12" fill="#ff3366" rx="1"/>
+                <rect x="122" y="62" width="5" height="12" fill="#ff3366" rx="1"/>
+                <rect x="132" y="68" width="5" height="5" fill="#00ff88" rx="1"/>
+                <rect x="142" y="52" width="5" height="12" fill="#00ff88" rx="1"/>
+                <rect x="152" y="35" width="5" height="12" fill="#00ff88" rx="1"/>
+                <rect x="162" y="28" width="5" height="8" fill="#00ff88" rx="1"/>
+                <rect x="172" y="20" width="5" height="8" fill="#00ff88" rx="1"/>
+                <text x="60" y="88" fill="#ff6b00" font-size="7" text-anchor="middle">Дно 1</text>
+                <text x="130" y="88" fill="#ff6b00" font-size="7" text-anchor="middle">Дно 2</text>
+            </svg>
+            <p>Два касания поддержки без пробоя → пробой сопротивления вверх.</p>
+
+            <h3 style="margin:24px 0 12px;color:var(--green)">2. Бычий флаг (Bull Flag)</h3>
+            <svg viewBox="0 0 260 100">
+                <rect x="25" y="72" width="5" height="12" fill="#00ff88" rx="1"/>
+                <rect x="35" y="55" width="5" height="15" fill="#00ff88" rx="1"/>
+                <rect x="45" y="35" width="5" height="18" fill="#00ff88" rx="1"/>
+                <rect x="55" y="18" width="5" height="15" fill="#00ff88" rx="1"/>
+                <rect x="67" y="22" width="5" height="8" fill="#ff3366" rx="1"/>
+                <rect x="77" y="28" width="5" height="6" fill="#ff3366" rx="1"/>
+                <rect x="87" y="32" width="5" height="5" fill="#00ff88" rx="1"/>
+                <rect x="97" y="35" width="5" height="5" fill="#ff3366" rx="1"/>
+                <rect x="107" y="38" width="5" height="5" fill="#ff3366" rx="1"/>
+                <line x1="63" y1="18" x2="115" y2="34" stroke="#ff6b00" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="63" y1="35" x2="115" y2="48" stroke="#ff6b00" stroke-width="1" stroke-dasharray="4,3"/>
+                <rect x="117" y="30" width="5" height="8" fill="#00ff88" rx="1"/>
+                <rect x="127" y="20" width="5" height="10" fill="#00ff88" rx="1"/>
+                <rect x="137" y="10" width="5" height="10" fill="#00ff88" rx="1"/>
+                <text x="42" y="95" fill="#ff6b00" font-size="7" text-anchor="middle">Шест</text>
+                <text x="90" y="58" fill="#ff6b00" font-size="7" text-anchor="middle">Флаг</text>
+            </svg>
+            <p>Импульс вверх + небольшая коррекция в канале → пробой вверх.</p>
+
+            <h3 style="margin:24px 0 12px;color:var(--green)">3. Восходящий треугольник</h3>
+            <svg viewBox="0 0 260 100">
+                <line x1="20" y1="22" x2="175" y2="22" stroke="#00ff88" stroke-width="1" stroke-dasharray="5,3"/>
+                <line x1="20" y1="80" x2="175" y2="28" stroke="#ff6b00" stroke-width="1" stroke-dasharray="5,3"/>
+                <rect x="25" y="65" width="5" height="12" fill="#00ff88" rx="1"/>
+                <rect x="35" y="40" width="5" height="10" fill="#00ff88" rx="1"/>
+                <rect x="45" y="24" width="5" height="8" fill="#00ff88" rx="1"/>
+                <rect x="55" y="28" width="5" height="10" fill="#ff3366" rx="1"/>
+                <rect x="65" y="48" width="5" height="8" fill="#ff3366" rx="1"/>
+                <rect x="75" y="38" width="5" height="8" fill="#00ff88" rx="1"/>
+                <rect x="85" y="24" width="5" height="6" fill="#00ff88" rx="1"/>
+                <rect x="95" y="28" width="5" height="6" fill="#ff3366" rx="1"/>
+                <rect x="105" y="38" width="5" height="5" fill="#ff3366" rx="1"/>
+                <rect x="115" y="32" width="5" height="5" fill="#00ff88" rx="1"/>
+                <rect x="125" y="24" width="5" height="5" fill="#00ff88" rx="1"/>
+                <rect x="140" y="14" width="5" height="10" fill="#00ff88" rx="1"/>
+                <rect x="150" y="8" width="5" height="8" fill="#00ff88" rx="1"/>
+            </svg>
+            <p>Горизонтальное сопротивление + повышающиеся минимумы → пробой вверх.</p>
+
+            <ul class="key-takeaways">
+                <h4>🔑 Ключевые выводы</h4>
+                <li>Double Bottom — два дна = бычий разворот</li>
+                <li>Bull Flag — импульс + коррекция = продолжение</li>
+                <li>Ascending Triangle — сжатие цены = взрывной пробой</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- УРОК 4 -->
+    <div data-lesson="4" class="lesson-content">
+        <div class="lesson-card">
+            <span class="section-label">Урок 4</span>
+            <h2>Основы риск-менеджмента</h2>
+            <p>Риск-менеджмент — это то, что отличает трейдера от азартного игрока. Главное правило: <strong>никогда не рискуй более 1-2% депозита на одну сделку</strong>.</p>
+            <p>Это значит: при депозите $1000 ваш максимальный убыток на сделку = $10-20. Даже при серии из 10 неудачных сделок вы потеряете только 10-20% — это можно отбить.</p>
+            <p><strong>Risk/Reward Ratio (RR)</strong> — соотношение потенциальной прибыли к убытку. Минимум 1:2 — на каждый доллар риска ожидайте $2 прибыли.</p>
+            
+            <h3 style="margin:24px 0 12px;color:var(--accent)">🧮 Попробуй калькулятор</h3>
+            <div class="mini-calc">
+                <label>Депозит ($)</label>
+                <input type="number" id="mc-deposit" value="1000" oninput="miniCalc()">
+                <label>Риск (%)</label>
+                <input type="number" id="mc-risk" value="1" step="0.1" oninput="miniCalc()">
+                <label>Цена входа ($)</label>
+                <input type="number" id="mc-entry" value="67420" oninput="miniCalc()">
+                <label>Стоп-лосс ($)</label>
+                <input type="number" id="mc-stop" value="65000" oninput="miniCalc()">
+                <div class="mini-calc-result">
+                    <div class="mini-calc-row"><span>Риск в $</span><span id="mc-res-risk">$10.00</span></div>
+                    <div class="mini-calc-row"><span>Размер позиции</span><span id="mc-res-pos">$278.55</span></div>
+                    <div class="mini-calc-row"><span>Кол-во монет</span><span id="mc-res-coins">0.004132</span></div>
+                    <div class="mini-calc-row"><span style="color:var(--red)">Макс. убыток</span><span style="color:var(--red)" id="mc-res-loss">-$10.00</span></div>
+                </div>
+            </div>
+            <ul class="key-takeaways">
+                <h4>🔑 Ключевые выводы</h4>
+                <li>Правило 1% — максимальный риск на сделку</li>
+                <li>RR минимум 1:2 — прибыль должна быть больше убытка</li>
+                <li>Калькулятор позиции — обязательный инструмент трейдера</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- УРОК 5 -->
+    <div data-lesson="5" class="lesson-content">
+        <div class="lesson-card">
+            <span class="section-label">Урок 5</span>
+            <h2>Что дальше? Превью полного курса</h2>
+            <p>Поздравляем! Ты прошёл бесплатный мини-курс. Теперь ты знаешь основы. Но это только верхушка айсберга. Вот что ждёт тебя в полном курсе:</p>
+
+            <div style="margin:24px 0">
+                <div style="padding:16px;border-left:3px solid var(--accent);background:var(--accent-glow);border-radius:0 8px 8px 0;margin-bottom:12px">
+                    <strong style="color:var(--accent)">Модуль 1 — Основы криптовалют</strong><br>
+                    <span style="color:var(--text-secondary);font-size:14px">8 уроков: биржи, кошельки, ордера, первая сделка на BingX</span>
+                </div>
+                <div style="padding:16px;border-left:3px solid var(--accent);background:var(--accent-glow);border-radius:0 8px 8px 0;margin-bottom:12px">
+                    <strong style="color:var(--accent)">Модуль 2 — Технический анализ</strong><br>
+                    <span style="color:var(--text-secondary);font-size:14px">12 уроков: свечи, уровни, паттерны, индикаторы, стратегия</span>
+                </div>
+                <div style="padding:16px;border-left:3px solid var(--accent);background:var(--accent-glow);border-radius:0 8px 8px 0;margin-bottom:12px">
+                    <strong style="color:var(--accent)">Модуль 3 — Риск-менеджмент</strong><br>
+                    <span style="color:var(--text-secondary);font-size:14px">8 уроков: размер позиции, стоп-лоссы, RR ratio, разбор ошибок</span>
+                </div>
+                <div style="padding:16px;border-left:3px solid var(--accent);background:var(--accent-glow);border-radius:0 8px 8px 0;margin-bottom:12px">
+                    <strong style="color:var(--accent)">Модуль 4 — Психология трейдера</strong><br>
+                    <span style="color:var(--text-secondary);font-size:14px">7 уроков: FOMO, дисциплина, дневник, борьба со стрессом</span>
+                </div>
+                <div style="padding:16px;border-left:3px solid var(--accent);background:var(--accent-glow);border-radius:0 8px 8px 0;margin-bottom:12px">
+                    <strong style="color:var(--accent)">Модуль 5 — Практика и стратегии</strong><br>
+                    <span style="color:var(--text-secondary);font-size:14px">8 уроков: бэктестинг, разбор сделок, торговые сессии, итоговый план</span>
+                </div>
+            </div>
+
+            <div class="cta-card">
+                <h3>🔥 Получи полный доступ</h3>
+                <p>43 урока, SVG-паттерны, калькулятор, личный кабинет и обновления навсегда</p>
+                <a href="signup.html?plan=standard" class="btn btn-primary">Купить полный курс — $99</a>
+            </div>
+
+            <form name="lead-capture" method="POST" data-netlify="true" class="lead-form">
+                <p style="color:var(--text-secondary);margin-bottom:12px">Или получи бесплатный чек-лист паттернов на почту:</p>
+                <input type="email" name="email" placeholder="твой@email.com" required>
+                <br>
+                <button type="submit" class="btn btn-primary">Получить чек-лист паттернов 🔥</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer" style="margin-top:60px">
+    <div class="container footer-inner">
+        <a href="index.html" class="nav-logo" style="font-size:24px;"><span class="gradient-text">Qrypto</span></a>
+        <p style="margin-top:12px">© 2025 Qrypto. Все права защищены.</p>
+    </div>
+</footer>
+
+<script>
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
+
+// Mobile menu
+document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('active'));
+document.getElementById('mobile-close').addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('active'));
+
+// Логика уроков
+let currentLesson = parseInt(localStorage.getItem('qqrypto_lesson')) || 1;
+const totalLessons = 5;
+
+function showLesson(n) {
+    document.querySelectorAll('[data-lesson]').forEach(l => l.classList.remove('active'));
+    const lesson = document.querySelector(`[data-lesson="${n}"]`);
+    if (lesson) lesson.classList.add('active');
+    
+    document.getElementById('lesson-counter').textContent = `Урок ${n} из ${totalLessons}`;
+    document.getElementById('progress-fill').style.width = (n / totalLessons * 100) + '%';
+    document.getElementById('prev-btn').style.visibility = n === 1 ? 'hidden' : 'visible';
+    document.getElementById('next-btn').textContent = n === totalLessons ? 'Готово ✓' : 'Далее →';
+    
+    localStorage.setItem('qqrypto_lesson', n);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function nextLesson() {
+    if (currentLesson < totalLessons) { currentLesson++; showLesson(currentLesson); }
+    else { window.location.href = 'index.html#pricing'; }
+}
+function prevLesson() {
+    if (currentLesson > 1) { currentLesson--; showLesson(currentLesson); }
+}
+
+showLesson(currentLesson);
+
+// Мини-калькулятор
+function miniCalc() {
+    const d = parseFloat(document.getElementById('mc-deposit').value) || 0;
+    const r = parseFloat(document.getElementById('mc-risk').value) || 0;
+    const e = parseFloat(document.getElementById('mc-entry').value) || 0;
+    const s = parseFloat(document.getElementById('mc-stop').value) || 0;
+    const riskUSD = d * (r / 100);
+    const stopDist = Math.abs(e - s);
+    const stopPct = e > 0 ? (stopDist / e) * 100 : 0;
+    const pos = stopPct > 0 ? riskUSD / (stopPct / 100) : 0;
+    const coins = e > 0 ? pos / e : 0;
+    document.getElementById('mc-res-risk').textContent = '$' + riskUSD.toFixed(2);
+    document.getElementById('mc-res-pos').textContent = '$' + pos.toFixed(2);
+    document.getElementById('mc-res-coins').textContent = coins.toFixed(6);
+    document.getElementById('mc-res-loss').textContent = '-$' + riskUSD.toFixed(2);
+}
+miniCalc();
+</script>
+</body>
+</html>

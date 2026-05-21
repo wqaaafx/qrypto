@@ -1,0 +1,2325 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qrypto — Полный курс по криптотрейдингу</title>
+    <meta name="description" content="Qrypto — образовательная платформа по криптотрейдингу. Научись читать рынок, а не угадывать. 40+ уроков, паттерны, риск-менеджмент, психология.">
+    <meta property="og:title" content="Qrypto — Полный курс по криптотрейдингу">
+    <meta property="og:description" content="Научись читать рынок, а не угадывать. 40+ уроков, SVG-паттерны, калькулятор позиции.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🔥</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS ПЕРЕМЕННЫЕ ===== */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #0d0d0d;
+            --bg-card: #111111;
+            --bg-card-hover: #1a1a1a;
+            --bg-elevated: #141414;
+            --accent: #ff6b00;
+            --accent-light: #ff8c00;
+            --accent-dark: #e65100;
+            --accent-glow: rgba(255, 107, 0, 0.15);
+            --accent-glow-strong: rgba(255, 107, 0, 0.3);
+            --green: #00ff88;
+            --red: #ff3366;
+            --yellow: #ffd600;
+            --text-primary: #ffffff;
+            --text-secondary: #999999;
+            --text-muted: #555555;
+            --border: #1a1a1a;
+            --border-accent: #2a2a2a;
+            --border-orange: rgba(255, 107, 0, 0.25);
+            --gradient-main: linear-gradient(135deg, #ff6b00, #ff8c00);
+            --gradient-dark: linear-gradient(135deg, #e65100, #ff6b00);
+            --gradient-fire: linear-gradient(135deg, #ff6b00, #ffd600);
+            --shadow-orange: 0 0 30px rgba(255, 107, 0, 0.15);
+            --shadow-orange-strong: 0 0 40px rgba(255, 107, 0, 0.25);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --radius: 12px;
+            --radius-lg: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== АНИМАЦИИ ===== */
+        @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+        @keyframes pulse-glow { 0%,100%{opacity:0.5;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.2)} }
+        @keyframes pulse-ring { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.05)} }
+        @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+        @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+
+        /* ===== СБРОС И БАЗОВЫЕ СТИЛИ ===== */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        img { max-width: 100%; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== УТИЛИТЫ ===== */
+        .gradient-text {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-label {
+            display: inline-block;
+            color: var(--accent);
+            border: 1px solid var(--border-orange);
+            background: var(--accent-glow);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .orange-line {
+            width: 60px; height: 3px;
+            background: var(--gradient-main);
+            border-radius: 3px;
+            margin: 16px auto 0;
+        }
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-header h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 700; margin-bottom: 12px; }
+        .section-header p { color: var(--text-secondary); max-width: 600px; margin: 0 auto; font-size: 16px; }
+
+        /* ===== КНОПКИ ===== */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px; border-radius: var(--radius);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600; font-size: 15px;
+            cursor: pointer; border: none;
+            transition: var(--transition);
+            text-align: center; justify-content: center;
+        }
+        .btn-primary {
+            background: var(--gradient-main);
+            color: #000;
+            box-shadow: 0 4px 20px rgba(255,107,0,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255,107,0,0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+        .btn-outline:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-orange);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover { color: var(--accent); border-color: var(--border-orange); }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+            background: rgba(10,10,10,0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .navbar.scrolled {
+            background: rgba(10,10,10,0.95);
+            border-bottom: 1px solid rgba(255,107,0,0.1);
+            padding: 12px 0;
+        }
+        .navbar .container {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px; font-weight: 700;
+        }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a {
+            color: var(--text-secondary); font-size: 14px; font-weight: 500;
+            position: relative;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: var(--accent);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+        .nav-actions .btn { padding: 10px 20px; font-size: 14px; }
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; background: none; border: none; padding: 4px;
+        }
+        .hamburger span {
+            width: 24px; height: 2px; background: var(--text-primary);
+            transition: var(--transition); border-radius: 2px;
+        }
+        .mobile-menu {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10,10,10,0.98); z-index: 999;
+            flex-direction: column; align-items: center; justify-content: center;
+            gap: 24px;
+        }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a {
+            font-size: 20px; color: var(--text-secondary);
+            font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+        }
+        .mobile-menu a:hover { color: var(--accent); }
+        .mobile-close {
+            position: absolute; top: 20px; right: 24px;
+            font-size: 32px; color: var(--text-secondary);
+            cursor: pointer; background: none; border: none;
+        }
+        .mobile-close:hover { color: var(--accent); }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            position: relative; overflow: hidden;
+            padding-top: 80px;
+            padding-bottom: 56px;
+        }
+        #particles-canvas {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+        .hero-glow {
+            position: absolute; border-radius: 50%;
+            pointer-events: none; filter: blur(80px);
+        }
+        .hero-glow-1 {
+            width: 400px; height: 400px; top: 10%; left: 5%;
+            background: radial-gradient(circle, rgba(255,107,0,0.12), transparent 70%);
+        }
+        .hero-glow-2 {
+            width: 300px; height: 300px; top: 60%; right: 10%;
+            background: radial-gradient(circle, rgba(255,107,0,0.08), transparent 70%);
+        }
+        .hero-glow-3 {
+            width: 200px; height: 200px; top: 30%; right: 30%;
+            background: radial-gradient(circle, rgba(255,140,0,0.1), transparent 70%);
+        }
+        .hero .container {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 48px; align-items: center;
+            position: relative; z-index: 2;
+        }
+        .hero-title {
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 700; line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease;
+        }
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 17px; line-height: 1.7;
+            margin-bottom: 32px; max-width: 500px;
+            animation: fadeInUp 1s ease;
+        }
+        .hero-actions {
+            display: flex; gap: 16px; margin-bottom: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.2s ease;
+        }
+        .hero-trust {
+            display: flex; gap: 32px; flex-wrap: wrap;
+            animation: fadeInUp 1.4s ease;
+        }
+        .hero-trust-item {
+            font-size: 14px; color: var(--text-secondary);
+        }
+        .hero-trust-item span { color: var(--accent); font-weight: 700; }
+
+        /* Виджет графика TradingView */
+        .chart-widget {
+            border: 1px solid var(--border-orange);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-orange);
+            overflow: hidden;
+            position: relative;
+        }
+        .chart-widget iframe { display: block; }
+        .chart-tabs {
+            display: flex; gap: 6px; padding: 12px 14px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .chart-tabs::-webkit-scrollbar { display: none; }
+        .chart-tab {
+            padding: 6px 14px; border-radius: 8px;
+            font-size: 12px; font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text-muted);
+            background: transparent;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .chart-tab:hover {
+            color: var(--text-secondary);
+            border-color: var(--border-accent);
+        }
+        .chart-tab.active {
+            color: #000;
+            background: var(--gradient-main);
+            border-color: var(--accent);
+        }
+
+        /* ===== ТИКЕР ===== */
+        .ticker {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border);
+            padding: 12px 0;
+            overflow: hidden;
+        }
+        .ticker-track {
+            display: flex; gap: 48px;
+            animation: ticker 30s linear infinite;
+            width: max-content;
+        }
+        .ticker-item {
+            display: flex; align-items: center; gap: 10px;
+            white-space: nowrap; font-size: 14px;
+        }
+        .ticker-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px rgba(255,107,0,0.5);
+        }
+        .ticker-name { color: var(--text-secondary); font-weight: 500; }
+        .ticker-price { color: var(--text-primary); font-weight: 700; }
+        .ticker-change { font-weight: 600; font-size: 13px; }
+        .ticker-change.up { color: var(--green); }
+        .ticker-change.down { color: var(--red); }
+
+        /* ===== МЕНТОР ===== */
+        .mentor {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 100px 0;
+        }
+        .mentor .container {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+        }
+        .mentor-avatar-wrap { text-align: center; }
+        .mentor-avatar {
+            width: 220px; height: 220px; border-radius: 50%;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 60px rgba(255,107,0,0.2);
+            animation: pulse-ring 3s ease-in-out infinite;
+            object-fit: cover;
+            background: var(--bg-card);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 80px; margin: 0 auto;
+            overflow: hidden;
+        }
+        .mentor-stats {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 16px; margin-top: 32px;
+        }
+        .mentor-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px; text-align: center;
+        }
+        .mentor-stat-num { font-size: 20px; font-weight: 700; color: var(--accent); }
+        .mentor-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .mentor-role {
+            color: var(--accent); text-transform: uppercase;
+            letter-spacing: 2px; font-size: 13px; font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .mentor-bio { color: var(--text-secondary); margin-bottom: 16px; line-height: 1.8; }
+        .mentor-socials { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+        .social-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 18px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid var(--border);
+            color: var(--text-secondary); font-size: 14px; font-weight: 500;
+            transition: var(--transition);
+        }
+        .social-btn:hover {
+            border-color: var(--accent); color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* ===== МОДУЛИ / АККОРДЕОН ===== */
+        .modules { padding: 100px 0; }
+        .module-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .module-item.active {
+            border-color: var(--border-orange);
+            box-shadow: var(--shadow-orange);
+        }
+        .module-header {
+            display: flex; align-items: center; gap: 16px;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .module-header:hover { background: var(--bg-card-hover); }
+        .module-num {
+            width: 48px; height: 48px; min-width: 48px;
+            border-radius: 12px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            border: 1px solid var(--border-orange);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px; font-weight: 700;
+        }
+        .module-info { flex: 1; }
+        .module-title { font-size: 18px; font-weight: 600; }
+        .module-meta { display: flex; gap: 12px; margin-top: 4px; align-items: center; }
+        .module-badge {
+            font-size: 11px; padding: 3px 10px; border-radius: 100px;
+            font-weight: 600;
+        }
+        .module-badge.free { background: rgba(0,255,136,0.1); color: var(--green); }
+        .module-badge.updated { background: var(--accent-glow); color: var(--accent); }
+        .module-badge.new { background: var(--accent-glow); color: var(--accent); }
+        .module-lessons-count { font-size: 13px; color: var(--text-muted); }
+        .module-toggle {
+            font-size: 20px; color: var(--text-muted);
+            transition: var(--transition); transform: rotate(0deg);
+        }
+        .module-item.active .module-toggle { transform: rotate(180deg); color: var(--accent); }
+        .module-content {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .module-item.active .module-content { max-height: 2000px; }
+        .module-lessons { padding: 0 24px 24px; }
+        .lesson-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        .lesson-item:hover { background: var(--bg-card-hover); }
+        .lesson-icon { font-size: 16px; }
+        .lesson-name { flex: 1; font-size: 14px; color: var(--text-secondary); }
+        .lesson-status { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
+        .status-free { color: var(--green); background: rgba(0,255,136,0.1); }
+        .status-paid { color: var(--text-muted); background: rgba(85,85,85,0.2); }
+
+        /* ===== ПАТТЕРНЫ ===== */
+        .patterns {
+            background: var(--bg-secondary);
+            padding: 100px 0;
+        }
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .pattern-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .pattern-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 2px; opacity: 0; transition: var(--transition);
+        }
+        .pattern-card.bullish::before { background: var(--green); }
+        .pattern-card.bearish::before { background: var(--red); }
+        .pattern-card.neutral::before { background: var(--accent); }
+        .pattern-card:hover {
+            border-color: var(--border-orange);
+            box-shadow: var(--shadow-orange);
+            transform: translateY(-4px);
+        }
+        .pattern-card:hover::before { opacity: 1; }
+        .pattern-tag {
+            display: inline-block;
+            font-size: 11px; font-weight: 600;
+            padding: 3px 10px; border-radius: 100px;
+            margin-bottom: 12px; text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .tag-bullish { color: var(--green); background: rgba(0,255,136,0.1); }
+        .tag-bearish { color: var(--red); background: rgba(255,51,102,0.1); }
+        .tag-neutral { color: var(--accent); background: var(--accent-glow); }
+        .pattern-svg {
+            width: 100%; height: 120px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255,107,0,0.03);
+            margin-bottom: 16px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .pattern-svg svg { width: 100%; height: 100%; }
+        .pattern-name {
+            font-size: 16px; font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 8px;
+        }
+        .pattern-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+        /* ===== КАЛЬКУЛЯТОР ===== */
+        .calculator { padding: 100px 0; }
+        .calculator .container {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 48px; align-items: start;
+        }
+        .calc-feature {
+            display: flex; gap: 16px; margin-bottom: 24px;
+            padding: 20px; border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid var(--border);
+        }
+        .calc-feature-icon { font-size: 28px; }
+        .calc-feature h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .calc-feature p { font-size: 13px; color: var(--text-secondary); }
+        .calc-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-orange);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-orange);
+        }
+        .calc-title {
+            color: var(--accent);
+            font-size: 20px; font-weight: 600;
+            margin-bottom: 24px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .calc-field { margin-bottom: 16px; }
+        .calc-field label {
+            display: block; font-size: 13px;
+            color: var(--text-secondary); margin-bottom: 6px;
+        }
+        .calc-field input {
+            width: 100%; padding: 12px 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+        .calc-field input:focus {
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .calc-result {
+            background: var(--accent-glow);
+            border: 1px solid var(--border-orange);
+            border-radius: var(--radius);
+            padding: 20px; margin-top: 20px;
+        }
+        .calc-row {
+            display: flex; justify-content: space-between;
+            padding: 8px 0; font-size: 14px;
+        }
+        .calc-row-label { color: var(--text-secondary); }
+        .calc-row-value { font-weight: 600; color: var(--accent); }
+        .calc-row-value.danger { color: var(--red); }
+
+        /* ===== ОТЗЫВЫ ===== */
+        .reviews {
+            background: var(--bg-secondary);
+            padding: 100px 0;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .review-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: var(--transition);
+        }
+        .review-card:hover {
+            border-color: var(--border-orange);
+            box-shadow: var(--shadow-orange);
+            transform: translateY(-4px);
+        }
+        .review-fires { font-size: 16px; margin-bottom: 12px; }
+        .review-text {
+            font-style: italic; color: var(--text-secondary);
+            font-size: 14px; line-height: 1.7; margin-bottom: 16px;
+        }
+        .review-author {
+            display: flex; align-items: center; gap: 12px;
+        }
+        .review-avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--accent-glow);
+            color: var(--accent);
+            border: 1px solid var(--border-orange);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 16px;
+        }
+        .review-name { font-weight: 600; font-size: 14px; }
+        .review-result { font-size: 12px; color: var(--green); font-weight: 500; }
+
+        /* ===== ТАРИФЫ ===== */
+        .pricing { padding: 100px 0; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px; align-items: start;
+        }
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .pricing-card:hover {
+            border-color: var(--border-orange);
+            box-shadow: var(--shadow-orange);
+        }
+        .pricing-card.popular {
+            border-color: var(--accent);
+            background: rgba(255,107,0,0.05);
+            transform: scale(1.03);
+        }
+        .popular-badge {
+            position: absolute; top: -14px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-main);
+            color: #000; font-size: 12px; font-weight: 700;
+            padding: 6px 20px; border-radius: 100px;
+            text-transform: uppercase; letter-spacing: 1px;
+            white-space: nowrap;
+        }
+        .pricing-name {
+            font-size: 20px; font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 8px;
+        }
+        .pricing-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+        .pricing-price {
+            font-size: 48px; font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 24px;
+        }
+        .pricing-price.accent { color: var(--accent); }
+        .pricing-price small { font-size: 16px; color: var(--text-muted); font-weight: 400; }
+        .pricing-features { list-style: none; margin-bottom: 24px; }
+        .pricing-features li {
+            padding: 8px 0; font-size: 14px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .pricing-features .check { color: var(--accent); font-weight: 700; }
+        .pricing-features .cross { color: var(--text-muted); }
+        .pricing-features .cross ~ span { color: var(--text-muted); }
+        .pricing-card .btn { width: 100%; }
+        .guarantee-box {
+            margin-top: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-orange);
+            border-radius: var(--radius);
+            padding: 32px; text-align: center;
+            box-shadow: var(--shadow-orange);
+        }
+        .guarantee-box h3 { font-size: 20px; margin-bottom: 8px; }
+        .guarantee-box p { color: var(--text-secondary); font-size: 14px; }
+
+        /* ===== FAQ ===== */
+        .faq {
+            background: var(--bg-secondary);
+            padding: 100px 0;
+        }
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .faq-item.active {
+            border-color: var(--border-orange);
+            box-shadow: var(--shadow-orange);
+        }
+        .faq-question {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 20px 24px;
+            cursor: pointer; font-weight: 600; font-size: 15px;
+            transition: var(--transition);
+        }
+        .faq-question:hover { color: var(--accent); }
+        .faq-arrow {
+            font-size: 14px; color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .faq-item.active .faq-arrow { transform: rotate(180deg); color: var(--accent); }
+        .faq-answer {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.active .faq-answer { max-height: 500px; }
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            color: var(--text-secondary); font-size: 14px; line-height: 1.7;
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 100px 0;
+            background: radial-gradient(ellipse at center, rgba(255,107,0,0.08), transparent 70%);
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 700; margin-bottom: 16px;
+        }
+        .cta-section p { color: var(--text-secondary); margin-bottom: 32px; font-size: 16px; }
+        .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 64px 0 0;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+        .footer-desc { color: var(--text-muted); font-size: 14px; margin: 16px 0 24px; line-height: 1.7; }
+        .footer-socials { display: flex; gap: 12px; }
+        .footer-social {
+            width: 40px; height: 40px; border-radius: 8px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; transition: var(--transition);
+        }
+        .footer-social:hover {
+            border-color: var(--accent); background: var(--accent-glow);
+        }
+        .footer-col h4 {
+            color: var(--accent); text-transform: uppercase;
+            letter-spacing: 2px; font-size: 12px;
+            margin-bottom: 20px;
+        }
+        .footer-col a {
+            display: block; color: var(--text-muted);
+            font-size: 14px; padding: 6px 0;
+            transition: var(--transition);
+        }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            margin-top: 48px; padding: 24px 0;
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 16px;
+        }
+        .footer-bottom-text { color: var(--text-muted); font-size: 13px; }
+        .footer-bottom-links { display: flex; gap: 24px; }
+        .footer-bottom-links a { color: var(--text-muted); font-size: 13px; }
+        .footer-bottom-links a:hover { color: var(--accent); }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 1024px) {
+            .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+            .pricing-card.popular { transform: none; }
+            .mentor .container { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+            .mentor-socials { justify-content: center; }
+            .calculator .container { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links, .nav-actions { display: none; }
+            .hamburger { display: flex; }
+            .hero .container { grid-template-columns: 1fr; text-align: center; }
+            .hero-subtitle { margin: 0 auto 32px; }
+            .hero-actions { justify-content: center; }
+            .hero-trust { justify-content: center; }
+            .hero-right { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .patterns-grid { grid-template-columns: 1fr; }
+            .mentor-stats { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .hero-actions { flex-direction: column; align-items: center; }
+            .hero-actions .btn { width: 100%; }
+            .cta-actions { flex-direction: column; align-items: center; }
+            .cta-actions .btn { width: 100%; max-width: 320px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .hero-trust { flex-direction: column; gap: 8px; align-items: center; }
+            .mentor-stats { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+    <div class="container">
+        <a href="index.html" class="nav-logo"><span class="gradient-text">Qrypto</span></a>
+        <ul class="nav-links">
+            <li><a href="#modules">Программа</a></li>
+            <li><a href="#patterns">Паттерны</a></li>
+            <li><a href="#pricing">Тарифы</a></li>
+            <li><a href="#reviews">Отзывы</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="glossary.html">Глоссарий</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-ghost">Войти</a>
+            <a href="free-course.html" class="btn btn-primary">🔥 Начать бесплатно</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Мобильное меню -->
+<div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-close" id="mobile-close">✕</button>
+    <a href="#modules" onclick="closeMobile()">Программа</a>
+    <a href="#patterns" onclick="closeMobile()">Паттерны</a>
+    <a href="#pricing" onclick="closeMobile()">Тарифы</a>
+    <a href="#reviews" onclick="closeMobile()">Отзывы</a>
+    <a href="#faq" onclick="closeMobile()">FAQ</a>
+    <a href="glossary.html">Глоссарий</a>
+    <a href="login.html" class="btn btn-ghost" style="margin-top:16px">Войти</a>
+    <a href="free-course.html" class="btn btn-primary">🔥 Начать бесплатно</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+    <canvas id="particles-canvas"></canvas>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-glow hero-glow-3"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Научись <span class="gradient-text">читать рынок</span>,<br>
+                а не угадывать
+            </h1>
+            <p class="hero-subtitle">
+                Полный курс по криптотрейдингу: от основ блокчейна до реальных сделок.
+                SVG-паттерны, калькулятор позиции, риск-менеджмент и психология трейдера.
+            </p>
+            <div class="hero-actions">
+                <a href="free-course.html" class="btn btn-primary">🔥 Начать бесплатно</a>
+                <a href="#pricing" class="btn btn-outline">Полный курс →</a>
+            </div>
+            <div class="hero-trust">
+                <div class="hero-trust-item"><span>20+</span> учеников</div>
+                <div class="hero-trust-item"><span>4.8</span> / 5 оценка</div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="chart-widget">
+                <div class="chart-tabs" id="chart-tabs">
+                    <button class="chart-tab active" data-symbol="BINANCE:BTCUSDT">BTC</button>
+                    <button class="chart-tab" data-symbol="BINANCE:ETHUSDT">ETH</button>
+                    <button class="chart-tab" data-symbol="BINANCE:SOLUSDT">SOL</button>
+                    <button class="chart-tab" data-symbol="BINANCE:BNBUSDT">BNB</button>
+                    <button class="chart-tab" data-symbol="BINANCE:XRPUSDT">XRP</button>
+                    <button class="chart-tab" data-symbol="BINANCE:AVAXUSDT">AVAX</button>
+                    <button class="chart-tab" data-symbol="BINANCE:LINKUSDT">LINK</button>
+                </div>
+                <!-- TradingView Widget — настоящий свечной график -->
+                <div class="tradingview-widget-container" style="height:400px;width:100%;">
+                    <div id="tradingview-chart" style="height:100%;width:100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Тикер прижат к низу hero -->
+    <div class="ticker" id="ticker-section">
+        <div class="ticker-track" id="ticker-track">
+            <!-- Заполняется через JS -->
+        </div>
+    </div>
+</section>
+
+<!-- ===== МЕНТОР ===== -->
+<section class="mentor" id="mentor">
+    <div class="container">
+        <div class="mentor-avatar-wrap reveal">
+            <div class="mentor-avatar">👤</div>
+            <div class="mentor-stats">
+                <div class="mentor-stat">
+                    <div class="mentor-stat-num">2+</div>
+                    <div class="mentor-stat-label">лет опыта</div>
+                </div>
+                <div class="mentor-stat">
+                    <div class="mentor-stat-num">500+</div>
+                    <div class="mentor-stat-label">сделок</div>
+                </div>
+                <div class="mentor-stat">
+                    <div class="mentor-stat-num">20+</div>
+                    <div class="mentor-stat-label">учеников</div>
+                </div>
+            </div>
+        </div>
+        <div class="mentor-text reveal">
+            <span class="section-label">Об авторе</span>
+            <h2 style="font-size:32px;margin-bottom:8px;">Автор курса <span class="gradient-text">Qrypto</span></h2>
+            <div class="mentor-role">Криптотрейдер • Аналитик</div>
+            <p class="mentor-bio">
+                Торгую криптовалютами с 2023 года. Прошёл путь от полного новичка, потерявшего первый депозит, до прибыльного трейдера. Мой подход — это системный анализ, а не угадывание. Каждая сделка — по плану, с чётким стоп-лоссом и целью.
+            </p>
+            <p class="mentor-bio">
+                Создал Qrypto, чтобы помочь новичкам избежать ошибок, которые я сам совершал. В курсе нет «сигналов» и «100% стратегий» — только реальные знания, которые работают на любом рынке.
+            </p>
+            <div class="mentor-socials">
+                <a href="https://t.me/qrypto_channel" target="_blank" class="social-btn">✈️ Telegram канал</a>
+                <a href="https://t.me/qrypto_admin" target="_blank" class="social-btn">✈️ Связь с админом</a>
+                <a href="https://instagram.com/qrypto" target="_blank" class="social-btn">📸 Instagram</a>
+                <a href="https://tradingview.com" target="_blank" class="social-btn">📊 TradingView</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== МОДУЛИ ===== -->
+<section class="modules" id="modules">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-label">Программа курса</span>
+            <h2>5 модулей, <span class="gradient-text">43 урока</span></h2>
+            <p>От базовых понятий до реальных сделок — полный путь трейдера</p>
+            <div class="orange-line"></div>
+        </div>
+
+        <!-- Модуль 1 -->
+        <div class="module-item active reveal">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-num">01</div>
+                <div class="module-info">
+                    <div class="module-title">Основы криптовалют</div>
+                    <div class="module-meta">
+                        <span class="module-badge free">Бесплатно</span>
+                        <span class="module-lessons-count">8 уроков</span>
+                    </div>
+                </div>
+                <span class="module-toggle">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="module-lessons">
+                    <div class="lesson-item"><span class="lesson-icon">🔥</span><span class="lesson-name">Что такое криптовалюта и блокчейн</span><span class="lesson-status status-free">✓</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔥</span><span class="lesson-name">Биржи CEX vs DEX — где торговать</span><span class="lesson-status status-free">✓</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔥</span><span class="lesson-name">Кошельки, seed-фразы, безопасность</span><span class="lesson-status status-free">✓</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Регистрация на BingX — пошагово</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Типы ордеров: Market, Limit, Stop</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Spot vs Futures — разница и риски</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Безопасность: 2FA, антифишинг</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Первая сделка на практике</span><span class="lesson-status status-paid">✗</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модуль 2 -->
+        <div class="module-item reveal">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-num">02</div>
+                <div class="module-info">
+                    <div class="module-title">Технический анализ и паттерны</div>
+                    <div class="module-meta">
+                        <span class="module-badge updated">Обновлён</span>
+                        <span class="module-lessons-count">12 уроков</span>
+                    </div>
+                </div>
+                <span class="module-toggle">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="module-lessons">
+                    <div class="lesson-item"><span class="lesson-icon">🔥</span><span class="lesson-name">Свечной график — анатомия свечи</span><span class="lesson-status status-free">✓</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Уровни поддержки и сопротивления</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Трендовые линии и каналы</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Head & Shoulders — голова и плечи</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Double Top / Double Bottom</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Треугольники: восходящий, нисходящий</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Флаги и вымпелы</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Клин — восходящий и нисходящий</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Индикаторы: RSI, MACD, Bollinger Bands</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Объём и подтверждение движения</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Мультитаймфрейм-анализ</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Сборка стратегии — всё вместе</span><span class="lesson-status status-paid">✗</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модуль 3 -->
+        <div class="module-item reveal">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-num">03</div>
+                <div class="module-info">
+                    <div class="module-title">Риск-менеджмент</div>
+                    <div class="module-meta">
+                        <span class="module-lessons-count">8 уроков</span>
+                    </div>
+                </div>
+                <span class="module-toggle">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="module-lessons">
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Правило 1% — основа выживания</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Расчёт размера позиции</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Стоп-лосс: где и зачем ставить</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Тейк-профит: фиксация прибыли</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Risk/Reward Ratio — ключевая метрика</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Диверсификация портфеля</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Трейлинг-стоп на практике</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Разбор реальных сливов</span><span class="lesson-status status-paid">✗</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модуль 4 -->
+        <div class="module-item reveal">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-num">04</div>
+                <div class="module-info">
+                    <div class="module-title">Психология трейдера</div>
+                    <div class="module-meta">
+                        <span class="module-lessons-count">7 уроков</span>
+                    </div>
+                </div>
+                <span class="module-toggle">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="module-lessons">
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Почему 90% трейдеров теряют деньги</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">FOMO, жадность и страх</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Торговый план — шаблон</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Дневник трейдера: зачем и как</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Revenge trading — как остановиться</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Стресс и просадки — управление</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Дисциплина — главный навык</span><span class="lesson-status status-paid">✗</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модуль 5 -->
+        <div class="module-item reveal">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-num">05</div>
+                <div class="module-info">
+                    <div class="module-title">Практика и стратегии</div>
+                    <div class="module-meta">
+                        <span class="module-badge new">Новый</span>
+                        <span class="module-lessons-count">8 уроков</span>
+                    </div>
+                </div>
+                <span class="module-toggle">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="module-lessons">
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Бэктестинг стратегий</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Демо-счёт: 100 сделок</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Разбор 10 реальных сделок</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Торговые сессии: Asia/London/NY</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Скальпинг vs Свинг-трейдинг</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Как искать перспективные монеты</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Торговый план на неделю</span><span class="lesson-status status-paid">✗</span></div>
+                    <div class="lesson-item"><span class="lesson-icon">🔒</span><span class="lesson-name">Выпускной — итоговый чек-лист</span><span class="lesson-status status-paid">✗</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ПАТТЕРНЫ ===== -->
+<section class="patterns" id="patterns">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-label">Модуль 2</span>
+            <h2>Графические <span class="gradient-text">паттерны</span></h2>
+            <p>Научись видеть сигналы прямо на графике — каждый паттерн с реальным примером</p>
+            <div class="orange-line"></div>
+        </div>
+        <div class="patterns-grid">
+
+            <!-- 1. Голова и плечи (BEARISH) -->
+            <div class="pattern-card bearish reveal">
+                <span class="pattern-tag tag-bearish">Медвежий</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <!-- Сетка -->
+                        <line x1="20" y1="95" x2="240" y2="95" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <line x1="20" y1="70" x2="240" y2="70" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <line x1="20" y1="45" x2="240" y2="45" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Свечи: восходящее движение к левому плечу -->
+                        <line x1="25" y1="92" x2="25" y2="82" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="22" y="85" width="6" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="35" y1="85" x2="35" y2="72" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="32" y="75" width="6" height="7" fill="#00ff88" rx="1"/>
+                        <!-- Левое плечо -->
+                        <line x1="45" y1="75" x2="45" y2="55" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="42" y="58" width="6" height="12" fill="#00ff88" rx="1"/>
+                        <line x1="55" y1="60" x2="55" y2="52" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="52" y="55" width="6" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="65" y1="58" x2="65" y2="68" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="62" y="60" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <!-- Neckline area и подъём к голове -->
+                        <line x1="75" y1="72" x2="75" y2="62" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="72" y="65" width="6" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="85" y1="65" x2="85" y2="50" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="82" y="53" width="6" height="9" fill="#00ff88" rx="1"/>
+                        <line x1="95" y1="53" x2="95" y2="38" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="92" y="40" width="6" height="10" fill="#00ff88" rx="1"/>
+                        <!-- Голова (вершина) -->
+                        <line x1="105" y1="40" x2="105" y2="22" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="102" y="25" width="6" height="12" fill="#00ff88" rx="1"/>
+                        <line x1="115" y1="28" x2="115" y2="20" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="112" y="22" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="125" y1="25" x2="125" y2="40" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="122" y="28" width="6" height="12" fill="#ff3366" rx="1"/>
+                        <line x1="135" y1="42" x2="135" y2="58" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="132" y="45" width="6" height="10" fill="#ff3366" rx="1"/>
+                        <!-- Neckline и правое плечо -->
+                        <line x1="145" y1="60" x2="145" y2="68" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="142" y="62" width="6" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="155" y1="68" x2="155" y2="58" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="152" y="60" width="6" height="6" fill="#00ff88" rx="1"/>
+                        <!-- Правое плечо -->
+                        <line x1="165" y1="60" x2="165" y2="48" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="162" y="50" width="6" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="175" y1="52" x2="175" y2="45" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="172" y="48" width="6" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="185" y1="50" x2="185" y2="62" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="182" y="53" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <!-- Пробой вниз -->
+                        <line x1="195" y1="65" x2="195" y2="78" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="192" y="68" width="6" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="205" y1="78" x2="205" y2="88" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="202" y="80" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="215" y1="85" x2="215" y2="98" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="212" y="88" width="6" height="10" fill="#ff3366" rx="1"/>
+                        <!-- Линия шеи -->
+                        <line x1="60" y1="68" x2="190" y2="68" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                        <!-- Подписи -->
+                        <text x="50" y="115" fill="#999" font-size="8" text-anchor="middle">ЛП</text>
+                        <text x="115" y="16" fill="#ff6b00" font-size="8" text-anchor="middle" font-weight="600">Голова</text>
+                        <text x="170" y="115" fill="#999" font-size="8" text-anchor="middle">ПП</text>
+                        <!-- Стрелка вниз -->
+                        <line x1="220" y1="75" x2="220" y2="100" stroke="#ff3366" stroke-width="1.5"/>
+                        <polygon points="216,97 220,105 224,97" fill="#ff3366"/>
+                    </svg>
+                </div>
+                <div class="pattern-name">Голова и плечи</div>
+                <div class="pattern-desc">Разворотный паттерн. Три вершины: центральная (голова) выше боковых (плечи). Пробой линии шеи — сигнал на продажу.</div>
+            </div>
+
+            <!-- 2. Перевёрнутые ГиП (BULLISH) -->
+            <div class="pattern-card bullish reveal">
+                <span class="pattern-tag tag-bullish">Бычий</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <line x1="20" y1="25" x2="240" y2="25" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <line x1="20" y1="50" x2="240" y2="50" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <line x1="20" y1="75" x2="240" y2="75" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Нисходящее движение -->
+                        <line x1="25" y1="28" x2="25" y2="38" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="22" y="30" width="6" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="35" y1="35" x2="35" y2="48" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="32" y="38" width="6" height="7" fill="#ff3366" rx="1"/>
+                        <!-- Левое плечо (внизу) -->
+                        <line x1="45" y1="45" x2="45" y2="65" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="42" y="50" width="6" height="12" fill="#ff3366" rx="1"/>
+                        <line x1="55" y1="60" x2="55" y2="68" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="52" y="62" width="6" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="65" y1="62" x2="65" y2="52" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="62" y="54" width="6" height="6" fill="#00ff88" rx="1"/>
+                        <!-- К голове -->
+                        <line x1="75" y1="52" x2="75" y2="60" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="72" y="55" width="6" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="85" y1="58" x2="85" y2="72" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="82" y="62" width="6" height="9" fill="#ff3366" rx="1"/>
+                        <line x1="95" y1="70" x2="95" y2="85" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="92" y="73" width="6" height="10" fill="#ff3366" rx="1"/>
+                        <!-- Голова (дно) -->
+                        <line x1="105" y1="82" x2="105" y2="100" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="102" y="85" width="6" height="12" fill="#ff3366" rx="1"/>
+                        <line x1="115" y1="95" x2="115" y2="102" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="112" y="95" width="6" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="125" y1="98" x2="125" y2="80" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="122" y="82" width="6" height="12" fill="#00ff88" rx="1"/>
+                        <line x1="135" y1="82" x2="135" y2="65" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="132" y="68" width="6" height="10" fill="#00ff88" rx="1"/>
+                        <!-- Правое плечо -->
+                        <line x1="145" y1="60" x2="145" y2="55" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="142" y="56" width="6" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="155" y1="55" x2="155" y2="65" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="152" y="58" width="6" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="165" y1="62" x2="165" y2="72" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="162" y="65" width="6" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="175" y1="68" x2="175" y2="60" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="172" y="62" width="6" height="5" fill="#00ff88" rx="1"/>
+                        <!-- Пробой вверх -->
+                        <line x1="185" y1="58" x2="185" y2="48" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="182" y="50" width="6" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="195" y1="48" x2="195" y2="38" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="192" y="40" width="6" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="205" y1="40" x2="205" y2="28" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="202" y="30" width="6" height="8" fill="#00ff88" rx="1"/>
+                        <!-- Линия шеи -->
+                        <line x1="60" y1="55" x2="190" y2="55" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                        <!-- Подписи -->
+                        <text x="50" y="10" fill="#999" font-size="8" text-anchor="middle">ЛП</text>
+                        <text x="115" y="110" fill="#ff6b00" font-size="8" text-anchor="middle" font-weight="600">Голова</text>
+                        <text x="170" y="10" fill="#999" font-size="8" text-anchor="middle">ПП</text>
+                        <line x1="215" y1="48" x2="215" y2="22" stroke="#00ff88" stroke-width="1.5"/>
+                        <polygon points="211,25 215,17 219,25" fill="#00ff88"/>
+                    </svg>
+                </div>
+                <div class="pattern-name">Перевёрнутые голова и плечи</div>
+                <div class="pattern-desc">Зеркальный разворотный паттерн. Три дна, центральное ниже. Пробой линии шеи вверх — сигнал на покупку.</div>
+            </div>
+
+            <!-- 3. Двойная вершина (BEARISH) -->
+            <div class="pattern-card bearish reveal">
+                <span class="pattern-tag tag-bearish">Медвежий</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <line x1="20" y1="95" x2="240" y2="95" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <line x1="20" y1="68" x2="240" y2="68" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Восходящее движение к 1-й вершине -->
+                        <line x1="22" y1="90" x2="22" y2="78" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="19" y="80" width="6" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="32" y1="80" x2="32" y2="65" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="29" y="68" width="6" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="42" y1="68" x2="42" y2="48" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="39" y="50" width="6" height="14" fill="#00ff88" rx="1"/>
+                        <!-- Вершина 1 -->
+                        <line x1="52" y1="50" x2="52" y2="30" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="49" y="32" width="6" height="14" fill="#00ff88" rx="1"/>
+                        <line x1="62" y1="35" x2="62" y2="28" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="59" y="30" width="6" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="72" y1="32" x2="72" y2="48" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="69" y="35" width="6" height="12" fill="#ff3366" rx="1"/>
+                        <!-- Откат к поддержке -->
+                        <line x1="82" y1="48" x2="82" y2="62" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="79" y="52" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="92" y1="60" x2="92" y2="68" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="89" y="62" width="6" height="6" fill="#ff3366" rx="1"/>
+                        <!-- Отскок вверх -->
+                        <line x1="102" y1="68" x2="102" y2="58" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="99" y="60" width="6" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="112" y1="60" x2="112" y2="48" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="109" y="50" width="6" height="8" fill="#00ff88" rx="1"/>
+                        <!-- Вершина 2 -->
+                        <line x1="122" y1="50" x2="122" y2="30" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="119" y="32" width="6" height="14" fill="#00ff88" rx="1"/>
+                        <line x1="132" y1="35" x2="132" y2="28" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="129" y="30" width="6" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="142" y1="32" x2="142" y2="50" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="139" y="35" width="6" height="14" fill="#ff3366" rx="1"/>
+                        <!-- Пробой вниз -->
+                        <line x1="152" y1="50" x2="152" y2="65" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="149" y="53" width="6" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="162" y1="62" x2="162" y2="75" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="159" y="66" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="172" y1="72" x2="172" y2="85" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="169" y="75" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="182" y1="82" x2="182" y2="95" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="179" y="85" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <!-- Линия поддержки -->
+                        <line x1="85" y1="68" x2="165" y2="68" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                        <!-- Подписи -->
+                        <text x="58" y="24" fill="#ff6b00" font-size="7" text-anchor="middle" font-weight="600">Вершина 1</text>
+                        <text x="128" y="24" fill="#ff6b00" font-size="7" text-anchor="middle" font-weight="600">Вершина 2</text>
+                        <line x1="190" y1="72" x2="190" y2="100" stroke="#ff3366" stroke-width="1.5"/>
+                        <polygon points="186,97 190,105 194,97" fill="#ff3366"/>
+                    </svg>
+                </div>
+                <div class="pattern-name">Двойная вершина</div>
+                <div class="pattern-desc">Цена дважды тестирует уровень сопротивления и не может его пробить. Пробой поддержки — сигнал на шорт.</div>
+            </div>
+
+            <!-- 4. Двойное дно (BULLISH) -->
+            <div class="pattern-card bullish reveal">
+                <span class="pattern-tag tag-bullish">Бычий</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <line x1="20" y1="25" x2="240" y2="25" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <line x1="20" y1="52" x2="240" y2="52" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Нисходящее движение к 1-му дну -->
+                        <line x1="22" y1="30" x2="22" y2="42" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="19" y="32" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="32" y1="40" x2="32" y2="55" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="29" y="42" width="6" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="42" y1="52" x2="42" y2="72" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="39" y="56" width="6" height="14" fill="#ff3366" rx="1"/>
+                        <!-- Дно 1 -->
+                        <line x1="52" y1="70" x2="52" y2="90" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="49" y="74" width="6" height="14" fill="#ff3366" rx="1"/>
+                        <line x1="62" y1="88" x2="62" y2="92" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="59" y="88" width="6" height="4" fill="#00ff88" rx="1"/>
+                        <line x1="72" y1="90" x2="72" y2="72" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="69" y="75" width="6" height="12" fill="#00ff88" rx="1"/>
+                        <!-- Откат вверх к сопротивлению -->
+                        <line x1="82" y1="72" x2="82" y2="58" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="79" y="60" width="6" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="92" y1="60" x2="92" y2="52" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="89" y="54" width="6" height="5" fill="#00ff88" rx="1"/>
+                        <!-- Снова вниз -->
+                        <line x1="102" y1="55" x2="102" y2="62" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="99" y="57" width="6" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="112" y1="60" x2="112" y2="72" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="109" y="63" width="6" height="8" fill="#ff3366" rx="1"/>
+                        <!-- Дно 2 -->
+                        <line x1="122" y1="70" x2="122" y2="90" stroke="#ff3366" stroke-width="1"/>
+                        <rect x="119" y="74" width="6" height="14" fill="#ff3366" rx="1"/>
+                        <line x1="132" y1="88" x2="132" y2="92" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="129" y="88" width="6" height="4" fill="#00ff88" rx="1"/>
+                        <line x1="142" y1="90" x2="142" y2="72" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="139" y="75" width="6" height="12" fill="#00ff88" rx="1"/>
+                        <!-- Пробой вверх -->
+                        <line x1="152" y1="72" x2="152" y2="56" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="149" y="58" width="6" height="12" fill="#00ff88" rx="1"/>
+                        <line x1="162" y1="58" x2="162" y2="45" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="159" y="47" width="6" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="172" y1="48" x2="172" y2="35" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="169" y="37" width="6" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="182" y1="38" x2="182" y2="25" stroke="#00ff88" stroke-width="1"/>
+                        <rect x="179" y="27" width="6" height="8" fill="#00ff88" rx="1"/>
+                        <!-- Линия сопротивления -->
+                        <line x1="85" y1="52" x2="165" y2="52" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                        <text x="58" y="100" fill="#ff6b00" font-size="7" text-anchor="middle" font-weight="600">Дно 1</text>
+                        <text x="128" y="100" fill="#ff6b00" font-size="7" text-anchor="middle" font-weight="600">Дно 2</text>
+                        <line x1="190" y1="48" x2="190" y2="20" stroke="#00ff88" stroke-width="1.5"/>
+                        <polygon points="186,23 190,15 194,23" fill="#00ff88"/>
+                    </svg>
+                </div>
+                <div class="pattern-name">Двойное дно</div>
+                <div class="pattern-desc">Цена дважды тестирует поддержку и отскакивает. Пробой сопротивления вверх — сигнал на лонг.</div>
+            </div>
+
+            <!-- 5. Восходящий треугольник (BULLISH) -->
+            <div class="pattern-card bullish reveal">
+                <span class="pattern-tag tag-bullish">Бычий</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <line x1="20" y1="95" x2="240" y2="95" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Горизонтальное сопротивление -->
+                        <line x1="30" y1="30" x2="200" y2="30" stroke="#00ff88" stroke-width="1" stroke-dasharray="5,3"/>
+                        <!-- Восходящая поддержка -->
+                        <line x1="30" y1="90" x2="200" y2="35" stroke="#ff6b00" stroke-width="1.5" stroke-dasharray="5,3"/>
+                        <!-- Свечи zigzag -->
+                        <rect x="32" y="80" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="35" y1="78" x2="35" y2="92" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="42" y="55" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="45" y1="52" x2="45" y2="68" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="52" y="30" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="55" y1="28" x2="55" y2="40" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="62" y="35" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="65" y1="32" x2="65" y2="48" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="72" y="60" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="75" y1="58" x2="75" y2="72" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="82" y="50" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="85" y1="48" x2="85" y2="62" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="92" y="32" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="95" y1="30" x2="95" y2="42" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="102" y="35" width="5" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="105" y1="32" x2="105" y2="45" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="112" y="48" width="5" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="115" y1="46" x2="115" y2="58" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="122" y="42" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="125" y1="40" x2="125" y2="52" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="132" y="32" width="5" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="135" y1="30" x2="135" y2="40" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="142" y="33" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="145" y1="31" x2="145" y2="40" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="152" y="38" width="5" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="155" y1="36" x2="155" y2="44" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="162" y="32" width="5" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="165" y1="30" x2="165" y2="38" stroke="#00ff88" stroke-width="0.8"/>
+                        <!-- Пробой вверх -->
+                        <rect x="175" y="22" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="178" y1="18" x2="178" y2="34" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="185" y="15" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="188" y1="12" x2="188" y2="25" stroke="#00ff88" stroke-width="0.8"/>
+                        <line x1="200" y1="30" x2="220" y2="10" stroke="#00ff88" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <polygon points="217,14 222,7 215,8" fill="#00ff88"/>
+                        <text x="225" y="12" fill="#00ff88" font-size="8" font-weight="600">Пробой</text>
+                    </svg>
+                </div>
+                <div class="pattern-name">Восходящий треугольник</div>
+                <div class="pattern-desc">Горизонтальное сопротивление + повышающиеся минимумы. Пробой вверх — продолжение тренда.</div>
+            </div>
+
+            <!-- 6. Нисходящий треугольник (BEARISH) -->
+            <div class="pattern-card bearish reveal">
+                <span class="pattern-tag tag-bearish">Медвежий</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <line x1="20" y1="25" x2="240" y2="25" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Горизонтальная поддержка -->
+                        <line x1="30" y1="85" x2="200" y2="85" stroke="#ff3366" stroke-width="1" stroke-dasharray="5,3"/>
+                        <!-- Нисходящее сопротивление -->
+                        <line x1="30" y1="25" x2="200" y2="80" stroke="#ff6b00" stroke-width="1.5" stroke-dasharray="5,3"/>
+                        <!-- Свечи -->
+                        <rect x="32" y="28" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="35" y1="25" x2="35" y2="42" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="42" y="52" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="45" y1="48" x2="45" y2="65" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="52" y="75" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="55" y1="72" x2="55" y2="88" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="62" y="70" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="65" y1="67" x2="65" y2="82" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="72" y="45" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="75" y1="42" x2="75" y2="58" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="82" y="55" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="85" y1="52" x2="85" y2="68" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="92" y="75" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="95" y1="72" x2="95" y2="87" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="102" y="70" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="105" y1="67" x2="105" y2="80" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="112" y="55" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="115" y1="52" x2="115" y2="65" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="122" y="62" width="5" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="125" y1="60" x2="125" y2="72" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="132" y="76" width="5" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="135" y1="74" x2="135" y2="86" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="142" y="72" width="5" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="145" y1="70" x2="145" y2="80" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="152" y="74" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="155" y1="72" x2="155" y2="82" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="162" y="78" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="165" y1="76" x2="165" y2="86" stroke="#ff3366" stroke-width="0.8"/>
+                        <!-- Пробой вниз -->
+                        <rect x="175" y="85" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="178" y1="82" x2="178" y2="98" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="185" y="92" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="188" y1="90" x2="188" y2="105" stroke="#ff3366" stroke-width="0.8"/>
+                        <line x1="200" y1="85" x2="220" y2="108" stroke="#ff3366" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <polygon points="217,104 222,112 215,110" fill="#ff3366"/>
+                        <text x="225" y="110" fill="#ff3366" font-size="8" font-weight="600">Пробой</text>
+                    </svg>
+                </div>
+                <div class="pattern-name">Нисходящий треугольник</div>
+                <div class="pattern-desc">Горизонтальная поддержка + понижающиеся максимумы. Пробой вниз — продолжение нисходящего тренда.</div>
+            </div>
+
+            <!-- 7. Бычий флаг (BULLISH) -->
+            <div class="pattern-card bullish reveal">
+                <span class="pattern-tag tag-bullish">Бычий</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <line x1="20" y1="95" x2="240" y2="95" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Шест (импульс вверх) -->
+                        <rect x="30" y="80" width="5" height="12" fill="#00ff88" rx="1"/>
+                        <line x1="33" y1="78" x2="33" y2="95" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="40" y="62" width="5" height="15" fill="#00ff88" rx="1"/>
+                        <line x1="43" y1="58" x2="43" y2="80" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="50" y="42" width="5" height="18" fill="#00ff88" rx="1"/>
+                        <line x1="53" y1="38" x2="53" y2="62" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="60" y="25" width="5" height="15" fill="#00ff88" rx="1"/>
+                        <line x1="63" y1="22" x2="63" y2="42" stroke="#00ff88" stroke-width="0.8"/>
+                        <!-- Флаг (коррекция вниз) -->
+                        <rect x="72" y="30" width="5" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="75" y1="28" x2="75" y2="40" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="82" y="38" width="5" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="85" y1="36" x2="85" y2="46" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="92" y="35" width="5" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="95" y1="33" x2="95" y2="43" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="102" y="40" width="5" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="105" y1="38" x2="105" y2="48" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="112" y="45" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="115" y1="43" x2="115" y2="52" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="122" y="42" width="5" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="125" y1="40" x2="125" y2="48" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="132" y="48" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="135" y1="46" x2="135" y2="55" stroke="#ff3366" stroke-width="0.8"/>
+                        <!-- Линии флага -->
+                        <line x1="68" y1="25" x2="140" y2="42" stroke="#ff6b00" stroke-width="1" stroke-dasharray="4,3"/>
+                        <line x1="68" y1="42" x2="140" y2="56" stroke="#ff6b00" stroke-width="1" stroke-dasharray="4,3"/>
+                        <!-- Пробой вверх -->
+                        <rect x="142" y="38" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="145" y1="35" x2="145" y2="50" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="152" y="25" width="5" height="12" fill="#00ff88" rx="1"/>
+                        <line x1="155" y1="22" x2="155" y2="40" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="162" y="15" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="165" y1="12" x2="165" y2="28" stroke="#00ff88" stroke-width="0.8"/>
+                        <!-- Подписи -->
+                        <text x="48" y="110" fill="#ff6b00" font-size="8" text-anchor="middle" font-weight="600">Шест</text>
+                        <text x="105" y="64" fill="#ff6b00" font-size="8" text-anchor="middle" font-weight="600">Флаг</text>
+                        <line x1="170" y1="25" x2="190" y2="10" stroke="#00ff88" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <polygon points="187,14 192,7 185,8" fill="#00ff88"/>
+                    </svg>
+                </div>
+                <div class="pattern-name">Бычий флаг</div>
+                <div class="pattern-desc">Сильный импульс вверх (шест) + нисходящая коррекция (флаг). Пробой вверх — продолжение роста.</div>
+            </div>
+
+            <!-- 8. Восходящий клин (BEARISH) -->
+            <div class="pattern-card bearish reveal">
+                <span class="pattern-tag tag-bearish">Медвежий</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <line x1="20" y1="95" x2="240" y2="95" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Линии клина (сходящиеся вверх) -->
+                        <line x1="25" y1="95" x2="180" y2="20" stroke="#ff6b00" stroke-width="1.2" stroke-dasharray="5,3"/>
+                        <line x1="25" y1="65" x2="180" y2="28" stroke="#ff6b00" stroke-width="1.2" stroke-dasharray="5,3"/>
+                        <!-- Свечи zigzag внутри клина -->
+                        <rect x="30" y="80" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="33" y1="78" x2="33" y2="92" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="40" y="68" width="5" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="43" y1="65" x2="43" y2="76" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="50" y="72" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="53" y1="70" x2="53" y2="82" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="60" y="60" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="63" y1="58" x2="63" y2="70" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="70" y="55" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="73" y1="53" x2="73" y2="62" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="80" y="58" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="83" y1="55" x2="83" y2="68" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="90" y="48" width="5" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="93" y1="45" x2="93" y2="56" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="100" y="44" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="103" y1="42" x2="103" y2="52" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="110" y="46" width="5" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="113" y1="44" x2="113" y2="54" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="120" y="38" width="5" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="123" y1="36" x2="123" y2="46" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="130" y="35" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="133" y1="33" x2="133" y2="42" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="140" y="37" width="5" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="143" y1="35" x2="143" y2="43" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="150" y="30" width="5" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="153" y1="28" x2="153" y2="37" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="160" y="28" width="5" height="4" fill="#ff3366" rx="1"/>
+                        <line x1="163" y1="26" x2="163" y2="34" stroke="#ff3366" stroke-width="0.8"/>
+                        <!-- Пробой вниз -->
+                        <rect x="170" y="35" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="173" y1="32" x2="173" y2="48" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="180" y="48" width="5" height="12" fill="#ff3366" rx="1"/>
+                        <line x1="183" y1="45" x2="183" y2="62" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="190" y="62" width="5" height="14" fill="#ff3366" rx="1"/>
+                        <line x1="193" y1="58" x2="193" y2="78" stroke="#ff3366" stroke-width="0.8"/>
+                        <line x1="200" y1="78" x2="215" y2="100" stroke="#ff3366" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <polygon points="212,96 217,105 210,102" fill="#ff3366"/>
+                    </svg>
+                </div>
+                <div class="pattern-name">Восходящий клин</div>
+                <div class="pattern-desc">Две сходящиеся линии направлены вверх. Сжатие диапазона → пробой вниз. Сигнал разворота.</div>
+            </div>
+
+            <!-- 9. Симметричный треугольник (NEUTRAL) -->
+            <div class="pattern-card neutral reveal">
+                <span class="pattern-tag tag-neutral">Нейтральный</span>
+                <div class="pattern-svg">
+                    <svg viewBox="0 0 260 120">
+                        <line x1="20" y1="60" x2="240" y2="60" stroke="#1a1a1a" stroke-width="0.5"/>
+                        <!-- Линии треугольника -->
+                        <line x1="20" y1="20" x2="170" y2="55" stroke="#ff6b00" stroke-width="1.2" stroke-dasharray="5,3"/>
+                        <line x1="20" y1="100" x2="170" y2="65" stroke="#ff6b00" stroke-width="1.2" stroke-dasharray="5,3"/>
+                        <!-- Свечи zigzag -->
+                        <rect x="25" y="22" width="5" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="28" y1="20" x2="28" y2="32" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="35" y="65" width="5" height="12" fill="#ff3366" rx="1"/>
+                        <line x1="38" y1="62" x2="38" y2="80" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="45" y="82" width="5" height="12" fill="#ff3366" rx="1"/>
+                        <line x1="48" y1="78" x2="48" y2="98" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="55" y="55" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="58" y1="52" x2="58" y2="68" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="65" y="35" width="5" height="10" fill="#00ff88" rx="1"/>
+                        <line x1="68" y1="32" x2="68" y2="48" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="75" y="40" width="5" height="8" fill="#ff3366" rx="1"/>
+                        <line x1="78" y1="38" x2="78" y2="50" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="85" y="65" width="5" height="10" fill="#ff3366" rx="1"/>
+                        <line x1="88" y1="62" x2="88" y2="78" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="95" y="60" width="5" height="8" fill="#00ff88" rx="1"/>
+                        <line x1="98" y1="58" x2="98" y2="70" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="105" y="45" width="5" height="6" fill="#00ff88" rx="1"/>
+                        <line x1="108" y1="42" x2="108" y2="54" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="115" y="48" width="5" height="5" fill="#ff3366" rx="1"/>
+                        <line x1="118" y1="46" x2="118" y2="55" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="125" y="60" width="5" height="6" fill="#ff3366" rx="1"/>
+                        <line x1="128" y1="58" x2="128" y2="68" stroke="#ff3366" stroke-width="0.8"/>
+                        <rect x="135" y="56" width="5" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="138" y1="54" x2="138" y2="62" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="145" y="52" width="5" height="5" fill="#00ff88" rx="1"/>
+                        <line x1="148" y1="50" x2="148" y2="58" stroke="#00ff88" stroke-width="0.8"/>
+                        <rect x="155" y="55" width="5" height="4" fill="#ff3366" rx="1"/>
+                        <line x1="158" y1="53" x2="158" y2="60" stroke="#ff3366" stroke-width="0.8"/>
+                        <!-- Пробой вверх (зелёный) -->
+                        <line x1="170" y1="50" x2="200" y2="25" stroke="#00ff88" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <polygon points="197,28 202,20 195,23" fill="#00ff88"/>
+                        <text x="210" y="22" fill="#00ff88" font-size="7" font-weight="600">Вверх?</text>
+                        <!-- Пробой вниз (красный) -->
+                        <line x1="170" y1="70" x2="200" y2="95" stroke="#ff3366" stroke-width="1.5" stroke-dasharray="4,3"/>
+                        <polygon points="197,91 202,100 195,97" fill="#ff3366"/>
+                        <text x="210" y="98" fill="#ff3366" font-size="7" font-weight="600">Вниз?</text>
+                    </svg>
+                </div>
+                <div class="pattern-name">Симметричный треугольник</div>
+                <div class="pattern-desc">Сходящиеся линии тренда. Пробой может быть в любую сторону — ждём подтверждения объёмом.</div>
+            </div>
+
+        </div>
+        <div style="text-align:center;margin-top:40px;">
+            <a href="#modules" class="btn btn-outline">Изучить все паттерны →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== КАЛЬКУЛЯТОР ===== -->
+<section class="calculator" id="calculator">
+    <div class="container">
+        <div class="calc-info reveal">
+            <span class="section-label">Инструмент</span>
+            <h2 style="font-size:clamp(28px,4vw,42px);margin-bottom:16px;">
+                Рассчитай <span class="gradient-text">размер позиции</span>
+            </h2>
+            <p style="color:var(--text-secondary);margin-bottom:24px;line-height:1.7;">
+                Правильный расчёт позиции — основа риск-менеджмента. Никогда не рискуй больше, чем можешь позволить потерять.
+            </p>
+            <p style="color:var(--text-secondary);margin-bottom:32px;line-height:1.7;">
+                Калькулятор автоматически рассчитает размер позиции, количество монет и максимальный убыток.
+            </p>
+            <div class="calc-feature">
+                <div class="calc-feature-icon">🛡️</div>
+                <div>
+                    <h4>Защита депозита</h4>
+                    <p>Рискуй не более 1-2% на сделку — это правило профессиональных трейдеров</p>
+                </div>
+            </div>
+            <div class="calc-feature">
+                <div class="calc-feature-icon">📐</div>
+                <div>
+                    <h4>Точный расчёт</h4>
+                    <p>Размер позиции = (Депозит × Риск%) / Стоп%</p>
+                </div>
+            </div>
+        </div>
+        <div class="calc-card reveal">
+            <div class="calc-title">🧮 Калькулятор позиции</div>
+            <div class="calc-field">
+                <label>Депозит ($)</label>
+                <input type="number" id="calc-deposit" value="1000" oninput="calculatePosition()">
+            </div>
+            <div class="calc-field">
+                <label>Риск на сделку (%)</label>
+                <input type="number" id="calc-risk" value="1" step="0.1" oninput="calculatePosition()">
+            </div>
+            <div class="calc-field">
+                <label>Цена входа ($)</label>
+                <input type="number" id="calc-entry" value="67420" oninput="calculatePosition()">
+            </div>
+            <div class="calc-field">
+                <label>Стоп-лосс ($)</label>
+                <input type="number" id="calc-stop" value="65000" oninput="calculatePosition()">
+            </div>
+            <div class="calc-result">
+                <div class="calc-row">
+                    <span class="calc-row-label">Риск в $</span>
+                    <span class="calc-row-value" id="res-risk-usd">$10.00</span>
+                </div>
+                <div class="calc-row">
+                    <span class="calc-row-label">Стоп-лосс %</span>
+                    <span class="calc-row-value" id="res-stop-pct">3.59%</span>
+                </div>
+                <div class="calc-row">
+                    <span class="calc-row-label">Размер позиции</span>
+                    <span class="calc-row-value" id="res-position">$278.55</span>
+                </div>
+                <div class="calc-row">
+                    <span class="calc-row-label">Кол-во монет</span>
+                    <span class="calc-row-value" id="res-coins">0.004132</span>
+                </div>
+                <div class="calc-row">
+                    <span class="calc-row-label">Макс. убыток</span>
+                    <span class="calc-row-value danger" id="res-max-loss">-$10.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ОТЗЫВЫ ===== -->
+<section class="reviews" id="reviews">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-label">Отзывы</span>
+            <h2>Что говорят <span class="gradient-text">ученики</span></h2>
+            <div class="orange-line"></div>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card reveal">
+                <div class="review-fires">🔥🔥🔥🔥🔥</div>
+                <p class="review-text">"Раньше торговал на интуиции — сливал депозит за депозитом. После курса понял, что трейдинг — это система, а не казино. Теперь каждый вход по плану."</p>
+                <div class="review-author">
+                    <div class="review-avatar">А</div>
+                    <div>
+                        <div class="review-name">Алексей К.</div>
+                        <div class="review-result">+34% за 2 месяца 📈</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-fires">🔥🔥🔥🔥🔥</div>
+                <p class="review-text">"Модуль по психологии — это то, чего мне не хватало. Перестала входить на эмоциях, научилась ждать свои сетапы. Результат — ноль сливов за месяц."</p>
+                <div class="review-author">
+                    <div class="review-avatar">М</div>
+                    <div>
+                        <div class="review-name">Марина С.</div>
+                        <div class="review-result">Перестала сливать 🛡️</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-fires">🔥🔥🔥🔥🔥</div>
+                <p class="review-text">"SVG-схемы паттернов — супер наглядно. Увидел бычий флаг на SOL, вошёл по плану, взял профит. Такое понимание графиков дорогого стоит."</p>
+                <div class="review-author">
+                    <div class="review-avatar">Д</div>
+                    <div>
+                        <div class="review-name">Дмитрий Р.</div>
+                        <div class="review-result">+18% за 3 дня на SOL 🚀</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-fires">🔥🔥🔥🔥🔥</div>
+                <p class="review-text">"Начинал с полного нуля — даже не знал что такое свеча. Прошёл все 5 модулей, сейчас уверенно торгую на споте. Курс стоит каждого рубля."</p>
+                <div class="review-author">
+                    <div class="review-avatar">И</div>
+                    <div>
+                        <div class="review-name">Иван Л.</div>
+                        <div class="review-result">С нуля до профита 💎</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-fires">🔥🔥🔥🔥🔥</div>
+                <p class="review-text">"Калькулятор позиции изменил всё. Раньше входил на полный депозит и молился. Теперь рискую 1% — и сплю спокойно даже в просадке."</p>
+                <div class="review-author">
+                    <div class="review-avatar">О</div>
+                    <div>
+                        <div class="review-name">Ольга В.</div>
+                        <div class="review-result">Нулевые просадки 💼</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-fires">🔥🔥🔥🔥🔥</div>
+                <p class="review-text">"Взял Premium — ментор разобрал мои ошибки за 15 минут. Оказывается, я неправильно ставил стопы. После коррекции — +67% за квартал."</p>
+                <div class="review-author">
+                    <div class="review-avatar">С</div>
+                    <div>
+                        <div class="review-name">Сергей Т.</div>
+                        <div class="review-result">+67% за квартал 🏆</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ТАРИФЫ ===== -->
+<section class="pricing" id="pricing">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-label">Тарифы</span>
+            <h2>Выбери свой <span class="gradient-text">план</span></h2>
+            <p>Начни бесплатно или получи полный доступ к курсу и менторству</p>
+            <div class="orange-line"></div>
+        </div>
+        <div class="pricing-grid">
+            <!-- FREE -->
+            <div class="pricing-card reveal">
+                <div class="pricing-name">FREE</div>
+                <div class="pricing-desc">Попробуй бесплатно</div>
+                <div class="pricing-price">$0 <small>/ навсегда</small></div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> <span>5 бесплатных уроков</span></li>
+                    <li><span class="check">✓</span> <span>Мини-курс для новичков</span></li>
+                    <li><span class="check">✓</span> <span>Калькулятор позиции</span></li>
+                    <li><span class="check">✓</span> <span>Глоссарий терминов</span></li>
+                    <li><span class="cross">✗</span> <span>Модули M1-M5 (40+ уроков)</span></li>
+                    <li><span class="cross">✗</span> <span>Паттерны с разборами</span></li>
+                    <li><span class="cross">✗</span> <span>Разбор 10 реальных сделок</span></li>
+                    <li><span class="cross">✗</span> <span>Менторство и созвоны</span></li>
+                </ul>
+                <a href="free-course.html" class="btn btn-ghost">Начать бесплатно</a>
+            </div>
+            <!-- STANDARD (POPULAR) -->
+            <div class="pricing-card popular reveal">
+                <div class="popular-badge">🔥 ПОПУЛЯРНЫЙ</div>
+                <div class="pricing-name">STANDARD</div>
+                <div class="pricing-desc">Полный курс</div>
+                <div class="pricing-price accent">$99 <small>/ полный доступ</small></div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> <span>Все уроки M1-M5 (43 урока)</span></li>
+                    <li><span class="check">✓</span> <span>Паттерны с разборами</span></li>
+                    <li><span class="check">✓</span> <span>Калькулятор позиции</span></li>
+                    <li><span class="check">✓</span> <span>Обновления курса навсегда</span></li>
+                    <li><span class="check">✓</span> <span>Личный кабинет</span></li>
+                    <li><span class="check">✓</span> <span>Разбор 10 реальных сделок</span></li>
+                    <li><span class="cross">✗</span> <span>Менторство и созвоны</span></li>
+                    <li><span class="cross">✗</span> <span>VIP-канал и приоритетный чат</span></li>
+                </ul>
+                <a href="https://t.me/qrypto_manager?text=Привет! Хочу купить тариф Standard за 99$" class="btn btn-primary">Купить — $99</a>
+            </div>
+            <!-- PREMIUM -->
+            <div class="pricing-card reveal">
+                <div class="pricing-name">PREMIUM</div>
+                <div class="pricing-desc">Курс + менторство</div>
+                <div class="pricing-price">$199 <small>/ полный доступ</small></div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> <span>Всё из Standard</span></li>
+                    <li><span class="check">✓</span> <span>3 персональных созвона</span></li>
+                    <li><span class="check">✓</span> <span>Разбор твоих сделок</span></li>
+                    <li><span class="check">✓</span> <span>Личный торговый план</span></li>
+                    <li><span class="check">✓</span> <span>Приоритетный чат</span></li>
+                    <li><span class="check">✓</span> <span>VIP Telegram канал</span></li>
+                    <li><span class="check">✓</span> <span>Дневник трейдера</span></li>
+                    <li><span class="check">✓</span> <span>Поддержка 3 месяца</span></li>
+                </ul>
+                <a href="https://t.me/qrypto_manager?text=Привет! Хочу купить тариф Premium за 199$" class="btn btn-outline">Купить — $199</a>
+            </div>
+        </div>
+
+        <div class="guarantee-box reveal">
+            <h3>📊 Рекомендуемая биржа — BingX</h3>
+            <p style="margin-top:8px;">
+                Мы рекомендуем <a href="https://bingxdao.com/invite/OU83SM/" target="_blank" style="color:var(--accent);font-weight:600;text-decoration:underline;">BingX</a> — удобная биржа с копитрейдингом, демо-счётом и низкими комиссиями. Регистрируйся по нашей ссылке и получи бонус.
+            </p>
+            <a href="https://bingxdao.com/invite/OU83SM/" target="_blank" class="btn btn-primary" style="margin-top:16px;">Зарегистрироваться на BingX 🔥</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-label">FAQ</span>
+            <h2>Частые <span class="gradient-text">вопросы</span></h2>
+            <div class="orange-line"></div>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item reveal">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Нужен ли начальный капитал?
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Для обучения — нет. Курс можно проходить с демо-счётом. Для реальной торговли рекомендуем начинать с $100-500. Главное — не вкладывай больше, чем готов потерять.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Сколько времени займёт обучение?
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Весь курс можно пройти за 2-4 недели при занятиях 1-2 часа в день. Но рекомендуем не торопиться — практикуй каждый модуль на демо перед переходом к следующему.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Будет ли поддержка после курса?
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Да! Все ученики Standard получают доступ к обновлениям. Premium ученики получают 3 месяца персональной поддержки и доступ в VIP-канал.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Какой опыт нужен для старта?
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Никакого! Курс начинается с самых основ — что такое криптовалюта, как работает блокчейн. Постепенно переходим к анализу и стратегиям.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    На какой бирже лучше торговать?
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Мы рекомендуем <a href="https://bingxdao.com/invite/OU83SM/" target="_blank" style="color:var(--accent);">BingX</a> — удобный интерфейс, низкие комиссии, копитрейдинг и демо-счёт для практики. В курсе подробно разбираем работу с этой биржей.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Это трейдинг или инвестирование?
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Курс фокусируется на активном трейдинге — дейтрейдинг и свинг. Но навыки технического анализа и риск-менеджмента применимы и к долгосрочным инвестициям.</div>
+                </div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Подойдёт ли курс для фондового рынка?
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Да, принципы технического анализа, паттерны и риск-менеджмент работают на любом рынке — крипта, форекс, акции. Мы учим читать графики, а не привязываемся к одному активу.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+    <div class="container reveal">
+        <h2>Готов начать <span class="gradient-text">торговать</span> системно?</h2>
+        <p>Присоединяйся к 20+ ученикам, которые уже перестали угадывать и начали зарабатывать</p>
+        <div class="cta-actions">
+            <a href="free-course.html" class="btn btn-primary">🔥 Начать бесплатно</a>
+            <a href="#pricing" class="btn btn-outline">Посмотреть тарифы</a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a href="index.html" class="nav-logo" style="font-size:28px;"><span class="gradient-text">Qrypto</span></a>
+                <p class="footer-desc">Образовательная платформа по криптотрейдингу. Научись читать рынок, а не угадывать.</p>
+                <div class="footer-socials">
+                    <a href="https://t.me/qrypto_channel" target="_blank" class="footer-social" title="Telegram канал">✈️</a>
+                    <a href="https://t.me/qrypto_admin" target="_blank" class="footer-social" title="Связь с админом">💬</a>
+                    <a href="https://instagram.com/qrypto" target="_blank" class="footer-social" title="Instagram">📸</a>
+                    <a href="https://tradingview.com" target="_blank" class="footer-social" title="TradingView">📊</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Курс</h4>
+                <a href="#modules">Программа</a>
+                <a href="#patterns">Паттерны</a>
+                <a href="#pricing">Тарифы</a>
+                <a href="free-course.html">Бесплатный курс</a>
+                <a href="glossary.html">Глоссарий</a>
+            </div>
+            <div class="footer-col">
+                <h4>Аккаунт</h4>
+                <a href="login.html">Войти</a>
+                <a href="signup.html">Регистрация</a>
+                <a href="dashboard.html">Кабинет</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <a href="https://t.me/qrypto_channel" target="_blank">Telegram канал</a>
+                <a href="https://t.me/qrypto_admin" target="_blank">Telegram админ</a>
+                <a href="https://instagram.com/qrypto" target="_blank">Instagram</a>
+                <a href="https://tradingview.com" target="_blank">TradingView</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-text">© 2025 Qrypto. Все права защищены.</div>
+            <div class="footer-bottom-links">
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Условия использования</a>
+                <a href="#">Оферта</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ===== NAVBAR SCROLL ===== */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+/* ===== МОБИЛЬНОЕ МЕНЮ ===== */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileClose = document.getElementById('mobile-close');
+
+hamburger.addEventListener('click', () => mobileMenu.classList.add('active'));
+mobileClose.addEventListener('click', () => mobileMenu.classList.remove('active'));
+function closeMobile() { mobileMenu.classList.remove('active'); }
+
+/* ===== ЧАСТИЦЫ НА CANVAS ===== */
+(function() {
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const count = 60;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            r: Math.random() * 2 + 1
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,107,0,0.3)';
+            ctx.fill();
+        });
+
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(255,107,0,${0.08 * (1 - dist/120)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+})();
+
+/* ===== TRADINGVIEW ВИДЖЕТ — НАСТОЯЩИЙ СВЕЧНОЙ ГРАФИК ===== */
+(function() {
+    let currentSymbol = 'BINANCE:BTCUSDT';
+
+    function loadChart(symbol) {
+        currentSymbol = symbol;
+        const container = document.getElementById('tradingview-chart');
+        container.innerHTML = '';
+        new TradingView.widget({
+            container_id: 'tradingview-chart',
+            autosize: true,
+            symbol: symbol,
+            interval: '15',
+            timezone: 'Etc/UTC',
+            theme: 'dark',
+            style: '1',
+            locale: 'ru',
+            toolbar_bg: '#0a0a0a',
+            enable_publishing: false,
+            hide_top_toolbar: false,
+            hide_legend: false,
+            save_image: false,
+            hide_volume: false,
+            backgroundColor: '#0a0a0a',
+            gridColor: 'rgba(255, 107, 0, 0.04)',
+            studies: [],
+            overrides: {
+                'paneProperties.background': '#0a0a0a',
+                'paneProperties.backgroundType': 'solid',
+                'paneProperties.vertGridProperties.color': 'rgba(255,107,0,0.04)',
+                'paneProperties.horzGridProperties.color': 'rgba(255,107,0,0.04)',
+                'scalesProperties.textColor': '#999999',
+                'scalesProperties.lineColor': '#1a1a1a',
+                'mainSeriesProperties.candleStyle.upColor': '#00ff88',
+                'mainSeriesProperties.candleStyle.downColor': '#ff3366',
+                'mainSeriesProperties.candleStyle.borderUpColor': '#00ff88',
+                'mainSeriesProperties.candleStyle.borderDownColor': '#ff3366',
+                'mainSeriesProperties.candleStyle.wickUpColor': '#00ff88',
+                'mainSeriesProperties.candleStyle.wickDownColor': '#ff3366'
+            }
+        });
+    }
+
+    // Загружаем скрипт TradingView
+    const script = document.createElement('script');
+    script.src = 'https://s3.tradingview.com/tv.js';
+    script.onload = function() {
+        loadChart(currentSymbol);
+
+        // Переключение между активами
+        document.getElementById('chart-tabs').addEventListener('click', function(e) {
+            const tab = e.target.closest('.chart-tab');
+            if (!tab) return;
+            const symbol = tab.dataset.symbol;
+            if (symbol === currentSymbol) return;
+
+            document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            loadChart(symbol);
+        });
+    };
+    document.head.appendChild(script);
+})();
+
+/* ===== ТИКЕР — BINANCE WEBSOCKET REAL-TIME ===== */
+(function() {
+    const tickerTrack = document.getElementById('ticker-track');
+    
+    // Символы для тикера (Binance пары)
+    const symbols = [
+        { symbol: 'BTCUSDT', display: 'BTC' },
+        { symbol: 'ETHUSDT', display: 'ETH' },
+        { symbol: 'SOLUSDT', display: 'SOL' },
+        { symbol: 'BNBUSDT', display: 'BNB' },
+        { symbol: 'XRPUSDT', display: 'XRP' },
+        { symbol: 'AVAXUSDT', display: 'AVAX' },
+        { symbol: 'MATICUSDT', display: 'MATIC' },
+        { symbol: 'LINKUSDT', display: 'LINK' }
+    ];
+    
+    // Хранилище текущих данных
+    const tickerData = {};
+    symbols.forEach(s => {
+        tickerData[s.symbol] = { price: 0, change: 0 };
+    });
+
+    function renderTicker() {
+        let html = '';
+        // Дублируем для бесконечного скролла
+        for (let d = 0; d < 2; d++) {
+            symbols.forEach(s => {
+                const data = tickerData[s.symbol];
+                const changeClass = data.change >= 0 ? 'up' : 'down';
+                const arrow = data.change >= 0 ? '▲' : '▼';
+                const sign = data.change >= 0 ? '+' : '';
+                const priceStr = data.price > 100 
+                    ? data.price.toLocaleString('en-US', {maximumFractionDigits: 0})
+                    : data.price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 4});
+                html += `
+                    <div class="ticker-item" data-symbol="${s.symbol}">
+                        <div class="ticker-dot"></div>
+                        <span class="ticker-name">${s.display}</span>
+                        <span class="ticker-price">$${priceStr}</span>
+                        <span class="ticker-change ${changeClass}">${arrow} ${sign}${data.change.toFixed(2)}%</span>
+                    </div>
+                `;
+            });
+        }
+        tickerTrack.innerHTML = html;
+    }
+
+    // Обновление конкретного тикера в DOM без полного перерендера
+    function updateTickerItem(symbol, price, change) {
+        const items = document.querySelectorAll(`.ticker-item[data-symbol="${symbol}"]`);
+        items.forEach(item => {
+            const priceEl = item.querySelector('.ticker-price');
+            const changeEl = item.querySelector('.ticker-change');
+            
+            const priceStr = price > 100 
+                ? price.toLocaleString('en-US', {maximumFractionDigits: 0})
+                : price.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 4});
+            priceEl.textContent = '$' + priceStr;
+            
+            const changeClass = change >= 0 ? 'up' : 'down';
+            const arrow = change >= 0 ? '▲' : '▼';
+            const sign = change >= 0 ? '+' : '';
+            changeEl.textContent = `${arrow} ${sign}${change.toFixed(2)}%`;
+            changeEl.className = 'ticker-change ' + changeClass;
+        });
+    }
+
+    // Загрузка начальных данных
+    async function loadInitialTickerData() {
+        try {
+            const symbolsParam = JSON.stringify(symbols.map(s => s.symbol));
+            const res = await fetch('https://api.binance.com/api/v3/ticker/24hr');
+            const allTickers = await res.json();
+            
+            symbols.forEach(s => {
+                const ticker = allTickers.find(t => t.symbol === s.symbol);
+                if (ticker) {
+                    tickerData[s.symbol] = {
+                        price: parseFloat(ticker.lastPrice),
+                        change: parseFloat(ticker.priceChangePercent)
+                    };
+                }
+            });
+            renderTicker();
+        } catch(e) {
+            // Фоллбэк
+            tickerData['BTCUSDT'] = { price: 67420, change: 2.34 };
+            tickerData['ETHUSDT'] = { price: 3542, change: 1.87 };
+            tickerData['SOLUSDT'] = { price: 178, change: -0.95 };
+            tickerData['BNBUSDT'] = { price: 612, change: 0.45 };
+            tickerData['XRPUSDT'] = { price: 0.62, change: 3.21 };
+            tickerData['AVAXUSDT'] = { price: 38.5, change: -1.23 };
+            tickerData['MATICUSDT'] = { price: 0.72, change: 0.89 };
+            tickerData['LINKUSDT'] = { price: 14.8, change: 4.56 };
+            renderTicker();
+        }
+    }
+
+    // WebSocket для real-time обновлений всех монет
+    function connectTickerWebSocket() {
+        const streams = symbols.map(s => s.symbol.toLowerCase() + '@miniTicker').join('/');
+        const ws = new WebSocket(`wss://stream.binance.com:9443/stream?streams=${streams}`);
+        
+        ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            const data = message.data;
+            const symbol = data.s; // symbol
+            const price = parseFloat(data.c); // close price
+            const openPrice = parseFloat(data.o); // open price
+            const change = ((price - openPrice) / openPrice) * 100;
+            
+            // Обновляем данные
+            tickerData[symbol] = { price, change };
+            
+            // Обновляем DOM
+            updateTickerItem(symbol, price, change);
+        };
+        
+        ws.onclose = () => {
+            setTimeout(connectTickerWebSocket, 3000);
+        };
+        
+        ws.onerror = (err) => {
+            console.log('Ticker WebSocket error:', err);
+            ws.close();
+        };
+    }
+
+    // Инициализация
+    loadInitialTickerData().then(() => {
+        connectTickerWebSocket();
+    });
+})();
+
+/* ===== АККОРДЕОН МОДУЛЕЙ ===== */
+function toggleModule(header) {
+    const item = header.parentElement;
+    const wasActive = item.classList.contains('active');
+    
+    document.querySelectorAll('.module-item').forEach(m => m.classList.remove('active'));
+    
+    if (!wasActive) {
+        item.classList.add('active');
+    }
+}
+
+/* ===== FAQ АККОРДЕОН ===== */
+function toggleFaq(question) {
+    const item = question.parentElement;
+    const wasActive = item.classList.contains('active');
+    
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('active'));
+    
+    if (!wasActive) {
+        item.classList.add('active');
+    }
+}
+
+/* ===== КАЛЬКУЛЯТОР ПОЗИЦИИ ===== */
+function calculatePosition() {
+    const deposit = parseFloat(document.getElementById('calc-deposit').value) || 0;
+    const riskPct = parseFloat(document.getElementById('calc-risk').value) || 0;
+    const entry = parseFloat(document.getElementById('calc-entry').value) || 0;
+    const stop = parseFloat(document.getElementById('calc-stop').value) || 0;
+
+    const riskUSD = deposit * (riskPct / 100);
+    const stopDist = Math.abs(entry - stop);
+    const stopPct = entry > 0 ? (stopDist / entry) * 100 : 0;
+    const positionSz = stopPct > 0 ? riskUSD / (stopPct / 100) : 0;
+    const coins = entry > 0 ? positionSz / entry : 0;
+
+    document.getElementById('res-risk-usd').textContent = '$' + riskUSD.toFixed(2);
+    document.getElementById('res-stop-pct').textContent = stopPct.toFixed(2) + '%';
+    document.getElementById('res-position').textContent = '$' + positionSz.toFixed(2);
+    document.getElementById('res-coins').textContent = coins.toFixed(6);
+    document.getElementById('res-max-loss').textContent = '-$' + riskUSD.toFixed(2);
+}
+calculatePosition();
+
+/* ===== SCROLL REVEAL (IntersectionObserver) ===== */
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+revealElements.forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

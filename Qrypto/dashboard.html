@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | QRYPTO</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <style>
+        :root { --primary: #ff6b00; --bg: #0a0a0a; --card: #161616; --border: rgba(255,107,0,0.15); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; display: flex; min-height: 100vh; }
+
+        /* SIDEBAR */
+        .sidebar { width: 280px; background: var(--card); border-right: 1px solid var(--border); position: fixed; top: 0; left: 0; height: 100vh; display: flex; flex-direction: column; z-index: 100; overflow: hidden; }
+        .sidebar-logo { padding: 25px 20px; font-size: 22px; font-weight: 900; color: var(--primary); letter-spacing: 2px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+        .user-info-block { padding: 15px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+        .user-info-block .uname { font-weight: 700; font-size: 15px; }
+        .user-info-block .uplan { font-size: 12px; color: var(--primary); margin-top: 3px; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-menu { flex: 1; overflow-y: auto; padding: 15px 12px; }
+        .module-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #555; padding: 8px 8px 5px; margin-top: 10px; }
+        .nav-item { padding: 10px 12px; border-radius: 10px; cursor: pointer; transition: 0.2s; color: #aaa; display: flex; align-items: center; justify-content: space-between; font-size: 14px; margin-bottom: 2px; }
+        .nav-item:hover { background: rgba(255,107,0,0.1); color: #fff; }
+        .nav-item.active { background: rgba(255,107,0,0.2); color: var(--primary); }
+        .nav-item.completed { color: #2ecc71; }
+        .nav-item .icon { font-size: 13px; flex-shrink: 0; margin-left: 8px; }
+        .logout-section { padding: 15px 20px; border-top: 1px solid var(--border); flex-shrink: 0; }
+        .logout-btn { width: 100%; padding: 10px; background: transparent; border: 1px solid #333; border-radius: 10px; color: #888; cursor: pointer; font-size: 14px; transition: 0.2s; }
+        .logout-btn:hover { border-color: #ff4444; color: #ff4444; }
+
+        /* MAIN */
+        .main { margin-left: 280px; flex: 1; padding: 35px 40px; }
+        .welcome-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 70vh; text-align: center; }
+        .welcome-screen h2 { font-size: 32px; margin-bottom: 15px; }
+        .welcome-screen p { color: #888; font-size: 16px; }
+
+        /* LESSON PAGE */
+        .lesson-page { display: none; }
+        .lesson-header { margin-bottom: 25px; }
+        .lesson-meta { font-size: 13px; color: #555; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .lesson-title { font-size: 28px; font-weight: 700; color: #fff; }
+        .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); background: #000; margin: 25px 0; }
+        .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .no-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #444; }
+        .no-video span { font-size: 48px; margin-bottom: 10px; }
+        .lesson-body { line-height: 1.7; color: #bbb; font-size: 16px; }
+        .lesson-body h3 { color: #fff; margin: 25px 0 10px; font-size: 20px; }
+        .lesson-body ul { padding-left: 20px; margin: 10px 0; }
+        .lesson-body li { margin-bottom: 6px; }
+        .lesson-actions { margin-top: 35px; display: flex; gap: 15px; align-items: center; }
+        .btn-complete { padding: 14px 30px; background: var(--primary); color: #fff; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 15px; transition: 0.3s; }
+        .btn-complete:hover { opacity: 0.9; transform: translateY(-2px); }
+        .btn-complete.done { background: #2ecc71; cursor: default; }
+        .btn-complete.done:hover { transform: none; }
+        .progress-text { color: #666; font-size: 14px; }
+
+        /* LOADING */
+        .loading { display: flex; align-items: center; justify-content: center; min-height: 100vh; font-size: 18px; color: #555; }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main { margin-left: 0; padding: 20px; }
+            body { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Экран загрузки -->
+<div class="loading" id="loadingScreen">Загрузка...</div>
+
+<!-- Основной интерфейс (скрыт до загрузки) -->
+<div id="appWrapper" style="display:none; width:100%; display:none;">
+
+    <div class="sidebar">
+        <div class="sidebar-logo">⚡ QRYPTO</div>
+        <div class="user-info-block">
+            <div class="uname" id="sidebarName">...</div>
+            <div class="uplan" id="sidebarPlan">...</div>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <!-- Меню уроков рендерится JS-ом -->
+        </div>
+        <div class="logout-section">
+            <button class="logout-btn" onclick="logout()">Выйти из аккаунта</button>
+        </div>
+    </div>
+
+    <div class="main">
+        <!-- Экран приветствия -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div style="font-size:64px; margin-bottom:20px;">📚</div>
+            <h2>Привет, <span id="welcomeName">Ученик</span>!</h2>
+            <p>Выбери урок в меню слева, чтобы начать обучение</p>
+        </div>
+
+        <!-- Страница урока -->
+        <div class="lesson-page" id="lessonPage">
+            <div class="lesson-header">
+                <div class="lesson-meta" id="lessonMeta">Модуль 1 · Урок 1</div>
+                <div class="lesson-title" id="lessonTitle">Название урока</div>
+            </div>
+            <div class="video-wrap" id="videoWrap">
+                <div class="no-video">
+                    <span>🎬</span>
+                    <p>Видео скоро появится</p>
+                </div>
+            </div>
+            <div class="lesson-body" id="lessonBody"></div>
+            <div class="lesson-actions">
+                <button class="btn-complete" id="completeBtn" onclick="markDone()">
+                    ✓ Завершить урок
+                </button>
+                <div class="progress-text" id="progressText"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────
+//  КОНФИГУРАЦИЯ
+// ─────────────────────────────────────────
+const db = supabase.createClient(
+    'https://dwpslpqqasabxilqtkvm.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cHNscHFxYXNhYnhpbHF0a3ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzODQ4OTAsImV4cCI6MjA5NDk2MDg5MH0.YCKirX0pAJYw6gsIxs3KAGNe5YKl6acgs93xxjpPpew'
+);
+
+// ─────────────────────────────────────────
+//  СТРУКТУРА КУРСА
+//  Замени '000000000' на ID видео из Vimeo!
+// ─────────────────────────────────────────
+const COURSE = [
+    {
+        module: 'Модуль 1: Основы',
+        lessons: [
+            {
+                key: 'M1-1',
+                title: 'Что такое криптовалюта',
+                vimeoId: '000000000',
+                body: `
+                    <h3>О чём этот урок</h3>
+                    <p>В этом уроке ты узнаешь, что такое криптовалюта, как появился Биткоин и почему это технология изменила финансовый мир.</p>
+                    <h3>Ключевые понятия</h3>
+                    <ul>
+                        <li>Децентрализация — никто не контролирует сеть</li>
+                        <li>Блокчейн — открытая база данных всех транзакций</li>
+                        <li>Майнинг — процесс создания новых монет</li>
+                    </ul>
+                `
+            },
+            {
+                key: 'M1-2',
+                title: 'Как работает Биткоин',
+                vimeoId: '000000000',
+                body: `<p>Биткоин — это первая и самая популярная криптовалюта. Узнаем как устроена сеть изнутри.</p>`
+            },
+            {
+                key: 'M1-3',
+                title: 'Кошельки и безопасность',
+                vimeoId: '000000000',
+                body: `<p>Сид-фраза, горячие и холодные кошельки. Никому не передавай свои ключи!</p>`
+            },
+            {
+                key: 'M1-4',
+                title: 'Первая покупка криптовалюты',
+                vimeoId: '000000000',
+                body: `<p>Пошаговая инструкция по покупке USDT на бирже.</p>`
+            },
+        ]
+    },
+    {
+        module: 'Модуль 2: Технический анализ',
+        lessons: [
+            {
+                key: 'M2-1',
+                title: 'Чтение графиков',
+                vimeoId: '000000000',
+                body: `<p>Японские свечи, уровни поддержки и сопротивления — всё это в этом уроке.</p>`
+            },
+            {
+                key: 'M2-2',
+                title: 'Трендовые линии',
+                vimeoId: '000000000',
+                body: `<p>Как правильно рисовать тренды и не ошибаться.</p>`
+            },
+            {
+                key: 'M2-3',
+                title: 'Индикаторы RSI и MACD',
+                vimeoId: '000000000',
+                body: `<p>Классические индикаторы технического анализа.</p>`
+            },
+            {
+                key: 'M2-4',
+                title: 'Паттерны разворота',
+                vimeoId: '000000000',
+                body: `<p>Голова и плечи, двойное дно, клин — и как их торговать.</p>`
+            },
+            {
+                key: 'M2-5',
+                title: 'Управление рисками',
+                vimeoId: '000000000',
+                body: `<p>Стоп-лосс, тейк-профит, соотношение риска к прибыли.</p>`
+            },
+        ]
+    },
+    {
+        module: 'Модуль 3: Продвинутые стратегии',
+        lessons: [
+            {
+                key: 'M3-1',
+                title: 'Торговля на фьючерсах',
+                vimeoId: '000000000',
+                body: `<p>Плечо, маржа, ликвидация — и как не потерять всё.</p>`
+            },
+            {
+                key: 'M3-2',
+                title: 'DeFi и стейкинг',
+                vimeoId: '000000000',
+                body: `<p>Пассивный доход в крипте без активной торговли.</p>`
+            },
+            {
+                key: 'M3-3',
+                title: 'NFT и Web3',
+                vimeoId: '000000000',
+                body: `<p>Разбор NFT-рынка и возможностей Web3.</p>`
+            },
+            {
+                key: 'M3-4',
+                title: 'Налоги на криптовалюту',
+                vimeoId: '000000000',
+                body: `<p>Как правильно задекларировать доход от крипты в РФ.</p>`
+            },
+            {
+                key: 'M3-5',
+                title: 'Построение портфеля',
+                vimeoId: '000000000',
+                body: `<p>Диверсификация, ребалансировка, долгосрочное инвестирование.</p>`
+            },
+            {
+                key: 'M3-6',
+                title: 'Психология трейдера',
+                vimeoId: '000000000',
+                body: `<p>FOMO, жадность и страх — главные враги прибыльной торговли.</p>`
+            },
+            {
+                key: 'M3-7',
+                title: 'Итог курса и план развития',
+                vimeoId: '000000000',
+                body: `<p>Что делать дальше после прохождения курса QRYPTO.</p>`
+            },
+        ]
+    }
+];
+
+// ─────────────────────────────────────────
+//  ПЕРЕМЕННЫЕ
+// ─────────────────────────────────────────
+let currentUser   = null;
+let completedKeys = new Set();
+let currentKey    = null;
+
+// ─────────────────────────────────────────
+//  ИНИЦИАЛИЗАЦИЯ
+// ─────────────────────────────────────────
+async function init() {
+    const { data: { session } } = await db.auth.getSession();
+
+    if (!session) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    currentUser = session.user;
+
+    // Загружаем профиль
+    const { data: profile } = await db
+        .from('profiles')
+        .select('*')
+        .eq('id', currentUser.id)
+        .single();
+
+    const name = profile?.name || currentUser.email;
+    const plan = profile?.plan || 'free';
+
+    document.getElementById('sidebarName').textContent = name;
+    document.getElementById('sidebarPlan').textContent = 'Тариф: ' + plan.toUpperCase();
+    document.getElementById('welcomeName').textContent = name.split(' ')[0];
+
+    // Загружаем пройденные уроки
+    const { data: progressData } = await db
+        .from('progress')
+        .select('lesson_key')
+        .eq('user_id', currentUser.id)
+        .eq('completed', true);
+
+    if (progressData) {
+        progressData.forEach(row => completedKeys.add(row.lesson_key));
+    }
+
+    // Рендерим меню
+    renderMenu();
+
+    // Показываем интерфейс
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('appWrapper').style.display = 'flex';
+}
+
+// ─────────────────────────────────────────
+//  РЕНДЕР МЕНЮ
+// ─────────────────────────────────────────
+function renderMenu() {
+    const nav = document.getElementById('navMenu');
+    nav.innerHTML = '';
+
+    COURSE.forEach(mod => {
+        const modTitle = document.createElement('div');
+        modTitle.className = 'module-title';
+        modTitle.textContent = mod.module;
+        nav.appendChild(modTitle);
+
+        mod.lessons.forEach(lesson => {
+            const item = document.createElement('div');
+            const isDone = completedKeys.has(lesson.key);
+            item.className = 'nav-item' + (isDone ? ' completed' : '');
+            item.dataset.key = lesson.key;
+            item.innerHTML = `
+                <span>${lesson.title}</span>
+                <span class="icon">${isDone ? '✅' : '○'}</span>
+            `;
+            item.onclick = () => openLesson(lesson.key);
+            nav.appendChild(item);
+        });
+    });
+}
+
+// ─────────────────────────────────────────
+//  ОТКРЫТИЕ УРОКА
+// ─────────────────────────────────────────
+function openLesson(key) {
+    currentKey = key;
+
+    // Находим урок в структуре курса
+    let foundLesson = null;
+    let foundModule = '';
+    let lessonIndex = 0;
+
+    COURSE.forEach(mod => {
+        mod.lessons.forEach((lesson, idx) => {
+            if (lesson.key === key) {
+                foundLesson = lesson;
+                foundModule = mod.module;
+                lessonIndex = idx + 1;
+            }
+        });
+    });
+
+    if (!foundLesson) return;
+
+    // Скрываем приветствие, показываем урок
+    document.getElementById('welcomeScreen').style.display = 'none';
+    document.getElementById('lessonPage').style.display = 'block';
+
+    // Заполняем данные
+    document.getElementById('lessonMeta').textContent = foundModule + ' · Урок ' + lessonIndex;
+    document.getElementById('lessonTitle').textContent = foundLesson.title;
+    document.getElementById('lessonBody').innerHTML = foundLesson.body;
+
+    // Видео
+    const videoWrap = document.getElementById('videoWrap');
+    if (foundLesson.vimeoId && foundLesson.vimeoId !== '000000000') {
+        videoWrap.innerHTML = `
+            <iframe 
+                src="https://player.vimeo.com/video/${foundLesson.vimeoId}?badge=0&autopause=0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        `;
+    } else {
+        videoWrap.innerHTML = `
+            <div class="no-video">
+                <span>🎬</span>
+                <p>Видео скоро появится</p>
+            </div>
+        `;
+    }
+
+    // Кнопка завершения
+    const btn = document.getElementById('completeBtn');
+    const isDone = completedKeys.has(key);
+    if (isDone) {
+        btn.textContent = '✅ Урок завершён';
+        btn.className = 'btn-complete done';
+    } else {
+        btn.textContent = '✓ Завершить урок';
+        btn.className = 'btn-complete';
+    }
+
+    // Прогресс
+    const total = COURSE.reduce((sum, m) => sum + m.lessons.length, 0);
+    document.getElementById('progressText').textContent = `Пройдено: ${completedKeys.size} / ${total}`;
+
+    // Активный пункт меню
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    const activeItem = document.querySelector(`.nav-item[data-key="${key}"]`);
+    if (activeItem) activeItem.classList.add('active');
+}
+
+// ─────────────────────────────────────────
+//  ОТМЕТИТЬ КАК ЗАВЕРШЁННЫЙ
+// ─────────────────────────────────────────
+async function markDone() {
+    if (!currentKey || completedKeys.has(currentKey)) return;
+
+    const btn = document.getElementById('completeBtn');
+    btn.textContent = 'Сохраняем...';
+    btn.disabled = true;
+
+    const { error } = await db.from('progress').upsert({
+        user_id: currentUser.id,
+        lesson_key: currentKey,
+        completed: true,
+        completed_at: new Date().toISOString()
+    });
+
+    if (error) {
+        console.error(error);
+        btn.textContent = 'Ошибка, попробуй ещё';
+        btn.disabled = false;
+        return;
+    }
+
+    // Обновляем активность за сегодня
+    const today = new Date().toISOString().split('T')[0];
+    await db.from('activity').upsert(
+        { user_id: currentUser.id, date: today, lessons_count: 1 },
+        { onConflict: 'user_id,date' }
+    );
+
+    completedKeys.add(currentKey);
+
+    btn.textContent = '✅ Урок завершён';
+    btn.className = 'btn-complete done';
+    btn.disabled = false;
+
+    // Обновляем счётчик и меню
+    const total = COURSE.reduce((sum, m) => sum + m.lessons.length, 0);
+    document.getElementById('progressText').textContent = `Пройдено: ${completedKeys.size} / ${total}`;
+    renderMenu();
+
+    // Оставляем активный элемент
+    const activeItem = document.querySelector(`.nav-item[data-key="${currentKey}"]`);
+    if (activeItem) activeItem.classList.add('active');
+}
+
+// ─────────────────────────────────────────
+//  ВЫХОД
+// ─────────────────────────────────────────
+async function logout() {
+    await db.auth.signOut();
+    window.location.href = 'login.html';
+}
+
+// ─────────────────────────────────────────
+//  ЗАПУСК
+// ─────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

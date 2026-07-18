@@ -3,3 +3,7 @@
 /signup     /signup.html      301
 /glossary   /glossary.html    301
 /course     /free-course.html 301
+/vpn          /vpn.html          301
+/vpn-account  /vpn-account.html  301
+/vpn-success  /vpn-success.html  301
+/vpn-failed   /vpn-failed.html   301

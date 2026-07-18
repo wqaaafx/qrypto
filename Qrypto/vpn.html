@@ -3,46 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qrypto VPN — приватный доступ для трейдинга и Web3</title>
-    <meta name="description" content="Qrypto VPN — быстрый и приватный VPN для безопасной работы с криптобиржами, кошельками, Web3-сервисами и привычным интернетом. Покупка и управление подпиской через Telegram-бота.">
-    <meta property="og:title" content="Qrypto VPN — приватный доступ для трейдинга и Web3">
-    <meta property="og:description" content="VPN от Qrypto: быстрый старт, поддержка устройств, управление подпиской в Telegram-боте.">
+    <title>Qrypto VPN — приватный VPN на Reality для трейдинга и Web3</title>
+    <meta name="description" content="Qrypto VPN — приватный VPN на Reality для крипты, трейдинга, Web3 и безопасного доступа к интернету. Тарифы от 114 ₽/мес по акции, подключение через Telegram-бота.">
+    <meta property="og:title" content="Qrypto VPN — приватный VPN на Reality">
+    <meta property="og:description" content="VPN для трейдинга, крипты и Web3. Маскировка под обычный TLS-трафик, подключение через Telegram-бота, оплата криптой и другими способами.">
     <meta property="og:type" content="website">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🛡️</text></svg>">
     <style>
         :root{
-            --bg:#080808;--bg2:#0d0d0d;--card:#121212;--card2:#171717;--border:#242424;
-            --accent:#ff6b00;--accent2:#ff8c00;--green:#00ff88;--red:#ff3366;
-            --text:#fff;--muted:#a3a3a3;--dim:#666;--shadow:0 0 40px rgba(255,107,0,.16);
-            --gradient:linear-gradient(135deg,#ff6b00,#ffd600);--radius:22px;
+            --bg:#070707;--bg2:#0d0d0d;--card:#121212;--card2:#171717;--border:#242424;
+            --accent:#ff6b00;--accent2:#ff8c00;--cyan:#21ffd0;--green:#00ff88;--red:#ff3366;--yellow:#ffd600;
+            --text:#fff;--muted:#a3a3a3;--dim:#666;--shadow:0 0 42px rgba(255,107,0,.18);
+            --gradient:linear-gradient(135deg,#ff6b00,#ffd600);--radius:22px;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
         }
         *{box-sizing:border-box;margin:0;padding:0}
-        html{scroll-behavior:smooth}
-        body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
-        a{text-decoration:none;color:inherit} .container{max-width:1180px;margin:0 auto;padding:0 24px}
-        .gradient{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:14px;font-weight:800;border:1px solid transparent;transition:.25s;cursor:pointer;white-space:nowrap}
-        .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 10px 30px rgba(255,107,0,.24)}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(255,107,0,.34)}
-        .btn-outline{border-color:rgba(255,107,0,.35);background:rgba(255,107,0,.06);color:var(--accent2)}
-        .btn-outline:hover{background:rgba(255,107,0,.13);transform:translateY(-2px)}
-        .btn-ghost{border-color:#2b2b2b;background:rgba(255,255,255,.03);color:#ddd}.btn-ghost:hover{border-color:var(--accent);color:#fff}
-        .navbar{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07)}
-        .navbar .container{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-        .logo{font-size:28px;font-weight:950;letter-spacing:-.04em}.nav-links{display:flex;align-items:center;gap:24px;list-style:none;color:var(--muted);font-size:14px;font-weight:700}.nav-links a:hover{color:var(--accent2)}
-        .nav-actions{display:flex;gap:12px;align-items:center}.mobile-toggle{display:none;background:none;border:0;color:#fff;font-size:28px}
-        .hero{position:relative;padding:92px 0 74px;overflow:hidden}.hero:before{content:"";position:absolute;inset:-220px -120px auto auto;width:580px;height:580px;background:radial-gradient(circle,rgba(255,107,0,.22),transparent 62%);filter:blur(12px);pointer-events:none}.hero:after{content:"";position:absolute;left:-220px;bottom:-260px;width:560px;height:560px;background:radial-gradient(circle,rgba(0,255,136,.08),transparent 62%);filter:blur(10px);pointer-events:none}
-        .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.06fr .94fr;gap:52px;align-items:center}.badge{display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border:1px solid rgba(255,107,0,.28);background:rgba(255,107,0,.08);border-radius:999px;color:var(--accent2);font-size:13px;font-weight:900;margin-bottom:22px}
-        h1{font-size:clamp(42px,6vw,78px);line-height:.94;letter-spacing:-.06em;margin-bottom:24px}.hero p{font-size:18px;color:var(--muted);max-width:650px}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}.trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:28px;color:var(--muted);font-size:14px}.trust b{color:#fff}
-        .vpn-card{position:relative;background:linear-gradient(180deg,rgba(255,107,0,.10),rgba(18,18,18,.96));border:1px solid rgba(255,107,0,.24);border-radius:32px;padding:28px;box-shadow:var(--shadow);overflow:hidden}.vpn-card:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(255,214,0,.16),transparent 34%);pointer-events:none}.shield{position:relative;z-index:2;min-height:390px;display:flex;flex-direction:column;justify-content:space-between}.shield-top{display:flex;align-items:center;justify-content:space-between}.status{font-size:12px;color:var(--green);background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);padding:8px 11px;border-radius:999px;font-weight:900}.big-icon{font-size:88px;filter:drop-shadow(0 0 24px rgba(255,107,0,.45))}.server-list{display:grid;gap:12px}.server{display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:16px;color:#ddd}.server span:last-child{color:var(--green);font-weight:900}
-        section{padding:78px 0}.section-head{text-align:center;max-width:760px;margin:0 auto 42px}.label{display:block;color:var(--accent2);font-weight:950;text-transform:uppercase;letter-spacing:.14em;font-size:12px;margin-bottom:10px}h2{font-size:clamp(32px,4vw,52px);line-height:1.05;letter-spacing:-.04em;margin-bottom:14px}.section-head p{color:var(--muted)}
-        .features{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.feature,.price-card,.step,.faq-item,.notice,.bot-panel{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--border);border-radius:var(--radius);padding:22px}.feature:hover,.price-card:hover{border-color:rgba(255,107,0,.36);transform:translateY(-3px);transition:.25s}.feature-icon{font-size:30px;margin-bottom:13px}.feature h3{font-size:18px;margin-bottom:8px}.feature p,.step p,.faq-item p,.notice p{color:var(--muted);font-size:14px}
-        .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.price-card{position:relative;padding:28px}.price-card.popular{border-color:rgba(255,107,0,.5);box-shadow:var(--shadow)}.popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gradient);color:#fff;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:950}.plan-name{font-size:24px;font-weight:950;margin-bottom:5px}.plan-desc{color:var(--muted);font-size:14px;margin-bottom:22px}.price{font-size:34px;font-weight:950;margin-bottom:6px}.price small{font-size:14px;color:var(--muted);font-weight:600}.price-note{font-size:13px;color:var(--dim);margin-bottom:22px}.price-card ul{list-style:none;display:grid;gap:10px;margin-bottom:24px;color:#ddd;font-size:14px}.check{color:var(--green);font-weight:950;margin-right:8px}.price-card .btn{width:100%}
-        .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step-num{width:40px;height:40px;border-radius:12px;background:rgba(255,107,0,.12);border:1px solid rgba(255,107,0,.28);display:flex;align-items:center;justify-content:center;color:var(--accent2);font-weight:950;margin-bottom:15px}.step h3{font-size:17px;margin-bottom:8px}
-        .account{background:linear-gradient(135deg,rgba(255,107,0,.14),rgba(0,255,136,.04));border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}.account-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:28px;align-items:center}.bot-panel{border-color:rgba(255,107,0,.27);box-shadow:var(--shadow)}.bot-row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07);color:#ddd}.bot-row:last-child{border-bottom:0}.bot-row span:last-child{color:var(--accent2);font-weight:900}
-        .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.faq-item h3{font-size:17px;margin-bottom:8px}.notice{border-color:rgba(255,107,0,.25);margin-top:22px}.footer{border-top:1px solid rgba(255,255,255,.08);padding:34px 0;color:var(--muted)}.footer .container{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer-links{display:flex;gap:18px;flex-wrap:wrap}.footer a:hover{color:var(--accent2)}
-        @media(max-width:980px){.hero-grid,.account-grid{grid-template-columns:1fr}.features,.steps{grid-template-columns:repeat(2,1fr)}.pricing-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}.nav-links{display:none}.mobile-toggle{display:block}}
-        @media(max-width:560px){.navbar .container{height:auto;padding-top:16px;padding-bottom:16px;align-items:flex-start}.nav-actions{display:none}.hero{padding:56px 0}.features,.steps,.faq-grid{grid-template-columns:1fr}.hero-actions .btn{width:100%}.trust{flex-direction:column;gap:8px}.vpn-card{padding:20px}.shield{min-height:320px}section{padding:56px 0}.footer .container{flex-direction:column}.mobile-open .nav-links{display:flex;position:absolute;left:24px;right:24px;top:68px;flex-direction:column;align-items:flex-start;background:#111;border:1px solid var(--border);padding:18px;border-radius:18px}.mobile-open{padding-bottom:218px}}
+        html{scroll-behavior:smooth} body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+        a{text-decoration:none;color:inherit}.container{max-width:1180px;margin:0 auto;padding:0 24px}.gradient{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.cyan{color:var(--cyan)}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:14px;font-weight:850;border:1px solid transparent;transition:.25s;cursor:pointer;white-space:nowrap}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 10px 30px rgba(255,107,0,.24)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(255,107,0,.34)}.btn-outline{border-color:rgba(255,107,0,.35);background:rgba(255,107,0,.06);color:var(--accent2)}.btn-outline:hover{background:rgba(255,107,0,.13);transform:translateY(-2px)}.btn-ghost{border-color:#2b2b2b;background:rgba(255,255,255,.03);color:#ddd}.btn-ghost:hover{border-color:var(--accent);color:#fff}.btn-cyan{border-color:rgba(33,255,208,.35);background:rgba(33,255,208,.08);color:var(--cyan)}
+        .navbar{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.86);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07)}.navbar .container{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}.logo{font-size:28px;font-weight:950;letter-spacing:-.04em}.nav-links{display:flex;align-items:center;gap:24px;list-style:none;color:var(--muted);font-size:14px;font-weight:700}.nav-links a:hover{color:var(--accent2)}.nav-actions{display:flex;gap:12px;align-items:center}.mobile-toggle{display:none;background:none;border:0;color:#fff;font-size:28px}
+        .hero{position:relative;padding:92px 0 74px;overflow:hidden}.hero:before{content:"";position:absolute;inset:-230px -130px auto auto;width:650px;height:650px;background:radial-gradient(circle,rgba(255,107,0,.24),transparent 62%);filter:blur(12px);pointer-events:none}.hero:after{content:"";position:absolute;left:-240px;bottom:-280px;width:650px;height:650px;background:radial-gradient(circle,rgba(33,255,208,.10),transparent 62%);filter:blur(10px);pointer-events:none}.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}.badge{display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border:1px solid rgba(255,107,0,.28);background:rgba(255,107,0,.08);border-radius:999px;color:var(--accent2);font-size:13px;font-weight:950;margin-bottom:22px}.badge.cyan-badge{border-color:rgba(33,255,208,.26);background:rgba(33,255,208,.07);color:var(--cyan)}
+        h1{font-size:clamp(42px,6vw,80px);line-height:.94;letter-spacing:-.065em;margin-bottom:24px}.hero p{font-size:18px;color:var(--muted);max-width:650px}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}.trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:28px;color:var(--muted);font-size:14px}.trust b{color:#fff}
+        .terminal{background:linear-gradient(180deg,rgba(255,107,0,.10),rgba(15,15,15,.98));border:1px solid rgba(255,107,0,.24);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}.terminal-head{height:48px;display:flex;align-items:center;gap:8px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.28)}.dot{width:10px;height:10px;border-radius:50%;background:#ff5f57}.dot:nth-child(2){background:#ffbd2e}.dot:nth-child(3){background:#28c840}.terminal-body{padding:24px;font-family:var(--mono);font-size:14px;min-height:390px}.line{display:flex;gap:10px;margin:10px 0;color:#bdbdbd}.line .k{color:var(--accent2);min-width:90px}.line .ok{color:var(--green)}.line .cyan{color:var(--cyan)}.pulse{display:inline-block;width:8px;height:15px;background:var(--cyan);animation:blink 1s infinite;vertical-align:-2px}@keyframes blink{50%{opacity:.2}}.mask-card{margin-top:20px;padding:16px;border-radius:16px;border:1px solid rgba(33,255,208,.2);background:rgba(33,255,208,.06);font-family:Inter,Arial,sans-serif}.mask-card b{color:#fff}.mask-card p{font-size:13px;color:var(--muted);margin-top:4px}
+        section{padding:78px 0}.section-head{text-align:center;max-width:800px;margin:0 auto 42px}.label{display:block;color:var(--accent2);font-weight:950;text-transform:uppercase;letter-spacing:.14em;font-size:12px;margin-bottom:10px}h2{font-size:clamp(32px,4vw,54px);line-height:1.05;letter-spacing:-.045em;margin-bottom:14px}.section-head p{color:var(--muted)}
+        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.feature,.price-card,.step,.faq-item,.notice,.bot-panel,.pay-card,.rule-card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--border);border-radius:var(--radius);padding:22px}.feature:hover,.price-card:hover,.pay-card:hover{border-color:rgba(255,107,0,.36);transform:translateY(-3px);transition:.25s}.feature-icon{font-size:30px;margin-bottom:13px}.feature h3,.rule-card h3{font-size:18px;margin-bottom:8px}.feature p,.step p,.faq-item p,.notice p,.rule-card p,.pay-card p{color:var(--muted);font-size:14px}.metric{font-family:var(--mono);font-size:13px;color:var(--cyan);margin-top:12px}
+        .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.price-card{position:relative;padding:28px}.price-card.popular{border-color:rgba(255,107,0,.5);box-shadow:var(--shadow)}.popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gradient);color:#fff;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:950}.plan-name{font-size:24px;font-weight:950;margin-bottom:5px}.plan-desc{color:var(--muted);font-size:14px;margin-bottom:20px}.old-price{display:inline-block;color:#777;text-decoration:line-through;font-size:18px;margin-right:8px}.price{font-size:38px;font-weight:950;margin-bottom:4px}.price small{font-size:14px;color:var(--muted);font-weight:600}.price-note{font-size:13px;color:var(--dim);margin-bottom:22px}.price-card ul{list-style:none;display:grid;gap:10px;margin-bottom:24px;color:#ddd;font-size:14px}.check{color:var(--green);font-weight:950;margin-right:8px}.price-card .btn{width:100%}.sale{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,214,0,.10);border:1px solid rgba(255,214,0,.25);color:var(--yellow);font-size:13px;font-weight:950;margin-bottom:18px}
+        .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.step-num{width:40px;height:40px;border-radius:12px;background:rgba(255,107,0,.12);border:1px solid rgba(255,107,0,.28);display:flex;align-items:center;justify-content:center;color:var(--accent2);font-weight:950;margin-bottom:15px}.step h3{font-size:17px;margin-bottom:8px}
+        .payments{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.pay-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.pay-name{font-weight:950;font-size:18px}.status{font-size:11px;text-transform:uppercase;letter-spacing:.08em;border-radius:999px;padding:6px 9px;font-weight:950}.status.on{color:var(--green);background:rgba(0,255,136,.09);border:1px solid rgba(0,255,136,.22)}.status.soon{color:var(--yellow);background:rgba(255,214,0,.09);border:1px solid rgba(255,214,0,.22)}
+        .account{background:linear-gradient(135deg,rgba(255,107,0,.14),rgba(33,255,208,.04));border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}.account-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:28px;align-items:center}.bot-panel{border-color:rgba(255,107,0,.27);box-shadow:var(--shadow)}.bot-row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.07);color:#ddd}.bot-row:last-child{border-bottom:0}.bot-row span:last-child{color:var(--accent2);font-weight:900}
+        .rules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.faq-item h3{font-size:17px;margin-bottom:8px}.notice{border-color:rgba(255,107,0,.25);margin-top:22px}.footer{border-top:1px solid rgba(255,255,255,.08);padding:34px 0;color:var(--muted)}.footer .container{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer-links{display:flex;gap:18px;flex-wrap:wrap}.footer a:hover{color:var(--accent2)}
+        @media(max-width:980px){.hero-grid,.account-grid{grid-template-columns:1fr}.features,.steps,.payments,.rules-grid{grid-template-columns:repeat(2,1fr)}.pricing-grid{grid-template-columns:1fr;max-width:540px;margin:0 auto}.nav-links{display:none}.mobile-toggle{display:block}}
+        @media(max-width:560px){.navbar .container{height:auto;padding-top:16px;padding-bottom:16px;align-items:flex-start}.nav-actions{display:none}.hero{padding:56px 0}.features,.steps,.payments,.rules-grid,.faq-grid{grid-template-columns:1fr}.hero-actions .btn{width:100%}.trust{flex-direction:column;gap:8px}.terminal-body{font-size:12px;padding:18px;min-height:auto}section{padding:56px 0}.footer .container{flex-direction:column}.mobile-open .nav-links{display:flex;position:absolute;left:24px;right:24px;top:68px;flex-direction:column;align-items:flex-start;background:#111;border:1px solid var(--border);padding:18px;border-radius:18px}.mobile-open{padding-bottom:218px}}
     </style>
 </head>
 <body>
@@ -50,195 +40,118 @@
     <div class="container">
         <a href="index.html" class="logo"><span class="gradient">Qrypto</span></a>
         <ul class="nav-links">
-            <li><a href="index.html">Курс</a></li>
-            <li><a href="vpn.html">VPN</a></li>
-            <li><a href="#plans">Тарифы VPN</a></li>
-            <li><a href="#how">Как подключить</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="vpn-account.html">Подписка</a></li>
+            <li><a href="index.html">Курс</a></li><li><a href="vpn.html">VPN</a></li><li><a href="#plans">Тарифы</a></li><li><a href="#connect">Подключение</a></li><li><a href="#rules">Правила</a></li><li><a href="vpn-account.html">Подписка</a></li>
         </ul>
-        <div class="nav-actions">
-            <a href="vpn-account.html" class="btn btn-ghost">Моя подписка</a>
-            <a href="https://t.me/qrypto_vpn_bot?start=site_vpn" target="_blank" class="btn btn-primary">Открыть бота</a>
-        </div>
+        <div class="nav-actions"><a href="vpn-account.html" class="btn btn-ghost">Моя подписка</a><a href="https://t.me/qrypto_vpn_bot?start=site_nav" target="_blank" class="btn btn-primary">Открыть бота</a></div>
         <button class="mobile-toggle" id="mobileToggle" aria-label="Меню">☰</button>
     </div>
 </nav>
-
 <header class="hero">
     <div class="container hero-grid">
         <div>
-            <div class="badge">🛡️ Qrypto VPN · отдельный продукт экосистемы</div>
-            <h1>Приватный VPN для <span class="gradient">трейдинга, крипты и Web3</span></h1>
-            <p>Подключайся к интернету безопаснее, работай с привычными сервисами и управляй VPN-подпиской через Telegram-бота Qrypto. Быстрый старт: выбрал тариф → оплатил → получил доступ и инструкцию.</p>
-            <div class="hero-actions">
-                <a href="https://t.me/qrypto_vpn_bot?start=site_vpn_buy" target="_blank" class="btn btn-primary">Купить VPN в Telegram</a>
-                <a href="#plans" class="btn btn-outline">Посмотреть тарифы</a>
-                <a href="vpn-account.html" class="btn btn-ghost">Управление подпиской</a>
-            </div>
-            <div class="trust">
-                <div><b>⚡ Быстрый старт</b> через бота</div>
-                <div><b>📱 iOS / Android / PC</b></div>
-                <div><b>💬 Поддержка</b> в Telegram</div>
-            </div>
+            <div class="badge">🛡️ Qrypto VPN · Reality / VLESS</div>
+            <h1>VPN, который выглядит как <span class="gradient">обычный TLS-трафик</span></h1>
+            <p>Приватный VPN для трейдинга, крипты, Web3 и повседневного интернета. Подключение через Telegram-бота: выбрал тариф → оплатил → получил ключ и инструкцию.</p>
+            <div class="hero-actions"><a href="https://t.me/qrypto_vpn_bot?start=site_hero_buy" target="_blank" class="btn btn-primary">Купить VPN в Telegram</a><a href="#plans" class="btn btn-outline">Тарифы от 114 ₽/мес</a><a href="#connect" class="btn btn-cyan">Как подключить</a></div>
+            <div class="trust"><div><b>Reality</b> маскировка</div><div><b>200 ГБ/мес</b> ориентир трафика</div><div><b>CryptoBot</b> + Lava/Tribute в работе</div></div>
         </div>
-        <div class="vpn-card" aria-label="Qrypto VPN status card">
-            <div class="shield">
-                <div class="shield-top">
-                    <div class="big-icon">🛡️</div>
-                    <div class="status">ONLINE</div>
-                </div>
-                <div>
-                    <h2 style="font-size:34px;margin-bottom:10px">Qrypto VPN</h2>
-                    <p style="color:var(--muted);margin-bottom:18px">Защищённое подключение и управление подпиской в одном Telegram-боте.</p>
-                    <div class="server-list">
-                        <div class="server"><span>Telegram-бот</span><span>готов</span></div>
-                        <div class="server"><span>Покупка</span><span>в боте</span></div>
-                        <div class="server"><span>Подписка</span><span>управление</span></div>
-                    </div>
-                </div>
+        <div class="terminal" aria-label="Reality traffic masking demo">
+            <div class="terminal-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:8px;color:#888;font-family:var(--mono);font-size:12px">qrypto-vpn :: handshake</span></div>
+            <div class="terminal-body">
+                <div class="line"><span class="k">client</span><span>initializing secure profile...</span></div>
+                <div class="line"><span class="k">protocol</span><span class="cyan">VLESS + Reality</span></div>
+                <div class="line"><span class="k">observer</span><span>sees ordinary TLS connection</span></div>
+                <div class="line"><span class="k">sni</span><span>public demo: example.com</span></div>
+                <div class="line"><span class="k">status</span><span class="ok">masked / connected</span></div>
+                <div class="line"><span class="k">latency</span><span>stable route selected <span class="pulse"></span></span></div>
+                <div class="mask-card"><b>Реальный SNI-домен не публикуем</b><p>Это техническая деталь сервера. Её нельзя светить на сайте, чтобы не упрощать блокировку и фингерпринтинг сервиса.</p></div>
             </div>
         </div>
     </div>
 </header>
-
 <section>
     <div class="container">
-        <div class="section-head">
-            <span class="label">Преимущества</span>
-            <h2>VPN, который удобно покупать и продлевать</h2>
-            <p>Страница на сайте работает как витрина, а Telegram-бот — как точка покупки, выдачи доступа, продления и поддержки.</p>
-        </div>
+        <div class="section-head"><span class="label">Почему Qrypto VPN</span><h2>Сделан под крипту, трейдинг и стабильный доступ</h2><p>Не бесплатный публичный VPN, а аккуратная инфраструктура с понятными лимитами, Telegram-управлением и приватным подключением.</p></div>
         <div class="features">
-            <div class="feature"><div class="feature-icon">🔐</div><h3>Приватность</h3><p>Дополнительный слой защиты подключения для работы с биржами, кошельками и Web3-сервисами.</p></div>
-            <div class="feature"><div class="feature-icon">⚡</div><h3>Быстрое подключение</h3><p>Покупка и получение доступа происходят через Telegram-бота без сложной регистрации на отдельной панели.</p></div>
-            <div class="feature"><div class="feature-icon">📲</div><h3>Все устройства</h3><p>Подходит для смартфонов, компьютеров и планшетов. Инструкции доступны в боте.</p></div>
-            <div class="feature"><div class="feature-icon">💬</div><h3>Поддержка рядом</h3><p>Если нужна помощь с оплатой, продлением или установкой — пользователь остаётся в Telegram.</p></div>
+            <div class="feature"><div class="feature-icon">🕶️</div><h3>Reality-маскировка</h3><p>Подключение выглядит как обычный TLS-трафик. Это снижает заметность VPN-соединения для внешнего наблюдателя.</p><div class="metric">VLESS / Reality</div></div>
+            <div class="feature"><div class="feature-icon">💳</div><h3>Меньше лишнего антифрода</h3><p>Стабильный VPN-профиль лучше случайных бесплатных VPN, которые часто приводят к подозрительным IP и проверкам.</p><div class="metric">stable access</div></div>
+            <div class="feature"><div class="feature-icon">📦</div><h3>Понятный ресурс</h3><p>Ориентир инфраструктуры — около 200 ГБ трафика на пользователя в месяц. Этого достаточно для обычной работы.</p><div class="metric">~200 GB / month</div></div>
+            <div class="feature"><div class="feature-icon">🤖</div><h3>Всё в Telegram</h3><p>Покупка, продление, ключ, инструкции и поддержка находятся в официальном боте Qrypto VPN.</p><div class="metric">@qrypto_vpn_bot</div></div>
+            <div class="feature"><div class="feature-icon">📱</div><h3>Все основные устройства</h3><p>iOS, Android, Windows и macOS. Бот выдаёт актуальную инструкцию под твою платформу.</p><div class="metric">iOS / Android / PC</div></div>
+            <div class="feature"><div class="feature-icon">🧩</div><h3>Растущая инфраструктура</h3><p>Сначала стабильный путь до 50–100 клиентов, затем новые ноды и масштабирование без перегруза сервера.</p><div class="metric">node scaling</div></div>
         </div>
     </div>
 </section>
-
 <section id="plans" style="background:var(--bg2)">
     <div class="container">
-        <div class="section-head">
-            <span class="label">Тарифы</span>
-            <h2>Выбери срок подписки</h2>
-            <p>Актуальные цены и доступные способы оплаты открываются в Telegram-боте. Если бот поддерживает start-параметры, пользователь сразу попадёт на выбранный тариф.</p>
-        </div>
+        <div class="section-head"><span class="label">Тарифы</span><h2>Акция -50% на старт</h2><p>На сайте указана текущая промо-логика. Финальный выбор и оплата происходят в Telegram-боте.</p></div>
+        <div style="text-align:center"><div class="sale">🔥 Промо: 114 ₽/мес вместо 228 ₽/мес</div></div>
         <div class="pricing-grid">
-            <div class="price-card">
-                <div class="plan-name">1 месяц</div>
-                <div class="plan-desc">Для теста и короткой поездки</div>
-                <div class="price">Цена <small>в боте</small></div>
-                <div class="price-note">Оплата через подключённые платёжки</div>
-                <ul>
-                    <li><span class="check">✓</span> VPN-доступ на 30 дней</li>
-                    <li><span class="check">✓</span> Инструкции подключения</li>
-                    <li><span class="check">✓</span> Управление в Telegram</li>
-                </ul>
-                <a href="https://t.me/qrypto_vpn_bot?start=site_vpn_1m" target="_blank" class="btn btn-outline">Выбрать 1 месяц</a>
-            </div>
-            <div class="price-card popular">
-                <div class="popular-badge">ПОПУЛЯРНЫЙ</div>
-                <div class="plan-name">3 месяца</div>
-                <div class="plan-desc">Оптимальный вариант</div>
-                <div class="price">Цена <small>в боте</small></div>
-                <div class="price-note">Обычно выгоднее помесячной оплаты</div>
-                <ul>
-                    <li><span class="check">✓</span> VPN-доступ на 90 дней</li>
-                    <li><span class="check">✓</span> Продление через бота</li>
-                    <li><span class="check">✓</span> Поддержка в Telegram</li>
-                </ul>
-                <a href="https://t.me/qrypto_vpn_bot?start=site_vpn_3m" target="_blank" class="btn btn-primary">Выбрать 3 месяца</a>
-            </div>
-            <div class="price-card">
-                <div class="plan-name">12 месяцев</div>
-                <div class="plan-desc">Максимальная выгода</div>
-                <div class="price">Цена <small>в боте</small></div>
-                <div class="price-note">Для постоянного использования</div>
-                <ul>
-                    <li><span class="check">✓</span> VPN-доступ на 1 год</li>
-                    <li><span class="check">✓</span> Меньше ручных продлений</li>
-                    <li><span class="check">✓</span> Все инструкции в боте</li>
-                </ul>
-                <a href="https://t.me/qrypto_vpn_bot?start=site_vpn_12m" target="_blank" class="btn btn-outline">Выбрать 12 месяцев</a>
-            </div>
+            <div class="price-card"><div class="plan-name">1 месяц</div><div class="plan-desc">Попробовать VPN без долгих обязательств</div><div><span class="old-price">228 ₽</span></div><div class="price">114 ₽ <small>/ месяц</small></div><div class="price-note">30 дней доступа</div><ul><li><span class="check">✓</span> Reality/VLESS профиль</li><li><span class="check">✓</span> Инструкция в боте</li><li><span class="check">✓</span> Поддержка Telegram</li></ul><a href="https://t.me/qrypto_vpn_bot?start=site_vpn_1m" target="_blank" class="btn btn-outline">Выбрать 1 месяц</a></div>
+            <div class="price-card popular"><div class="popular-badge">ОПТИМАЛЬНЫЙ</div><div class="plan-name">3 месяца</div><div class="plan-desc">Для регулярной работы с криптой и Web3</div><div><span class="old-price">684 ₽</span></div><div class="price">342 ₽ <small>/ 3 месяца</small></div><div class="price-note">114 ₽/мес по акции</div><ul><li><span class="check">✓</span> 90 дней доступа</li><li><span class="check">✓</span> Меньше продлений</li><li><span class="check">✓</span> Приоритетная помощь</li></ul><a href="https://t.me/qrypto_vpn_bot?start=site_vpn_3m" target="_blank" class="btn btn-primary">Выбрать 3 месяца</a></div>
+            <div class="price-card"><div class="plan-name">12 месяцев</div><div class="plan-desc">Максимально удобно на год вперёд</div><div><span class="old-price">2736 ₽</span></div><div class="price">1368 ₽ <small>/ год</small></div><div class="price-note">114 ₽/мес по акции</div><ul><li><span class="check">✓</span> 365 дней доступа</li><li><span class="check">✓</span> Долгий срок без ручных оплат</li><li><span class="check">✓</span> Все инструкции в боте</li></ul><a href="https://t.me/qrypto_vpn_bot?start=site_vpn_12m" target="_blank" class="btn btn-outline">Выбрать 12 месяцев</a></div>
         </div>
-        <div class="notice">
-            <p><b style="color:#fff">Важно:</b> точные цены, список способов оплаты, лимиты устройств и доступные локации лучше подтянуть из бота/API на следующем этапе. Сейчас страница готова как MVP-витрина и ведёт пользователя в рабочий Telegram-бот продаж.</p>
-        </div>
+        <div class="notice"><p><b style="color:#fff">Важно:</b> если в боте уже указаны другие итоговые суммы для 3/12 месяцев, пришли точные цифры — я заменю расчётные цены. Сейчас они посчитаны от промо-цены 114 ₽/мес.</p></div>
     </div>
 </section>
-
-<section id="how">
+<section id="payments">
     <div class="container">
-        <div class="section-head">
-            <span class="label">Как это работает</span>
-            <h2>Покупка за 4 шага</h2>
-        </div>
-        <div class="steps">
-            <div class="step"><div class="step-num">1</div><h3>Открой бота</h3><p>Нажми кнопку покупки на сайте и перейди в <b>@qrypto_vpn_bot</b>.</p></div>
-            <div class="step"><div class="step-num">2</div><h3>Выбери тариф</h3><p>Выбери срок подписки и удобный способ оплаты из доступных в боте.</p></div>
-            <div class="step"><div class="step-num">3</div><h3>Получи доступ</h3><p>После оплаты бот выдаст VPN-доступ и инструкцию по подключению.</p></div>
-            <div class="step"><div class="step-num">4</div><h3>Управляй подпиской</h3><p>Проверяй статус, продлевай доступ и обращайся в поддержку через Telegram.</p></div>
+        <div class="section-head"><span class="label">Оплата</span><h2>Платёжки в боте</h2><p>Основная логика оплаты остаётся в Telegram-боте. Сайт приводит пользователя в нужный сценарий покупки.</p></div>
+        <div class="payments">
+            <div class="pay-card"><div class="pay-top"><div class="pay-name">CryptoBot</div><span class="status on">работает</span></div><p>Криптооплата в Telegram. Удобно для пользователей, которые уже держат баланс в крипте.</p></div>
+            <div class="pay-card"><div class="pay-top"><div class="pay-name">Lava.top</div><span class="status soon">добавляем</span></div><p>Карты/СБП и автоматические чеки для самозанятого. Комиссию сервиса закладываем в экономику тарифа.</p></div>
+            <div class="pay-card"><div class="pay-top"><div class="pay-name">Tribute.tg</div><span class="status soon">добавляем</span></div><p>Оплата прямо внутри Telegram для тех, кто не хочет выходить из мессенджера. Чеки и налоги — отдельно.</p></div>
         </div>
     </div>
 </section>
-
+<section id="connect" style="background:var(--bg2)">
+    <div class="container">
+        <div class="section-head"><span class="label">Подключение</span><h2>3 шага до рабочего VPN</h2></div>
+        <div class="steps">
+            <div class="step"><div class="step-num">1</div><h3>Открой бота</h3><p>Перейди в <b>@qrypto_vpn_bot</b>, нажми старт и выбери тариф.</p></div>
+            <div class="step"><div class="step-num">2</div><h3>Оплати подписку</h3><p>Выбери доступный способ оплаты: CryptoBot, позже Lava.top или Tribute.tg.</p></div>
+            <div class="step"><div class="step-num">3</div><h3>Импортируй профиль</h3><p>Бот выдаст ссылку/ключ и инструкцию для iOS, Android, Windows или macOS.</p></div>
+        </div>
+        <div class="features" style="margin-top:18px">
+            <div class="feature"><div class="feature-icon">🍏</div><h3>iOS</h3><p>Установи рекомендованный клиент из инструкции бота, импортируй subscription link или QR-код и включи профиль.</p></div>
+            <div class="feature"><div class="feature-icon">🤖</div><h3>Android</h3><p>Открой клиент, добавь профиль из буфера/QR, выбери Qrypto VPN и подключись.</p></div>
+            <div class="feature"><div class="feature-icon">💻</div><h3>Windows / macOS</h3><p>Установи desktop-клиент из инструкции, импортируй ссылку подписки и запусти подключение.</p></div>
+        </div>
+    </div>
+</section>
 <section class="account" id="account">
     <div class="container account-grid">
-        <div>
-            <span class="label">Личный кабинет VPN</span>
-            <h2>Управление подпиской — в Telegram</h2>
-            <p style="color:var(--muted);margin-bottom:24px">Пока основной VPN-кабинет находится в Telegram-боте. На следующем этапе можно связать бота с Supabase и показать статус подписки прямо на сайте.</p>
-            <div class="hero-actions" style="margin-top:0">
-                <a href="vpn-account.html" class="btn btn-primary">Открыть управление</a>
-                <a href="https://t.me/qrypto_vpn_bot?start=site_vpn_account" target="_blank" class="btn btn-outline">Перейти в бота</a>
-            </div>
-        </div>
-        <div class="bot-panel">
-            <div class="bot-row"><span>Статус подписки</span><span>в боте</span></div>
-            <div class="bot-row"><span>Продление</span><span>в боте</span></div>
-            <div class="bot-row"><span>VPN-ключ / ссылка</span><span>в боте</span></div>
-            <div class="bot-row"><span>Инструкции</span><span>iOS / Android / PC</span></div>
+        <div><span class="label">Кабинет VPN</span><h2>Управление подпиской — в Telegram</h2><p style="color:var(--muted);margin-bottom:24px">Пока основной VPN-кабинет находится в Telegram-боте: статус, дата окончания, продление, ключи, инструкции и поддержка.</p><div class="hero-actions" style="margin-top:0"><a href="vpn-account.html" class="btn btn-primary">Открыть управление</a><a href="https://t.me/qrypto_vpn_bot?start=site_vpn_account" target="_blank" class="btn btn-outline">Перейти в бота</a></div></div>
+        <div class="bot-panel"><div class="bot-row"><span>Статус подписки</span><span>в боте</span></div><div class="bot-row"><span>Продление</span><span>CryptoBot / Lava / Tribute</span></div><div class="bot-row"><span>VPN-ключ / ссылка</span><span>после оплаты</span></div><div class="bot-row"><span>Инструкции</span><span>iOS / Android / PC</span></div></div>
+    </div>
+</section>
+<section id="rules">
+    <div class="container">
+        <div class="section-head"><span class="label">Правила</span><h2>Используй VPN ответственно</h2><p>Qrypto VPN — инструмент приватности и стабильного доступа. Он не предназначен для незаконной активности.</p></div>
+        <div class="rules-grid">
+            <div class="rule-card"><h3>Запрещено</h3><p>Спам, фрод, атаки, вредоносная активность, перепродажа доступа и любые действия, нарушающие законы твоей юрисдикции.</p></div>
+            <div class="rule-card"><h3>Не публикуй ключ</h3><p>VPN-профиль — персональный. Не выкладывай его в открытый доступ и не передавай третьим лицам.</p></div>
+            <div class="rule-card"><h3>Поддержка</h3><p>Если подключение не работает, не покупай повторно сразу — напиши в бота/поддержку, чтобы проверить профиль и сервер.</p></div>
         </div>
     </div>
 </section>
-
-<section id="faq">
+<section id="faq" style="background:var(--bg2)">
     <div class="container">
-        <div class="section-head">
-            <span class="label">FAQ</span>
-            <h2>Частые вопросы</h2>
-        </div>
+        <div class="section-head"><span class="label">FAQ</span><h2>Частые вопросы</h2></div>
         <div class="faq-grid">
-            <div class="faq-item"><h3>Где покупать VPN?</h3><p>На этой странице нажми кнопку покупки — она откроет официальный Telegram-бот <b>@qrypto_vpn_bot</b>.</p></div>
-            <div class="faq-item"><h3>Где продлить подписку?</h3><p>Продление и проверка статуса выполняются в Telegram-боте. На сайте для этого есть страница «Моя подписка».</p></div>
-            <div class="faq-item"><h3>На каких устройствах работает?</h3><p>VPN обычно подключается на iOS, Android, Windows и macOS. Конкретные инструкции лучше смотреть в боте.</p></div>
-            <div class="faq-item"><h3>Можно ли купить за крипту или рубли?</h3><p>Способы оплаты зависят от подключённых платёжек в боте. Актуальные варианты появятся при покупке.</p></div>
+            <div class="faq-item"><h3>Почему Reality?</h3><p>Reality помогает маскировать VPN-соединение под обычный TLS-трафик и делает подключение менее заметным.</p></div>
+            <div class="faq-item"><h3>Где покупать VPN?</h3><p>На сайте нажми кнопку покупки — она откроет официальный Telegram-бот <b>@qrypto_vpn_bot</b>.</p></div>
+            <div class="faq-item"><h3>Какие способы оплаты?</h3><p>Сейчас основной вариант — CryptoBot. Lava.top и Tribute.tg добавляются как дополнительные способы оплаты.</p></div>
+            <div class="faq-item"><h3>Что делать после оплаты?</h3><p>Бот выдаст VPN-профиль и инструкцию. Если доступ не появился, открой раздел поддержки в боте.</p></div>
+            <div class="faq-item"><h3>Можно ли использовать для бирж?</h3><p>VPN помогает получить более стабильный и приватный доступ. Но пользователь сам отвечает за соблюдение правил конкретной биржи и законов своей страны.</p></div>
+            <div class="faq-item"><h3>Почему не указан реальный SNI?</h3><p>Это техническая деталь сервера. Публикация SNI на сайте облегчает блокировку и фингерпринтинг сервиса.</p></div>
         </div>
-        <div class="notice">
-            <p>Qrypto VPN предназначен для повышения приватности и безопасности подключения. Пользователь обязан соблюдать законы своей юрисдикции и правила сервисов, которыми пользуется.</p>
-        </div>
+        <div class="notice"><p>Qrypto VPN предназначен для повышения приватности и стабильности подключения. Это не гарантия доступа к любым сервисам и не способ нарушать правила платформ.</p></div>
     </div>
 </section>
-
 <footer class="footer">
-    <div class="container">
-        <div>© 2025 Qrypto. VPN-продукт экосистемы Qrypto.</div>
-        <div class="footer-links">
-            <a href="index.html">Курс</a>
-            <a href="vpn.html">VPN</a>
-            <a href="vpn-account.html">Моя подписка</a>
-            <a href="https://t.me/qrypto_vpn_bot" target="_blank">@qrypto_vpn_bot</a>
-        </div>
-    </div>
+    <div class="container"><div>© 2026 Qrypto VPN. Продукт экосистемы Qrypto.</div><div class="footer-links"><a href="index.html">Курс</a><a href="vpn.html">VPN</a><a href="vpn-account.html">Моя подписка</a><a href="https://t.me/qrypto_vpn_bot" target="_blank">@qrypto_vpn_bot</a></div></div>
 </footer>
-
-<script>
-    document.getElementById('mobileToggle').addEventListener('click', function(){
-        document.getElementById('navbar').classList.toggle('mobile-open');
-    });
-</script>
+<script>document.getElementById('mobileToggle').addEventListener('click',function(){document.getElementById('navbar').classList.toggle('mobile-open')});</script>
 </body>
 </html>

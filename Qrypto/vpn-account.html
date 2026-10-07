@@ -1,33 +1,467 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя VPN-подписка — Qrypto VPN</title>
-    <meta name="description" content="Управление Qrypto VPN-подпиской: статус, продление, ключ Reality/VLESS, инструкции и поддержка через Telegram-бота.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🛡️</text></svg>">
-    <style>
-        :root{--bg:#080808;--card:#141414;--border:#242424;--accent:#ff6b00;--accent2:#ff8c00;--cyan:#21ffd0;--text:#fff;--muted:#aaa;--green:#00ff88;--gradient:linear-gradient(135deg,#ff6b00,#ffd600)}*{box-sizing:border-box;margin:0;padding:0}body{min-height:100vh;background:radial-gradient(circle at top right,rgba(255,107,0,.18),transparent 36%),radial-gradient(circle at bottom left,rgba(33,255,208,.08),transparent 34%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:24px;line-height:1.6}a{text-decoration:none;color:inherit}.card{max-width:820px;width:100%;background:linear-gradient(180deg,#191919,var(--card));border:1px solid rgba(255,107,0,.24);border-radius:28px;padding:38px;box-shadow:0 0 44px rgba(255,107,0,.14)}.logo{display:inline-block;font-size:26px;font-weight:950;letter-spacing:-.04em;margin-bottom:24px}.gradient{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.badge{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(255,107,0,.1);border:1px solid rgba(255,107,0,.28);color:var(--accent2);font-weight:900;font-size:13px;margin-bottom:18px}h1{font-size:clamp(34px,6vw,54px);line-height:1;margin-bottom:16px;letter-spacing:-.05em}p{color:var(--muted);font-size:17px;margin-bottom:24px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:26px 0}.item{background:#101010;border:1px solid var(--border);border-radius:18px;padding:16px}.item b{display:block;margin-bottom:4px}.item span{color:var(--muted);font-size:14px}.buttons{display:flex;gap:12px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;border-radius:14px;font-weight:850;border:1px solid transparent}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}.btn-outline{border-color:rgba(255,107,0,.35);color:var(--accent2);background:rgba(255,107,0,.06)}.note{margin-top:24px;padding:16px;border:1px solid rgba(33,255,208,.18);background:rgba(33,255,208,.06);border-radius:18px;color:#cfcfcf;font-size:14px}.pay{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 24px}.pill{font-size:12px;border-radius:999px;padding:7px 10px;border:1px solid rgba(255,255,255,.12);color:#ddd}.pill.on{border-color:rgba(0,255,136,.25);color:var(--green)}.pill.soon{border-color:rgba(255,214,0,.25);color:#ffd600}@media(max-width:620px){.card{padding:26px}.grid{grid-template-columns:1fr}.buttons .btn{width:100%}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Моя подписка — Qrypto VPN</title>
+<meta name="description" content="Личный кабинет Qrypto VPN: вход через Telegram, статус подписки, ссылка подключения и оплата картой или СБП.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='32' font-size='32'>🛡️</text></svg>">
+<style>
+:root{--bg:#080808;--card:#141414;--card2:#191919;--border:#242424;--accent:#ff6b00;--accent2:#ff8c00;--cyan:#21ffd0;--text:#fff;--muted:#aaa;--dim:#777;--green:#00ff88;--red:#ff4d5e;--yellow:#ffd600;--gradient:linear-gradient(135deg,#ff6b00,#ffd600);--radius:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:radial-gradient(circle at top right,rgba(255,107,0,.16),transparent 36%),radial-gradient(circle at bottom left,rgba(33,255,208,.07),transparent 34%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;line-height:1.55;padding:20px 16px 60px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:960px;margin:0 auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+.logo{font-size:24px;font-weight:950;letter-spacing:-.04em}
+.gradient{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.user{display:flex;align-items:center;gap:10px}
+.user img,.user .ava{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#222;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--accent2)}
+.user .name{font-weight:800;font-size:15px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.link-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:10px;padding:7px 12px;font-size:13px}
+.link-btn:hover{color:#fff;border-color:#444}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--border);border-radius:var(--radius);padding:26px;margin-bottom:18px}
+.card.glow{border-color:rgba(255,107,0,.28);box-shadow:0 0 44px rgba(255,107,0,.12)}
+h1{font-size:clamp(30px,5.5vw,46px);line-height:1.05;letter-spacing:-.04em;margin-bottom:12px}
+h2{font-size:22px;letter-spacing:-.02em;margin-bottom:14px}
+p.lead{color:var(--muted);font-size:16px;margin-bottom:22px}
+.muted{color:var(--muted)}.small{font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:14px;font-weight:850;border:1px solid transparent;transition:.2s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-outline{border-color:rgba(255,107,0,.35);color:var(--accent2);background:rgba(255,107,0,.06)}
+.btn-cyan{border-color:rgba(33,255,208,.3);color:var(--cyan);background:rgba(33,255,208,.06)}
+.btn[disabled]{opacity:.55;cursor:wait}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.login-box{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+#tg-widget{min-height:48px}
+.banner{border-radius:16px;padding:14px 16px;margin-bottom:18px;font-size:15px;display:none}
+.banner.show{display:block}
+.banner.info{background:rgba(33,255,208,.07);border:1px solid rgba(33,255,208,.25);color:#d8fff6}
+.banner.ok{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);color:#d6ffe9}
+.banner.err{background:rgba(255,77,94,.08);border:1px solid rgba(255,77,94,.3);color:#ffd6da}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--cyan);border-radius:50%;animation:s 1s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes s{to{transform:rotate(360deg)}}
+.sub-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.status{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:900}
+.status.active{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.25)}
+.status.bad{background:rgba(255,77,94,.1);color:var(--red);border:1px solid rgba(255,77,94,.25)}
+.status.warn{background:rgba(255,214,0,.1);color:var(--yellow);border:1px solid rgba(255,214,0,.25)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat{background:#101010;border:1px solid var(--border);border-radius:16px;padding:14px}
+.stat .k{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.stat .v{font-size:22px;font-weight:900;margin-top:2px}
+.bar{height:8px;background:#222;border-radius:99px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--gradient);border-radius:99px}
+.sublink{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;background:#0d0d0d;border:1px solid var(--border);border-radius:16px;padding:16px}
+.sublink code{display:block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--cyan);word-break:break-all;background:#070707;border:1px solid #1d1d1d;border-radius:10px;padding:10px;margin:8px 0 12px}
+#qr{background:#fff;border-radius:12px;padding:10px;width:150px;height:150px}
+#qr img,#qr canvas{width:130px!important;height:130px!important}
+.plans{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.plan{position:relative;background:#101010;border:1px solid var(--border);border-radius:18px;padding:20px;display:flex;flex-direction:column;transition:.2s}
+.plan.hl{border-color:rgba(255,107,0,.7);box-shadow:0 0 30px rgba(255,107,0,.22)}
+.plan .tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gradient);color:#fff;border-radius:999px;padding:4px 11px;font-size:11px;font-weight:950;white-space:nowrap}
+.plan .t{font-size:19px;font-weight:950}
+.plan .old{color:var(--dim);text-decoration:line-through;font-size:15px;margin-top:10px}
+.plan .p{font-size:32px;font-weight:950;line-height:1.1}
+.plan .p small{font-size:13px;color:var(--muted);font-weight:600}
+.plan .gift{color:var(--yellow);font-size:13px;font-weight:800;margin:8px 0 4px}
+.plan .per{color:var(--muted);font-size:12px;margin-bottom:16px}
+.plan .btn{margin-top:auto;width:100%;padding:12px 10px;font-size:14px}
+.apps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.app{background:#101010;border:1px solid var(--border);border-radius:16px;padding:16px;font-size:14px;color:#ddd}
+.app b{display:block;color:#fff;font-size:16px;margin-bottom:4px}
+.note{margin-top:14px;padding:14px;border:1px solid rgba(33,255,208,.18);background:rgba(33,255,208,.05);border-radius:14px;color:#cfcfcf;font-size:13px}
+.hidden{display:none!important}
+.foot{text-align:center;color:var(--dim);font-size:13px;margin-top:26px}
+.foot a{color:var(--muted);margin:0 8px}
+@media(max-width:820px){.plans{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.card{padding:20px}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}.sublink{grid-template-columns:1fr}#qr{margin:0 auto}.apps{grid-template-columns:1fr}.row .btn{width:100%}.user .name{display:none}}
+@media(max-width:400px){.plans{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-    <main class="card">
-        <a href="index.html" class="logo"><span class="gradient">Qrypto</span> VPN</a><br>
-        <div class="badge">🛡️ Управление Reality/VLESS-подпиской</div>
-        <h1>Твой VPN-кабинет сейчас находится в Telegram</h1>
-        <p>Открой официальный бот, чтобы проверить статус подписки, продлить доступ, получить Reality/VLESS-профиль, открыть инструкции или написать в поддержку.</p>
-        <div class="pay"><span class="pill on">CryptoBot работает</span><span class="pill soon">Lava.top добавляем</span><span class="pill soon">Tribute.tg добавляем</span><span class="pill">акция от 114 ₽/мес</span></div>
-        <div class="grid">
-            <div class="item"><b>Статус подписки</b><span>активна / истекла / дата окончания</span></div>
-            <div class="item"><b>Продление</b><span>выбор тарифа и оплата в боте</span></div>
-            <div class="item"><b>VPN-доступ</b><span>ключ, subscription link или QR</span></div>
-            <div class="item"><b>Инструкции</b><span>iOS, Android, Windows, macOS</span></div>
+<div class="wrap">
+  <header class="top">
+    <a href="vpn.html" class="logo"><span class="gradient">Qrypto</span> VPN</a>
+    <div class="user hidden" id="user">
+      <span class="ava" id="ava"></span>
+      <span class="name" id="uname"></span>
+      <button class="link-btn" id="logout">Выйти</button>
+    </div>
+  </header>
+
+  <div class="banner" id="banner"></div>
+
+  <!-- не вошёл -->
+  <section class="card glow hidden" id="guest">
+    <h1>Моя <span class="gradient">подписка</span></h1>
+    <p class="lead">Войди через Telegram, чтобы увидеть статус подписки, получить ссылку подключения и оплатить картой или СБП прямо здесь.</p>
+    <div class="login-box">
+      <div id="tg-widget"></div>
+      <span class="small muted">Мы получаем только имя, username и аватар. Пароль не нужен.</span>
+      <a class="btn btn-outline" href="https://t.me/qrypto_vpn_bot?start=site_account" target="_blank" rel="noopener">Или открыть @qrypto_vpn_bot</a>
+    </div>
+  </section>
+
+  <!-- подписка -->
+  <section class="card glow hidden" id="subCard">
+    <div class="sub-head">
+      <div><h2 style="margin:0">Твоя подписка</h2><span class="small muted">🇳🇱 Нидерланды · 🇩🇪 Германия · до 4 устройств</span></div>
+      <span class="status" id="subStatus"></span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">Действует до</div><div class="v" id="subExpire">—</div></div>
+      <div class="stat"><div class="k">Осталось</div><div class="v" id="subLeft">—</div></div>
+      <div class="stat"><div class="k">Трафик за месяц</div><div class="v" id="subTraffic">—</div><div class="bar"><i id="subBar" style="width:0"></i></div></div>
+    </div>
+    <div class="sublink">
+      <div>
+        <b>Ссылка подписки</b>
+        <code id="subUrl"></code>
+        <div class="row">
+          <button class="btn btn-primary" id="copyBtn">Скопировать</button>
+          <a class="btn btn-cyan" href="#connect">Как подключить</a>
         </div>
-        <div class="buttons">
-            <a href="https://t.me/qrypto_vpn_bot?start=site_vpn_account" target="_blank" class="btn btn-primary">Открыть @qrypto_vpn_bot</a>
-            <a href="vpn.html" class="btn btn-outline">Назад на страницу VPN</a>
-        </div>
-        <div class="note">Не публикуй свой VPN-ключ и не передавай его третьим лицам. Если после оплаты доступ не появился — сначала открой поддержку в боте.</div>
-    </main>
+      </div>
+      <div id="qr" title="Отсканируй в приложении"></div>
+    </div>
+    <div class="note">Ссылка личная: не публикуй её и не передавай другим. При продлении она не меняется.</div>
+  </section>
+
+  <!-- нет подписки -->
+  <section class="card glow hidden" id="noSub">
+    <h2>Подписки пока нет</h2>
+    <p class="lead" id="noSubText">Выбери тариф ниже, доступ появится здесь сразу после оплаты.</p>
+    <button class="btn btn-cyan hidden" id="trialBtn">🎁 Попробовать бесплатно</button>
+  </section>
+
+  <!-- тарифы -->
+  <section class="card" id="plansCard">
+    <h2 id="plansTitle">Тарифы</h2>
+    <p class="small muted" style="margin:-6px 0 22px">🔥 Скидка 50% и +7 дней в подарок к любому тарифу. Продление добавляет дни к текущему сроку.</p>
+    <div class="plans" id="plans"></div>
+    <p class="small muted" style="margin-top:16px">Оплата картой или СБП на защищённой странице Lava.top. Хочешь криптой (USDT, TON, BTC)? <a href="https://t.me/qrypto_vpn_bot?start=site_crypto" target="_blank" rel="noopener" style="color:var(--accent2)">Оплатить в Telegram →</a></p>
+  </section>
+
+  <!-- как подключить -->
+  <section class="card" id="connect">
+    <h2>Как подключить</h2>
+    <p class="small muted" style="margin-bottom:16px">Скопируй ссылку подписки → в приложении «+» → «Импорт из буфера обмена» → выбери сервер и включи. Если приложение пропало из магазина, поставь любое другое из списка, ссылка та же.</p>
+    <div class="apps">
+      <div class="app"><b>🍎 iPhone / iPad</b>Hiddify, Streisand, v2RayTun, V2Box. Нет в российском App Store? Подскажем, как поставить через Apple ID другой страны, в <a href="https://t.me/qrypto_vpn_bot?start=site_how" target="_blank" rel="noopener" style="color:var(--accent2)">боте</a>.</div>
+      <div class="app"><b>📱 Android</b>Hiddify из Google Play. Запасные: v2rayNG, v2RayTun.</div>
+      <div class="app"><b>💻 Windows</b>Hiddify, запуск от администратора, режим <b style="display:inline;font-size:14px">VPN</b> (не «Системный прокси»). Запасной: v2rayN с включённым Tun.</div>
+      <div class="app"><b>🍏 macOS</b>Hiddify, Streisand или V2Box из Mac App Store.</div>
+    </div>
+    <div class="note">Не работает? Полностью выключи другие VPN (FlClash, Radmin VPN, Outline и т.п.), обнови подписку в приложении, смени локацию. IP проверяй на ipinfo.io: российские сайты идут напрямую, поэтому 2ip.ru покажет твой обычный IP.</div>
+  </section>
+
+  <div class="foot">
+    <a href="vpn.html">О сервисе</a>·<a href="https://t.me/qrypto_manager" target="_blank" rel="noopener">Поддержка</a>·<a href="https://t.me/qrypto_vpn_bot" target="_blank" rel="noopener">@qrypto_vpn_bot</a>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function(){
+  var API = 'https://bot.qrypto.pro:8443/api/site';
+  var BOT = 'qrypto_vpn_bot';
+  var TOKEN_KEY = 'qvpn_token', USER_KEY = 'qvpn_user', PAID_KEY = 'qvpn_paid_base', PLAN_KEY = 'qvpn_plan';
+
+  // запасной список тарифов — показываем до входа (сервер после входа присылает актуальный)
+  var DEFAULT_PLANS = [
+    {key:'m1', title:'1 месяц', days:30, bonus_days:7, price:114, old_price:228},
+    {key:'m3', title:'3 месяца', days:90, bonus_days:7, price:308, old_price:615},
+    {key:'m6', title:'6 месяцев', days:180, bonus_days:7, price:560, old_price:1120},
+    {key:'m12', title:'12 месяцев', days:365, bonus_days:7, price:1025, old_price:2050}
+  ];
+
+  // ---------- storage (может быть недоступен в приватном режиме)
+  function sget(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function sset(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+  function sdel(k){ try { localStorage.removeItem(k); } catch(e){} }
+
+  var token = sget(TOKEN_KEY);
+  var user = null; try { user = JSON.parse(sget(USER_KEY) || 'null'); } catch(e){}
+  var state = null;
+
+  var qs = new URLSearchParams(location.search);
+  var hlPlan = qs.get('plan') || sget(PLAN_KEY);
+  if (qs.get('plan')) sset(PLAN_KEY, qs.get('plan'));
+  var waitingPaid = qs.get('paid') === '1';
+
+  var $ = function(id){ return document.getElementById(id); };
+  function show(el, on){ el.classList.toggle('hidden', !on); }
+
+  function banner(kind, html){
+    var b = $('banner');
+    if (!kind){ b.className = 'banner'; b.innerHTML = ''; return; }
+    b.className = 'banner show ' + kind; b.innerHTML = html;
+  }
+
+  // ---------- API
+  function api(method, path, body){
+    var opt = {method: method, headers: {}};
+    if (token) opt.headers['Authorization'] = 'Bearer ' + token;
+    if (body !== undefined){ opt.headers['Content-Type'] = 'application/json'; opt.body = JSON.stringify(body); }
+    return fetch(API + path, opt).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(data){
+        if (r.status === 401 && path !== '/login'){ logout(true); }
+        if (!r.ok){ var e = new Error(data.error || ('http_' + r.status)); e.status = r.status; throw e; }
+        return data;
+      });
+    });
+  }
+
+  // ---------- форматирование
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function fmtDate(ts){ var d = new Date(ts * 1000); return pad(d.getDate()) + '.' + pad(d.getMonth() + 1) + '.' + d.getFullYear(); }
+  function plural(n, a, b, c){ n = Math.abs(n) % 100; var m = n % 10; if (n > 10 && n < 20) return c; if (m > 1 && m < 5) return b; if (m === 1) return a; return c; }
+  function rub(n){ return Number(n).toLocaleString('ru-RU') + ' ₽'; }
+
+  // ---------- вход через Telegram
+  window.onTelegramAuth = function(tgUser){
+    banner('info', '<span class="spin"></span>Входим…');
+    api('POST', '/login', tgUser).then(function(res){
+      token = res.token; user = res.user;
+      sset(TOKEN_KEY, token); sset(USER_KEY, JSON.stringify(user));
+      banner(null);
+      renderUser(); load();
+    }).catch(function(e){
+      banner('err', e.status === 403 ? 'Telegram не подтвердил вход. Попробуй ещё раз.' : 'Не удалось войти: сервер недоступен. Попробуй через минуту или открой бота.');
+    });
+  };
+
+  function mountWidget(){
+    var box = $('tg-widget');
+    if (box.childNodes.length) return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://telegram.org/js/telegram-widget.js?22';
+    s.setAttribute('data-telegram-login', BOT);
+    s.setAttribute('data-size', 'large');
+    s.setAttribute('data-radius', '12');
+    s.setAttribute('data-request-access', 'write');
+    s.setAttribute('data-userpic', 'false');
+    s.setAttribute('data-onauth', 'onTelegramAuth(user)');
+    box.appendChild(s);
+  }
+
+  function logout(expired){
+    token = null; user = null; state = null;
+    sdel(TOKEN_KEY); sdel(USER_KEY);
+    renderUser(); renderGuest();
+    if (expired) banner('info', 'Сессия истекла, войди ещё раз.');
+  }
+  $('logout').onclick = function(){ logout(false); banner(null); };
+
+  function renderUser(){
+    show($('user'), !!user);
+    if (!user) return;
+    $('uname').textContent = user.first_name || (user.username ? '@' + user.username : 'Профиль');
+    var ava = $('ava'); ava.innerHTML = '';
+    if (user.photo_url && /^https:\/\//.test(user.photo_url)){
+      var img = document.createElement('img'); img.src = user.photo_url; img.alt = ''; img.referrerPolicy = 'no-referrer';
+      ava.appendChild(img);
+    } else {
+      ava.textContent = (user.first_name || '?').charAt(0).toUpperCase();
+    }
+  }
+
+  function renderGuest(){
+    show($('guest'), true); show($('subCard'), false); show($('noSub'), false);
+    $('plansTitle').textContent = 'Тарифы';
+    mountWidget();
+    renderPlans(DEFAULT_PLANS, false);
+  }
+
+  // ---------- тарифы
+  function renderPlans(plans, loggedIn){
+    var box = $('plans'); box.innerHTML = '';
+    plans.forEach(function(p){
+      var el = document.createElement('div');
+      el.className = 'plan' + (p.key === hlPlan ? ' hl' : '');
+      el.id = 'plan-' + p.key;
+      var months = Math.round(p.days / 30);
+      var perMonth = Math.round(p.price / Math.max(months, 1));
+      var tag = p.key === hlPlan ? 'Ты выбрал' : (p.key === 'm3' ? 'Популярный' : '');
+      el.innerHTML =
+        (tag ? '<span class="tag">' + tag + '</span>' : '') +
+        '<div class="t"></div>' +
+        (p.old_price ? '<div class="old">' + rub(p.old_price) + '</div>' : '<div class="old">&nbsp;</div>') +
+        '<div class="p">' + rub(p.price) + '</div>' +
+        '<div class="gift">🎁 +' + p.bonus_days + ' дней в подарок</div>' +
+        '<div class="per">' + (p.days + p.bonus_days) + ' дн. доступа' + (months > 1 ? ' · ≈' + perMonth + ' ₽/мес' : '') + '</div>';
+      el.querySelector('.t').textContent = p.title;
+      var btn = document.createElement('button');
+      btn.className = 'btn ' + (p.key === hlPlan || (!hlPlan && p.key === 'm3') ? 'btn-primary' : 'btn-outline');
+      if (!loggedIn){
+        btn.textContent = 'Войти и оплатить';
+        btn.onclick = function(){ hlPlan = p.key; sset(PLAN_KEY, p.key); renderPlans(plans, false); $('guest').scrollIntoView({behavior:'smooth'}); };
+      } else if (state && !state.card_payment){
+        btn.textContent = 'Оплатить в боте';
+        btn.onclick = function(){ window.open('https://t.me/' + BOT + '?start=site_' + p.key, '_blank'); };
+      } else {
+        btn.textContent = 'Оплатить картой / СБП';
+        btn.onclick = function(){ pay(p.key, btn); };
+      }
+      el.appendChild(btn);
+      box.appendChild(el);
+    });
+  }
+
+  function pay(key, btn){
+    btn.disabled = true; var old = btn.textContent; btn.innerHTML = '<span class="spin"></span>Создаём счёт…';
+    // запоминаем текущий срок, чтобы после оплаты понять, что он увеличился
+    var exp = state && state.subscription ? (state.subscription.expire || 0) : 0;
+    api('POST', '/pay', {plan: key}).then(function(res){
+      sset(PAID_KEY, JSON.stringify({expire: exp, t: Date.now()}));
+      location.href = res.url;
+    }).catch(function(e){
+      btn.disabled = false; btn.textContent = old;
+      var msg = {
+        too_many: 'Слишком много счетов за час. Подожди немного или напиши в поддержку.',
+        card_disabled: 'Оплата картой временно недоступна. Можно оплатить в <a href="https://t.me/' + BOT + '" target="_blank" style="text-decoration:underline">боте</a>.',
+        invoice_failed: 'Платёжная система не ответила. Попробуй ещё раз через минуту.'
+      }[e.message] || 'Не получилось создать счёт. Попробуй ещё раз.';
+      if (e.status !== 401) banner('err', msg);
+    });
+  }
+
+  // ---------- подписка
+  function renderState(){
+    var s = state.subscription;
+    show($('guest'), false);
+    show($('subCard'), !!s);
+    show($('noSub'), !s);
+    $('plansTitle').textContent = s ? 'Продлить подписку' : 'Тарифы';
+
+    if (s){
+      var now = Date.now() / 1000;
+      var st = $('subStatus');
+      var expired = s.expire && s.expire < now;
+      var map = {active: ['active', '● Активна'], limited: ['warn', '● Лимит трафика'], expired: ['bad', '● Истекла'], disabled: ['bad', '● Отключена'], on_hold: ['warn', '● Ожидает']};
+      var m = expired ? map.expired : (map[s.status] || ['warn', s.status || '—']);
+      st.className = 'status ' + m[0]; st.textContent = m[1];
+
+      $('subExpire').textContent = s.expire ? fmtDate(s.expire) : '∞';
+      if (s.expire){
+        var d = Math.ceil((s.expire - now) / 86400);
+        $('subLeft').textContent = d > 0 ? d + ' ' + plural(d, 'день', 'дня', 'дней') : 'истекла';
+        $('subLeft').style.color = d <= 3 ? 'var(--red)' : '';
+      } else { $('subLeft').textContent = '∞'; }
+
+      var used = s.used_gb || 0, lim = s.limit_gb || 0;
+      $('subTraffic').textContent = lim ? used.toFixed(1) + ' / ' + lim + ' ГБ' : used.toFixed(1) + ' ГБ';
+      $('subBar').style.width = lim ? Math.min(100, used / lim * 100) + '%' : '0';
+
+      var url = s.subscription_url || '';
+      $('subUrl').textContent = url;
+      var qr = $('qr');
+      if (qr.getAttribute('data-url') !== url){
+        qr.innerHTML = ''; qr.setAttribute('data-url', url);
+        if (url && window.QRCode){ new QRCode(qr, {text: url, width: 130, height: 130, correctLevel: QRCode.CorrectLevel.M}); }
+        else { qr.classList.add('hidden'); }
+      }
+    } else {
+      var canTrial = state.trial_available;
+      show($('trialBtn'), canTrial);
+      $('trialBtn').textContent = '🎁 Попробовать ' + state.trial_days + ' ' + plural(state.trial_days, 'день', 'дня', 'дней') + ' бесплатно';
+      $('noSubText').textContent = canTrial
+        ? 'Начни с бесплатного пробного периода или сразу выбери тариф. Доступ появится здесь мгновенно.'
+        : 'Выбери тариф ниже, доступ появится здесь сразу после оплаты.';
+    }
+    renderPlans(state.plans && state.plans.length ? state.plans : DEFAULT_PLANS, true);
+    if (hlPlan && !waitingPaid){
+      var el = $('plan-' + hlPlan);
+      if (el && !s) setTimeout(function(){ el.scrollIntoView({behavior:'smooth', block:'center'}); }, 300);
+    }
+  }
+
+  $('copyBtn').onclick = function(){
+    var url = $('subUrl').textContent, b = this;
+    function done(){ b.textContent = '✓ Скопировано'; setTimeout(function(){ b.textContent = 'Скопировать'; }, 1800); }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(done, fallback);
+    } else fallback();
+    function fallback(){
+      var r = document.createRange(); r.selectNodeContents($('subUrl'));
+      var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      try { document.execCommand('copy'); done(); } catch(e){ b.textContent = 'Выдели и скопируй вручную'; }
+    }
+  };
+
+  $('trialBtn').onclick = function(){
+    var b = this; b.disabled = true; b.innerHTML = '<span class="spin"></span>Выдаём доступ…';
+    api('POST', '/trial').then(function(res){
+      state = res; renderState();
+      banner('ok', '🎁 Пробный доступ активирован! Скопируй ссылку и подключись по инструкции ниже.');
+      $('subCard').scrollIntoView({behavior:'smooth'});
+    }).catch(function(e){
+      b.disabled = false;
+      if (e.message === 'trial_used'){ state.trial_available = false; renderState(); banner('info', 'Пробный период уже был использован. Выбери тариф.'); }
+      else if (e.status !== 401) { renderState(); banner('err', 'Не получилось выдать доступ. Попробуй позже или напиши в поддержку.'); }
+    });
+  };
+
+  // ---------- загрузка
+  function load(){
+    if (!token){ renderGuest(); return Promise.resolve(); }
+    return api('GET', '/me').then(function(res){
+      state = res; renderState();
+      if (waitingPaid) startPaidWait();
+    }).catch(function(e){
+      if (e.status === 401) return;
+      banner('err', 'Сервер подписок временно недоступен. Обнови страницу через минуту. Если срочно — открой <a href="https://t.me/' + BOT + '" target="_blank" style="text-decoration:underline">бота</a>.');
+      renderPlans(DEFAULT_PLANS, true);
+      show($('guest'), false);
+    });
+  }
+
+  // ---------- ожидание оплаты (?paid=1)
+  var paidTimer = null;
+  function startPaidWait(){
+    if (paidTimer) return;
+    var base = null;
+    try { var p = JSON.parse(sget(PAID_KEY) || 'null'); if (p && Date.now() - p.t < 6 * 3600 * 1000) base = p.expire || 0; } catch(e){}
+    var started = Date.now();
+    function curExp(){ return state && state.subscription ? (state.subscription.expire || 0) : 0; }
+    function finished(){
+      clearInterval(paidTimer); sdel(PAID_KEY); sdel(PLAN_KEY); waitingPaid = false;
+      history.replaceState(null, '', location.pathname);
+    }
+    function check(){
+      if (base !== null && curExp() > base){
+        finished();
+        banner('ok', '✅ <b>Оплата получена!</b> Подписка продлена до ' + fmtDate(curExp()) + '. Ссылка подключения ниже.');
+        $('subCard').scrollIntoView({behavior:'smooth'});
+        return true;
+      }
+      if (Date.now() - started > 120000){
+        finished();
+        banner('info', 'Платёж ещё обрабатывается. Обычно это пара минут: обнови страницу чуть позже. Если деньги списались, а срок не изменился за 15 минут, напиши в <a href="https://t.me/qrypto_manager" target="_blank" style="text-decoration:underline">поддержку</a>.');
+        return true;
+      }
+      return false;
+    }
+    banner('info', '<span class="spin"></span>Ждём подтверждение оплаты от банка… Обычно это занимает несколько секунд.');
+    if (check()) return;
+    paidTimer = setInterval(function(){
+      api('GET', '/me').then(function(res){ state = res; renderState(); check(); }).catch(function(){});
+    }, 5000);
+  }
+
+  // ---------- старт
+  renderUser();
+  if (token){ show($('guest'), false); banner('info', '<span class="spin"></span>Загружаем подписку…'); load().then(function(){ if (!waitingPaid && $('banner').innerHTML.indexOf('Загружаем') > -1) banner(null); }); }
+  else {
+    renderGuest();
+    if (waitingPaid) banner('info', 'Оплата прошла? Войди через Telegram тем же аккаунтом, с которого оплачивал, чтобы увидеть подписку.');
+  }
+})();
+</script>
 </body>
 </html>
